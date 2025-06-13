@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-public class ProductoView extends JFrame {
+public class ProductoAnadirView extends JFrame {
 
     private JPanel panelPrincipal;
     private JTextField txtPrecio;
@@ -16,7 +16,7 @@ public class ProductoView extends JFrame {
     private JButton btnAceptar;
     private JButton btnLimpiar;
 
-    public ProductoView() {
+    public ProductoAnadirView() {
 
         setContentPane(panelPrincipal);
         setTitle("Datos del Producto");
