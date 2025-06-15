@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="ec.edu.ups.vista.ProductoAnadirView">
-  <grid id="27dc6" binding="panelPrincipal" layout-manager="GridLayoutManager" row-count="4" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-    <margin top="100" left="100" bottom="100" right="100"/>
+  <grid id="27dc6" binding="panelPrincipal" layout-manager="GridLayoutManager" row-count="5" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="479" height="380"/>
+      <xy x="20" y="20" width="428" height="295"/>
     </constraints>
-    <properties>
-      <background color="-2631721"/>
-    </properties>
-    <border type="line" title="Ingrese los datos del producto" title-justification="2">
-      <font size="14" style="1"/>
+    <properties/>
+    <border type="none" title="Registro de Producto" title-justification="2" title-position="3">
+      <font name="DialogInput" size="14" style="1"/>
       <color color="-16777216"/>
     </border>
     <children>
-      <component id="f347c" class="javax.swing.JLabel">
+      <component id="f347c" class="javax.swing.JLabel" binding="lblPrecio">
         <constraints>
-          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <font name="Courier New" size="14" style="1"/>
@@ -24,7 +22,7 @@
       </component>
       <component id="c1154" class="javax.swing.JTextField" binding="txtPrecio">
         <constraints>
-          <grid row="2" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+          <grid row="3" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
@@ -32,18 +30,9 @@
           <toolTipText value="Ingresa el precio"/>
         </properties>
       </component>
-      <component id="9663b" class="javax.swing.JLabel">
-        <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <font name="Courier New" size="14" style="1"/>
-          <text value="Nombre:"/>
-        </properties>
-      </component>
       <component id="bcc93" class="javax.swing.JTextField" binding="txtNombre">
         <constraints>
-          <grid row="1" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+          <grid row="2" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
@@ -51,9 +40,9 @@
           <toolTipText value="Ingresa el nombre (ej. Producto 1)"/>
         </properties>
       </component>
-      <component id="d83ac" class="javax.swing.JLabel">
+      <component id="d83ac" class="javax.swing.JLabel" binding="lblCodigo">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <font name="Courier New" size="14" style="1"/>
@@ -62,7 +51,7 @@
       </component>
       <component id="f8fce" class="javax.swing.JTextField" binding="txtCodigo">
         <constraints>
-          <grid row="0" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+          <grid row="1" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
@@ -73,22 +62,66 @@
       </component>
       <component id="925c8" class="javax.swing.JButton" binding="btnAceptar">
         <constraints>
-          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="126" height="34"/>
-          </grid>
+          <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <background color="-10249183"/>
           <font name="Courier New" size="14"/>
+          <horizontalAlignment value="0"/>
+          <horizontalTextPosition value="11"/>
           <text value="Aceptar"/>
+          <verticalAlignment value="0"/>
         </properties>
       </component>
       <component id="22ef4" class="javax.swing.JButton" binding="btnLimpiar">
         <constraints>
-          <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <background color="-3561550"/>
           <font name="Courier New" size="14"/>
           <text value="Limpiar"/>
+        </properties>
+      </component>
+      <component id="9663b" class="javax.swing.JLabel" binding="lblNombre">
+        <constraints>
+          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Courier New" size="14" style="1"/>
+          <text value="Nombre:"/>
+        </properties>
+      </component>
+      <hspacer id="735a5">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="50" height="-1"/>
+          </grid>
+        </constraints>
+      </hspacer>
+      <hspacer id="afe77">
+        <constraints>
+          <grid row="1" column="4" row-span="1" col-span="1" vsize-policy="1" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="50" height="-1"/>
+          </grid>
+        </constraints>
+      </hspacer>
+      <component id="61309" class="javax.swing.JSeparator">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="5" vsize-policy="0" hsize-policy="0" anchor="1" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="11" height="11"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="d7fe0" class="javax.swing.JButton" binding="salirButton" default-binding="true">
+        <constraints>
+          <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-1753078"/>
+          <font name="DialogInput" size="14"/>
+          <text value="Salir"/>
         </properties>
       </component>
     </children>

@@ -13,6 +13,7 @@ public class ProductoListaView extends JFrame {
     private JTable tblProductos;
     private JPanel panelPrincipal;
     private JButton btnListar;
+    private JButton btnSalir;
     private DefaultTableModel modelo;
 
     public ProductoListaView() {
@@ -89,7 +90,6 @@ public class ProductoListaView extends JFrame {
             };
             modelo.addRow(fila);
         }
-
 
     }
 }

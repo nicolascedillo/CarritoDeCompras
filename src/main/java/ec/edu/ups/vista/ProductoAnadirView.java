@@ -15,24 +15,26 @@ public class ProductoAnadirView extends JFrame {
     private JTextField txtCodigo;
     private JButton btnAceptar;
     private JButton btnLimpiar;
+    private JLabel lblCodigo;
+    private JLabel lblPrecio;
+    private JLabel lblNombre;
+    private JButton salirButton;
 
     public ProductoAnadirView() {
 
         setContentPane(panelPrincipal);
         setTitle("Datos del Producto");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(500, 500);
-        //setResizable(false);
+        setSize(400,200);
         setLocationRelativeTo(null);
         setVisible(true);
-        //pack();
-
         btnLimpiar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 limpiarCampos();
             }
         });
+
     }
 
     public JPanel getPanelPrincipal() {
