@@ -24,12 +24,11 @@ public class ProductoAnadirView extends JInternalFrame {
 
         setContentPane(panelPrincipal);
         setTitle("Datos del Producto");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setSize(400,200);
         setClosable(true);
         setIconifiable(true);
         setResizable(true);
-        setVisible(true);
         btnLimpiar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

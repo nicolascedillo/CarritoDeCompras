@@ -1,32 +1,41 @@
 package ec.edu.ups.vista;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class Principal extends JFrame {
+public class MenuPrincipalView extends JFrame {
     private JMenuBar menuBar;
     private JMenu menuProducto;
+    private JMenu menuCarrito;
     private JMenuItem menuItemAddProducto;
     private JMenuItem menuItemEliminarProducto;
     private JMenuItem menuItemBuscarProducto;
     private JMenuItem menuItemModificarProdcuto;
+    private JMenuItem menuItemAnadirCarrito;
     private JDesktopPane jDesktopPane;
 
-    public Principal(){
+    public MenuPrincipalView(){
         jDesktopPane = new JDesktopPane();
+
         menuBar = new JMenuBar();
         menuProducto = new JMenu("Producto");
+        menuCarrito = new JMenu("Carrito");
+
         menuItemAddProducto = new JMenuItem("Add Producto");
         menuItemEliminarProducto = new JMenuItem("Eliminar Producto");
         menuItemBuscarProducto = new JMenuItem("Buscar Producto");
         menuItemModificarProdcuto = new JMenuItem("Modificar Producto");
 
+        menuItemAnadirCarrito = new JMenuItem("Anadir Carrito");
+
         menuBar.add(menuProducto);
+        menuBar.add(menuCarrito);
+
         menuProducto.add(menuItemAddProducto);
         menuProducto.add(menuItemEliminarProducto);
         menuProducto.add(menuItemBuscarProducto);
         menuProducto.add(menuItemModificarProdcuto);
+
+        menuCarrito.add(menuItemAnadirCarrito);
 
         setJMenuBar(menuBar);
         setContentPane(jDesktopPane);
@@ -38,10 +47,6 @@ public class Principal extends JFrame {
         setVisible(true);
         //mdi sistema de multiples documentos
 
-    }
-
-    public JMenu getMenuProducto() {
-        return menuProducto;
     }
 
     public JMenuItem getMenuItemAddProducto() {
@@ -63,4 +68,9 @@ public class Principal extends JFrame {
     public JMenuItem getMenuItemModificarProdcuto() {
         return menuItemModificarProdcuto;
     }
+
+    public JMenuItem getMenuItemAnadirCarrito() {
+        return menuItemAnadirCarrito;
+    }
+
 }
