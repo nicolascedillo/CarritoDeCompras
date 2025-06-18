@@ -141,11 +141,20 @@ public class ProductoController {
     }
 
     private void configurarEventosCarritoAnadir(){
+
         carritoAnadirView.getBuscarButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int codigo = Integer.parseInt(carritoAnadirView.getCodigoTextField().getText());
                 buscarProductoEnCarrito(codigo);
+            }
+        });
+
+        carritoAnadirView.getAnadirButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int codigo = Integer.parseInt(carritoAnadirView.getCodigoTextField().getText());
+                anadirProductoEnCarrito(codigo);
             }
         });
     }
@@ -194,5 +203,11 @@ public class ProductoController {
             carritoAnadirView.getNombreTextField().setText(productoEncontrado.getNombre());
             carritoAnadirView.getPrecioTextField().setText(String.valueOf(productoEncontrado.getPrecio()));
         }
+    }
+
+    private void anadirProductoEnCarrito(int codigo){
+        Producto productoEncontrado =  productoDAO.buscarPorCodigo(codigo);
+
+        carritoAnadirView.cargarDatos(productoEncontrado);
     }
 }

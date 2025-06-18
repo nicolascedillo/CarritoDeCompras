@@ -1,5 +1,6 @@
 package ec.edu.ups;
 
+import ec.edu.ups.controlador.CarritoController;
 import ec.edu.ups.controlador.ProductoController;
 import ec.edu.ups.dao.ProductoDAO;
 import ec.edu.ups.dao.impl.ProductoDAOMemoria;
@@ -30,6 +31,7 @@ public class Main {
                         productoListaView,productoDAO,productoEliminarView,
                         productoModificarView,carritoAnadirView);
 
+                CarritoController carritoController = new CarritoController(carritoAnadirView);
 
                 menuPrincipalView.getMenuItemAddProducto().addActionListener(new ActionListener() {
                     @Override

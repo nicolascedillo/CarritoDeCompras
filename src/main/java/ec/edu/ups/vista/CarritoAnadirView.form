@@ -134,6 +134,7 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <labelFor value="c3766"/>
               <text value="Subtotal:"/>
             </properties>
           </component>
@@ -153,7 +154,7 @@
               <text value="Total:"/>
             </properties>
           </component>
-          <component id="c3766" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+          <component id="c3766" class="javax.swing.JTextField" binding="subtotalTextField">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -161,9 +162,10 @@
             </constraints>
             <properties>
               <enabled value="false"/>
+              <text value="0.0"/>
             </properties>
           </component>
-          <component id="8f5c8" class="javax.swing.JTextField" binding="textField2" default-binding="true">
+          <component id="8f5c8" class="javax.swing.JTextField" binding="ivaTextField">
             <constraints>
               <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -171,9 +173,10 @@
             </constraints>
             <properties>
               <enabled value="false"/>
+              <text value="0.0"/>
             </properties>
           </component>
-          <component id="1b1b0" class="javax.swing.JTextField" binding="textField3" default-binding="true">
+          <component id="1b1b0" class="javax.swing.JTextField" binding="totalTextField">
             <constraints>
               <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -181,6 +184,7 @@
             </constraints>
             <properties>
               <enabled value="false"/>
+              <text value="0.0"/>
             </properties>
           </component>
         </children>

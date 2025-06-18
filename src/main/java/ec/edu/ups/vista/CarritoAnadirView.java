@@ -1,6 +1,12 @@
 package ec.edu.ups.vista;
 
+import ec.edu.ups.modelo.ItemCarrito;
+import ec.edu.ups.modelo.Producto;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CarritoAnadirView extends JInternalFrame{
     private JPanel panelPrincipal;
@@ -10,19 +16,26 @@ public class CarritoAnadirView extends JInternalFrame{
     private JButton buscarButton;
     private JButton anadirButton;
     private JTable table1;
-    private JTextField textField1;
-    private JTextField textField2;
-    private JTextField textField3;
+    private JTextField subtotalTextField;
+    private JTextField ivaTextField;
+    private JTextField totalTextField;
     private JButton guardarButton;
     private JButton cancelarButton;
     private JComboBox cantidadComboBox;
+    private List<ItemCarrito> itemsAniadidos;
+    private DefaultTableModel modelo;
 
     public  CarritoAnadirView() {
         super("Carrito Anadir",true,true,true,true);
         setContentPane(panelPrincipal);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setSize(400,700);
         cargarDatosComboBox();
+        itemsAniadidos = new ArrayList<>();
+        modelo = new DefaultTableModel();
+        Object[] columnas = {"Codigo", "Nombre", "Precio","Cantidad"};
+        modelo.setColumnIdentifiers(columnas);
+        table1.setModel(modelo);
     }
 
     private void cargarDatosComboBox(){
@@ -36,6 +49,30 @@ public class CarritoAnadirView extends JInternalFrame{
         JOptionPane.showMessageDialog(this, mensaje);
     }
 
+    public void cargarDatos(Producto producto) {
+
+        Object[] fila = {
+                producto.getCodigo(),
+                producto.getNombre(),
+                producto.getPrecio(),
+                cantidadComboBox.getSelectedItem()
+        };
+        modelo.addRow(fila);
+
+        double subtotal = Double.parseDouble(subtotalTextField.getText()) + producto.getPrecio();
+        subtotalTextField.setText(String.valueOf(subtotal));
+        double iva = subtotal * 0.14;
+        ivaTextField.setText(String.valueOf(iva));
+        double total = subtotal + iva;
+        totalTextField.setText(String.valueOf(total));
+
+    }
+
+    public void crearItems(){
+
+    }
+
+    //Getters y setters
     public JTextField getCodigoTextField() {
         return codigoTextField;
     }
@@ -84,28 +121,28 @@ public class CarritoAnadirView extends JInternalFrame{
         this.table1 = table1;
     }
 
-    public JTextField getTextField1() {
-        return textField1;
+    public JTextField getSubtotalTextField() {
+        return subtotalTextField;
     }
 
-    public void setTextField1(JTextField textField1) {
-        this.textField1 = textField1;
+    public void setSubtotalTextField(JTextField subtotalTextField) {
+        this.subtotalTextField = subtotalTextField;
     }
 
-    public JTextField getTextField2() {
-        return textField2;
+    public JTextField getIvaTextField() {
+        return ivaTextField;
     }
 
-    public void setTextField2(JTextField textField2) {
-        this.textField2 = textField2;
+    public void setIvaTextField(JTextField ivaTextField) {
+        this.ivaTextField = ivaTextField;
     }
 
-    public JTextField getTextField3() {
-        return textField3;
+    public JTextField getTotalTextField() {
+        return totalTextField;
     }
 
-    public void setTextField3(JTextField textField3) {
-        this.textField3 = textField3;
+    public void setTotalTextField(JTextField totalTextField) {
+        this.totalTextField = totalTextField;
     }
 
     public JButton getGuardarButton() {
@@ -122,5 +159,13 @@ public class CarritoAnadirView extends JInternalFrame{
 
     public void setCancelarButton(JButton cancelarButton) {
         this.cancelarButton = cancelarButton;
+    }
+
+    public DefaultTableModel getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(DefaultTableModel modelo) {
+        this.modelo = modelo;
     }
 }
