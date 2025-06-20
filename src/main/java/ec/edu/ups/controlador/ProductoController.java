@@ -150,13 +150,6 @@ public class ProductoController {
             }
         });
 
-        carritoAnadirView.getAnadirButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int codigo = Integer.parseInt(carritoAnadirView.getCodigoTextField().getText());
-                anadirProductoEnCarrito(codigo);
-            }
-        });
     }
 
     private void guardarProducto() {
@@ -205,9 +198,4 @@ public class ProductoController {
         }
     }
 
-    private void anadirProductoEnCarrito(int codigo){
-        Producto productoEncontrado =  productoDAO.buscarPorCodigo(codigo);
-
-        carritoAnadirView.cargarDatos(productoEncontrado);
-    }
 }

@@ -1,5 +1,6 @@
 package ec.edu.ups.modelo;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
@@ -26,8 +27,9 @@ public class Carrito {
         this.codigo = codigo;
     }
 
-    public GregorianCalendar getFechaCreacion() {
-        return fechaCreacion;
+    public String getFechaCreacion() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        return dateFormat.format(fechaCreacion.getTime());
     }
 
     public void setFechaCreacion(GregorianCalendar fechaCreacion) {
@@ -68,11 +70,28 @@ public class Carrito {
         return items.isEmpty();
     }
 
+    public double calcularSubtotal() {
+        double subtotal = 0;
+        for (ItemCarrito item : items) {
+            subtotal += item.getProducto().getPrecio() * item.getCantidad();
+        }
+        return subtotal;
+    }
+
+    public double calcularIva() {
+        return calcularSubtotal() * 0.14;
+    }
+
+    public double calcularTotalConIva() {
+        return calcularSubtotal() + calcularIva();
+    }
+
     @Override
     public String toString() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         return "Carrito{" +
                 "codigo=" + codigo +
-                ", fechaCreacion=" + fechaCreacion +
+                ", fechaCreacion=" + dateFormat.format(fechaCreacion.getTime()) +
                 ", items=" + items +
                 '}';
     }

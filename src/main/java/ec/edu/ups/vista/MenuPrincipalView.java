@@ -11,6 +11,7 @@ public class MenuPrincipalView extends JFrame {
     private JMenuItem menuItemBuscarProducto;
     private JMenuItem menuItemModificarProdcuto;
     private JMenuItem menuItemAnadirCarrito;
+    private JMenuItem menuItemEliminarCarrito;
     private JDesktopPane jDesktopPane;
 
     public MenuPrincipalView(){
@@ -26,6 +27,7 @@ public class MenuPrincipalView extends JFrame {
         menuItemModificarProdcuto = new JMenuItem("Modificar Producto");
 
         menuItemAnadirCarrito = new JMenuItem("Anadir Carrito");
+        menuItemEliminarCarrito = new JMenuItem("Eliminar Carrito");
 
         menuBar.add(menuProducto);
         menuBar.add(menuCarrito);
@@ -36,6 +38,7 @@ public class MenuPrincipalView extends JFrame {
         menuProducto.add(menuItemModificarProdcuto);
 
         menuCarrito.add(menuItemAnadirCarrito);
+        menuCarrito.add(menuItemEliminarCarrito);
 
         setJMenuBar(menuBar);
         setContentPane(jDesktopPane);
@@ -73,4 +76,7 @@ public class MenuPrincipalView extends JFrame {
         return menuItemAnadirCarrito;
     }
 
+    public JMenuItem getMenuItemEliminarCarrito() {
+        return menuItemEliminarCarrito;
+    }
 }
