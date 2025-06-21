@@ -9,6 +9,7 @@ import ec.edu.ups.dao.UsuarioDAO;
 import ec.edu.ups.dao.impl.CarritoDAOMemoria;
 import ec.edu.ups.dao.impl.ProductoDAOMemoria;
 import ec.edu.ups.dao.impl.UsuarioDAOMemoria;
+import ec.edu.ups.modelo.Rol;
 import ec.edu.ups.modelo.Usuario;
 import ec.edu.ups.vista.*;
 
@@ -30,10 +31,13 @@ public class Main {
                 UsuarioController usuarioController = new UsuarioController(usuarioDAO, logInView);
 
                 logInView.addWindowListener(new WindowAdapter() {
+
                     @Override
                     public void windowClosed(WindowEvent e) {
+
                         super.windowClosed(e);
                         Usuario usuarioAutenticado = usuarioController.getUsuarioAutenticado();
+
                         if(usuarioAutenticado != null){
                             // instanciamos DAO (Singleton)
                             ProductoDAO productoDAO = new ProductoDAOMemoria();
@@ -61,8 +65,13 @@ public class Main {
                             CarritoController carritoController = new CarritoController(productoDAO, carritoDAO,
                                     carritoAnadirView,carritoEliminarView);
 
+                            menuPrincipalView.mostrarMensaje("Bienvenido: " + usuarioAutenticado.getUsername());
+                            if (usuarioAutenticado.getRol().equals(Rol.USUARIO)) {
+                                menuPrincipalView.deshabilitarMenusAdministrador();
+                            }
+
                             // Configurar eventos de la vista del menu principal
-                            menuPrincipalView.getMenuItemAddProducto().addActionListener(new ActionListener() {
+                            menuPrincipalView.getMenuItemCrearProducto().addActionListener(new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent e){
                                     productoAnadirView.setVisible(true);
@@ -104,12 +113,17 @@ public class Main {
                                     carritoEliminarView.setVisible(true);
                                 }
                             });
+
                         }
+
                     }
+
                 });
 
             }
+
         });
+
     }
 
 }

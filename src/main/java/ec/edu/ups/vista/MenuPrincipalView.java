@@ -6,7 +6,7 @@ public class MenuPrincipalView extends JFrame {
     private JMenuBar menuBar;
     private JMenu menuProducto;
     private JMenu menuCarrito;
-    private JMenuItem menuItemAddProducto;
+    private JMenuItem menuItemCrearProducto;
     private JMenuItem menuItemEliminarProducto;
     private JMenuItem menuItemBuscarProducto;
     private JMenuItem menuItemModificarProdcuto;
@@ -21,7 +21,7 @@ public class MenuPrincipalView extends JFrame {
         menuProducto = new JMenu("Producto");
         menuCarrito = new JMenu("Carrito");
 
-        menuItemAddProducto = new JMenuItem("Add Producto");
+        menuItemCrearProducto = new JMenuItem("Add Producto");
         menuItemEliminarProducto = new JMenuItem("Eliminar Producto");
         menuItemBuscarProducto = new JMenuItem("Buscar Producto");
         menuItemModificarProdcuto = new JMenuItem("Modificar Producto");
@@ -32,7 +32,7 @@ public class MenuPrincipalView extends JFrame {
         menuBar.add(menuProducto);
         menuBar.add(menuCarrito);
 
-        menuProducto.add(menuItemAddProducto);
+        menuProducto.add(menuItemCrearProducto);
         menuProducto.add(menuItemEliminarProducto);
         menuProducto.add(menuItemBuscarProducto);
         menuProducto.add(menuItemModificarProdcuto);
@@ -52,8 +52,19 @@ public class MenuPrincipalView extends JFrame {
 
     }
 
-    public JMenuItem getMenuItemAddProducto() {
-        return menuItemAddProducto;
+    public void mostrarMensaje(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
+    public void deshabilitarMenusAdministrador() {
+        getMenuItemCrearProducto().setEnabled(false);
+        getMenuItemBuscarProducto().setEnabled(false);
+        getMenuItemModificarProdcuto().setEnabled(false);
+        getMenuItemEliminarProducto().setEnabled(false);
+    }
+
+    public JMenuItem getMenuItemCrearProducto() {
+        return menuItemCrearProducto;
     }
 
     public JMenuItem getMenuItemEliminarProducto() {
@@ -79,4 +90,5 @@ public class MenuPrincipalView extends JFrame {
     public JMenuItem getMenuItemEliminarCarrito() {
         return menuItemEliminarCarrito;
     }
+
 }
