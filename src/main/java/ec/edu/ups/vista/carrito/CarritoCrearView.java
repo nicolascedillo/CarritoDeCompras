@@ -1,14 +1,12 @@
-package ec.edu.ups.vista;
+package ec.edu.ups.vista.carrito;
 
-import ec.edu.ups.modelo.ItemCarrito;
+import ec.edu.ups.modelo.Carrito;
 import ec.edu.ups.modelo.Producto;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.util.ArrayList;
-import java.util.List;
 
-public class CarritoAnadirView extends JInternalFrame{
+public class CarritoCrearView extends JInternalFrame{
     private JPanel panelPrincipal;
     private JTextField codigoTextField;
     private JTextField nombreTextField;
@@ -23,17 +21,19 @@ public class CarritoAnadirView extends JInternalFrame{
     private JButton cancelarButton;
     private JComboBox cantidadComboBox;
     private DefaultTableModel modelo;
+    private Carrito carrito;
 
-    public  CarritoAnadirView() {
-        super("Carrito Anadir",true,true,true,true);
+    public CarritoCrearView() {
+        super("Crear Carrito",true,true,true,true);
         setContentPane(panelPrincipal);
-        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(400,700);
         cargarDatosComboBox();
         modelo = new DefaultTableModel();
-        Object[] columnas = {"Codigo", "Nombre", "Precio","Cantidad"};
+        Object[] columnas = {"Código", "Nombre", "Precio","Cantidad"};
         modelo.setColumnIdentifiers(columnas);
         table1.setModel(modelo);
+        carrito = new Carrito();
     }
 
     private void cargarDatosComboBox(){
@@ -56,6 +56,7 @@ public class CarritoAnadirView extends JInternalFrame{
                 cantidadComboBox.getSelectedItem()
         };
         modelo.addRow(fila);
+
         String cantidadSeleccionada = cantidadComboBox.getSelectedItem().toString();
         double subtotal = Double.parseDouble(subtotalTextField.getText()) + producto.getPrecio()*Integer.parseInt(cantidadSeleccionada);
         subtotalTextField.setText(String.valueOf(subtotal));
@@ -64,6 +65,17 @@ public class CarritoAnadirView extends JInternalFrame{
         double total = subtotal + iva;
         totalTextField.setText(String.valueOf(total));
 
+    }
+
+    public void limpiarCampos() {
+        codigoTextField.setText("");
+        nombreTextField.setText("");
+        precioTextField.setText("");
+        cantidadComboBox.setSelectedIndex(0);
+        subtotalTextField.setText("0.0");
+        ivaTextField.setText("0.0");
+        totalTextField.setText("0.0");
+        modelo.setRowCount(0);
     }
 
     //Getters y setters
@@ -169,5 +181,13 @@ public class CarritoAnadirView extends JInternalFrame{
 
     public void setCantidadComboBox(JComboBox cantidadComboBox) {
         this.cantidadComboBox = cantidadComboBox;
+    }
+
+    public Carrito getCarrito() {
+        return carrito;
+    }
+
+    public void setCarrito(Carrito carrito) {
+        this.carrito = carrito;
     }
 }

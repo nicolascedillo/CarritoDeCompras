@@ -9,12 +9,12 @@ import java.util.List;
 public class Carrito {
 
     private int codigo;
-
+    private static int contador = 1;
     private GregorianCalendar fechaCreacion;
-
     private List<ItemCarrito> items;
 
     public Carrito() {
+        codigo = contador++;
         items = new ArrayList<>();
         fechaCreacion = new GregorianCalendar();
     }
@@ -54,14 +54,6 @@ public class Carrito {
         items.clear();
     }
 
-    public double calcularTotal() {
-        double total = 0;
-        for (ItemCarrito item : items) {
-            total += item.getProducto().getPrecio() * item.getCantidad();
-        }
-        return total;
-    }
-
     public List<ItemCarrito> obtenerItems() {
         return items;
     }
@@ -82,9 +74,18 @@ public class Carrito {
         return calcularSubtotal() * 0.14;
     }
 
-    public double calcularTotalConIva() {
+    public double calcularTotal() {
         return calcularSubtotal() + calcularIva();
     }
+
+    public static int getContador() {
+        return contador;
+    }
+
+    public static void setContador(int contador) {
+        Carrito.contador = contador;
+    }
+
 
     @Override
     public String toString() {

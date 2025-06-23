@@ -16,6 +16,7 @@ public class UsuarioController {
         this.usuarioDAO = usuarioDAO;
         this.logInView = logInView;
         this.usuario = null;
+
         configurarEventosEnVista();
     }
 
@@ -41,7 +42,7 @@ public class UsuarioController {
 
         usuario = usuarioDAO.autenticar(username, password);
         if(usuario == null){
-            logInView.mostrarMensaje("Usuario o contraseña incorrectos9");
+            logInView.mostrarMensaje("Usuario o contraseña incorrectos");
         } else {
             logInView.dispose();
         }
@@ -51,14 +52,25 @@ public class UsuarioController {
         String username = logInView.getUsernameTextField().getText();
         String password = logInView.getContrasenaPasswordField().getText();
 
+        if (username.isEmpty() || password.isEmpty()) {
+            logInView.mostrarMensaje("Por favor, complete todos los campos.");
+            return;
+        }
+
         if (usuarioDAO.buscarPorUsername(username) != null) {
             logInView.mostrarMensaje("El usuario ya existe");
+            limpiarCampos();
             return;
         }
 
         usuario = new Usuario(username, password, Rol.USUARIO);
         usuarioDAO.crear(usuario);
         logInView.mostrarMensaje("Usuario registrado exitosamente");
+    }
+
+    private void limpiarCampos() {
+        logInView.getUsernameTextField().setText("");
+        logInView.getContrasenaPasswordField().setText("");
     }
 
     public Usuario getUsuarioAutenticado(){

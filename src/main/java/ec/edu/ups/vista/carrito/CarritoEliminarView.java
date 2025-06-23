@@ -1,4 +1,4 @@
-package ec.edu.ups.vista;
+package ec.edu.ups.vista.carrito;
 
 import ec.edu.ups.modelo.Carrito;
 import ec.edu.ups.modelo.ItemCarrito;
@@ -22,10 +22,10 @@ public class CarritoEliminarView extends JInternalFrame{
     public CarritoEliminarView() {
         super("Eliminar Carrito",true,true,true,true);
         setContentPane(panelPrincipal);
-        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(400,700);
         modelo = new DefaultTableModel();
-        Object[] columnas = {"Codigo", "Nombre", "Precio","Cantidad"};
+        Object[] columnas = {"Código", "Nombre", "Precio","Cantidad"};
         modelo.setColumnIdentifiers(columnas);
         table1.setModel(modelo);
     }
@@ -48,77 +48,50 @@ public class CarritoEliminarView extends JInternalFrame{
         }
     }
 
+    public void limpiarCampos() {
+        codigoTextField.setText("");
+        nombreTextField.setText("");
+        subtotalTextField.setText("0.0");
+        ivaTextField.setText("0.0");
+        totalTextField.setText("0.0");
+        modelo.setRowCount(0);
+    }
+
+    public void limpiarTabla() {
+        modelo.setRowCount(0);
+    }
+
     //Getters y Setters
     public JTextField getCodigoTextField() {
         return codigoTextField;
-    }
-
-    public void setCodigoTextField(JTextField codigoTextField) {
-        this.codigoTextField = codigoTextField;
     }
 
     public JTextField getNombreTextField() {
         return nombreTextField;
     }
 
-    public void setNombreTextField(JTextField nombreTextField) {
-        this.nombreTextField = nombreTextField;
-    }
-
     public JButton getBuscarButton() {
         return buscarButton;
-    }
-
-    public void setBuscarButton(JButton buscarButton) {
-        this.buscarButton = buscarButton;
-    }
-
-    public JTable getTable1() {
-        return table1;
-    }
-
-    public void setTable1(JTable table1) {
-        this.table1 = table1;
     }
 
     public JTextField getSubtotalTextField() {
         return subtotalTextField;
     }
 
-    public void setSubtotalTextField(JTextField subtotalTextField) {
-        this.subtotalTextField = subtotalTextField;
-    }
-
     public JTextField getIvaTextField() {
         return ivaTextField;
-    }
-
-    public void setIvaTextField(JTextField ivaTextField) {
-        this.ivaTextField = ivaTextField;
     }
 
     public JTextField getTotalTextField() {
         return totalTextField;
     }
 
-    public void setTotalTextField(JTextField totalTextField) {
-        this.totalTextField = totalTextField;
-    }
-
     public JButton getEliminarButton() {
         return eliminarButton;
     }
 
-    public void setEliminarButton(JButton eliminarButton) {
-        this.eliminarButton = eliminarButton;
-    }
-
     public JPanel getPanelPrincipal() {
         return panelPrincipal;
-    }
-
-    public void setPanelPrincipal(JPanel panelPrincipal) {
-        this.panelPrincipal = panelPrincipal;
     }
 
     public DefaultTableModel getModelo() {

@@ -1,6 +1,8 @@
 package ec.edu.ups.vista;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class LogInView extends JFrame {
     private JPanel panelPrincipal;
@@ -8,6 +10,7 @@ public class LogInView extends JFrame {
     private JPasswordField contrasenaPasswordField;
     private JButton iniciarSesionButton;
     private JButton registrarseButton;
+    private JButton salirButton;
 
     public LogInView() {
         setTitle("Iniciar Sesión");
@@ -16,6 +19,12 @@ public class LogInView extends JFrame {
         setSize(450, 250);
         setLocationRelativeTo(null);
         setResizable(false);
+        salirButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
     }
 
     public void mostrarMensaje(String mensaje) {
@@ -26,39 +35,24 @@ public class LogInView extends JFrame {
         return panelPrincipal;
     }
 
-    public void setPanelPrincipal(JPanel panelPrincipal) {
-        this.panelPrincipal = panelPrincipal;
-    }
-
     public JTextField getUsernameTextField() {
         return usernameTextField;
-    }
-
-    public void setUsernameTextField(JTextField usernameTextField) {
-        this.usernameTextField = usernameTextField;
     }
 
     public JPasswordField getContrasenaPasswordField() {
         return contrasenaPasswordField;
     }
 
-    public void setContrasenaPasswordField(JPasswordField contrasenaPasswordField) {
-        this.contrasenaPasswordField = contrasenaPasswordField;
-    }
-
     public JButton getIniciarSesionButton() {
         return iniciarSesionButton;
-    }
-
-    public void setIniciarSesionButton(JButton iniciarSesionButton) {
-        this.iniciarSesionButton = iniciarSesionButton;
     }
 
     public JButton getRegistrarseButton() {
         return registrarseButton;
     }
 
-    public void setRegistrarseButton(JButton registrarseButton) {
-        this.registrarseButton = registrarseButton;
+    public JButton getSalirButton() {
+        return salirButton;
     }
+
 }

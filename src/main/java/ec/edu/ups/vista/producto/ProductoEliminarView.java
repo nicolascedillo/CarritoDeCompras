@@ -1,4 +1,4 @@
-package ec.edu.ups.vista;
+package ec.edu.ups.vista.producto;
 
 import javax.swing.*;
 
@@ -19,11 +19,10 @@ public class ProductoEliminarView extends JInternalFrame {
         setContentPane(panelPrincipal);
         setTitle("Eliminar Producto");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(400,200);
+        setSize(450,200);
         setClosable(true);
         setIconifiable(true);
         setResizable(true);
-        setVisible(true);
         txtNombre.setEnabled(false);
         txtPrecio.setEnabled(false);
     }
