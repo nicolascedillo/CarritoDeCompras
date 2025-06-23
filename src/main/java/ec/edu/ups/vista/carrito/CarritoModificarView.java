@@ -19,7 +19,7 @@ public class CarritoModificarView extends JInternalFrame {
     private DefaultTableModel modelo;
 
     public CarritoModificarView() {
-        setTitle("Modificar Carrito");
+        super("Modificar Carrito", true, true, true, true);
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(400,700);
@@ -34,6 +34,7 @@ public class CarritoModificarView extends JInternalFrame {
     }
 
     public void cargarDatos(Carrito carrito) {
+        modelo.setRowCount(0);
 
         for(ItemCarrito itemCarrito: carrito.obtenerItems()){
             Producto producto = itemCarrito.getProducto();
@@ -42,7 +43,6 @@ public class CarritoModificarView extends JInternalFrame {
                     producto.getNombre(),
                     producto.getPrecio(),
                     itemCarrito.getCantidad(),
-
             };
             modelo.addRow(fila);
         }
@@ -58,6 +58,14 @@ public class CarritoModificarView extends JInternalFrame {
 
     public JButton getBuscarButton() {
         return buscarButton;
+    }
+
+    public JButton getEditarButton() {
+        return editarButton;
+    }
+
+    public JTable getTable1() {
+        return table1;
     }
 
     public JTextField getSubtotalTextField() {

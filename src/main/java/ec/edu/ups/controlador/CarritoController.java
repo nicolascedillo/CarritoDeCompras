@@ -3,6 +3,7 @@ package ec.edu.ups.controlador;
 import ec.edu.ups.dao.CarritoDAO;
 import ec.edu.ups.dao.ProductoDAO;
 import ec.edu.ups.modelo.Carrito;
+import ec.edu.ups.modelo.ItemCarrito;
 import ec.edu.ups.modelo.Producto;
 import ec.edu.ups.vista.carrito.CarritoCrearView;
 import ec.edu.ups.vista.carrito.CarritoEliminarView;
@@ -132,6 +133,34 @@ public class CarritoController {
                     carritoModificarView.getTotalTextField().setText(String.valueOf(carritoEncontrado.calcularTotal()));
                 } else {
                     carritoModificarView.mostrarMensaje("Carrito no encontrado");
+                }
+            }
+        });
+
+        carritoModificarView.getEditarButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(carritoModificarView.getTable1().getSelectedRow() != -1) {
+                    int nuevaCantidad = Integer.parseInt(JOptionPane.showInputDialog(carritoModificarView, "Ingrese la nueva cantidad:"));
+
+                    int codigoCarrito = Integer.parseInt(carritoModificarView.getCodigoTextField().getText());
+                    Carrito carritoEncontrado = carritoDao.buscarPorCodigo(codigoCarrito);
+
+                    for (ItemCarrito item: carritoEncontrado.obtenerItems()) {
+                        if (item.getProducto().getCodigo() == (Integer) carritoModificarView.getTable1().getValueAt(carritoModificarView.getTable1().getSelectedRow(), 0)) {
+                            item.setCantidad(nuevaCantidad);
+                        }
+                    }
+                    carritoDao.actualizar(carritoEncontrado);
+                    carritoModificarView.cargarDatos(carritoEncontrado);
+
+                    carritoModificarView.getSubtotalTextField().setText(String.valueOf(carritoEncontrado.calcularSubtotal()));
+                    carritoModificarView.getIvaTextField().setText(String.valueOf(carritoEncontrado.calcularIva()));
+                    carritoModificarView.getTotalTextField().setText(String.valueOf(carritoEncontrado.calcularTotal()));
+
+                } else {
+                    carritoModificarView.mostrarMensaje("Seleccione un Item para editar");
+
                 }
             }
         });
