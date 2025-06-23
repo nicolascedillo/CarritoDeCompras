@@ -1,6 +1,8 @@
 package ec.edu.ups.vista;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MenuPrincipalView extends JFrame {
     private JMenuBar menuBar;
@@ -19,6 +21,7 @@ public class MenuPrincipalView extends JFrame {
     private JMenuItem menuItemBuscarUsuario;
     private JMenuItem menuItemModificarUsuario;
     private JMenuItem menuItemEliminarUsuario;
+    private JButton btnCerrarSesion;
     private JDesktopPane jDesktopPane;
 
     public MenuPrincipalView(){
@@ -47,6 +50,10 @@ public class MenuPrincipalView extends JFrame {
         menuBar.add(menuProducto);
         menuBar.add(menuCarrito);
         menuBar.add(menuUsuario);
+
+        btnCerrarSesion = new JButton("Cerrar Sesión");
+        menuBar.add(Box.createHorizontalGlue());
+        menuBar.add(btnCerrarSesion);
 
         menuProducto.add(menuItemCrearProducto);
         menuProducto.add(menuItemEliminarProducto);
@@ -136,5 +143,9 @@ public class MenuPrincipalView extends JFrame {
 
     public JMenuItem getMenuItemEliminarUsuario() {
         return menuItemEliminarUsuario;
+    }
+
+    public JButton getBtnCerrarSesion() {
+        return btnCerrarSesion;
     }
 }

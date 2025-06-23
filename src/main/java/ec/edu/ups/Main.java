@@ -162,6 +162,18 @@ public class Main {
                                 }
                             });
 
+                            //USUARIO
+
+                            //CERRAR SESIÓN
+
+                            menuPrincipalView.getBtnCerrarSesion().addActionListener(new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    menuPrincipalView.dispose();
+                                    run();
+                                }
+                            });
+
                         }
 
                     }
