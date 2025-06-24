@@ -12,10 +12,7 @@ import ec.edu.ups.dao.impl.UsuarioDAOMemoria;
 import ec.edu.ups.modelo.Rol;
 import ec.edu.ups.modelo.Usuario;
 import ec.edu.ups.vista.*;
-import ec.edu.ups.vista.carrito.CarritoCrearView;
-import ec.edu.ups.vista.carrito.CarritoEliminarView;
-import ec.edu.ups.vista.carrito.CarritoListaView;
-import ec.edu.ups.vista.carrito.CarritoModificarView;
+import ec.edu.ups.vista.carrito.*;
 import ec.edu.ups.vista.producto.ProductoCrearView;
 import ec.edu.ups.vista.producto.ProductoEliminarView;
 import ec.edu.ups.vista.producto.ProductoListaView;
@@ -63,14 +60,17 @@ public class Main {
                             CarritoCrearView carritoCrearView = new CarritoCrearView();
                             CarritoEliminarView carritoEliminarView = new CarritoEliminarView();
                             CarritoListaView carritoListaView = new CarritoListaView();
+                            ItemListaView itemListaView = new ItemListaView();
                             CarritoModificarView carritoModificarView = new CarritoModificarView();
+                            menuPrincipalView.getjDesktopPane().add(itemListaView);
+
 
                             ProductoController productoController = new ProductoController(productoCrearView,
                                     productoListaView,productoDAO,productoEliminarView,
                                     productoModificarView, carritoCrearView);
 
                             CarritoController carritoController = new CarritoController(productoDAO, carritoDAO,
-                                    carritoCrearView,carritoEliminarView,carritoModificarView,carritoListaView);
+                                    carritoCrearView,carritoEliminarView,carritoModificarView,carritoListaView,itemListaView);
 
                             menuPrincipalView.mostrarMensaje("Bienvenido: " + usuarioAutenticado.getUsername());
                             if (usuarioAutenticado.getRol().equals(Rol.USUARIO)) {
@@ -122,7 +122,7 @@ public class Main {
 
                             //CARRITO
 
-                            menuPrincipalView.getMenuItemAnadirCarrito().addActionListener(new ActionListener() {
+                            menuPrincipalView.getMenuItemCrearCarrito().addActionListener(new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent e){
                                     if(!carritoCrearView.isVisible()){

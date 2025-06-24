@@ -5,10 +5,7 @@ import ec.edu.ups.dao.ProductoDAO;
 import ec.edu.ups.modelo.Carrito;
 import ec.edu.ups.modelo.ItemCarrito;
 import ec.edu.ups.modelo.Producto;
-import ec.edu.ups.vista.carrito.CarritoCrearView;
-import ec.edu.ups.vista.carrito.CarritoEliminarView;
-import ec.edu.ups.vista.carrito.CarritoListaView;
-import ec.edu.ups.vista.carrito.CarritoModificarView;
+import ec.edu.ups.vista.carrito.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -22,17 +19,20 @@ public class CarritoController {
     private final CarritoEliminarView carritoEliminarView;
     private final CarritoModificarView carritoModificarView;
     private final CarritoListaView carritoListaView;
+    private final ItemListaView itemListaView;
 
-    public CarritoController(ProductoDAO productoDAO, CarritoDAO carritoDao, CarritoCrearView carritoCrearView, CarritoEliminarView carritoEliminarView, CarritoModificarView carritoModificarView, CarritoListaView carritoListaView) {
+    public CarritoController(ProductoDAO productoDAO, CarritoDAO carritoDao, CarritoCrearView carritoCrearView, CarritoEliminarView carritoEliminarView, CarritoModificarView carritoModificarView, CarritoListaView carritoListaView,ItemListaView itemListaView) {
         this.carritoDao = carritoDao;
         this.carritoCrearView = carritoCrearView;
         this.productoDao = productoDAO;
         this.carritoEliminarView = carritoEliminarView;
         this.carritoModificarView = carritoModificarView;
         this.carritoListaView = carritoListaView;
+        this.itemListaView = itemListaView;
         configurarEventosAnadir();
         configurarEventosEliminar();
         configurarEventosModificar();
+        configurarEventosListar();
     }
 
 
@@ -166,6 +166,53 @@ public class CarritoController {
         });
 
 
+    }
+
+    private void configurarEventosListar() {
+        carritoListaView.getListarButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carritoListaView.limpiarCampos();
+                if(!carritoDao.listarTodos().isEmpty()){
+                    carritoListaView.cargarDatosLista(carritoDao.listarTodos());
+                } else {
+                    carritoListaView.mostrarMensaje("No hay carritos registrados");
+                }
+            }
+        });
+
+        carritoListaView.getBuscarButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(carritoListaView.getCodigoTextField().getText().isEmpty()) {
+                    carritoListaView.mostrarMensaje("Ingrese un código para buscar");
+                    return;
+                }
+                int codigo = Integer.parseInt(carritoListaView.getCodigoTextField().getText());
+                Carrito carritoEncontrado = carritoDao.buscarPorCodigo(codigo);
+                if (carritoEncontrado != null) {
+                    carritoListaView.cargarDatosBusqueda(carritoDao.buscarPorCodigo(codigo));
+                } else {
+                    carritoListaView.mostrarMensaje("Carrito no encontrado");
+                }
+            }
+        });
+
+        carritoListaView.getVerDetallesButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (carritoListaView.getTable1().getSelectedRow() != -1) {
+                    int codigoCarrito = (Integer) carritoListaView.getTable1().getValueAt(carritoListaView.getTable1().getSelectedRow(), 0);
+                    Carrito carritoEncontrado = carritoDao.buscarPorCodigo(codigoCarrito);
+                    itemListaView.cargarDatos(carritoEncontrado);
+                    if(!itemListaView.isVisible()){
+                        itemListaView.setVisible(true);
+                    }
+                } else {
+                    carritoListaView.mostrarMensaje("Seleccione un Carrito para ver detalles");
+                }
+            }
+        });
     }
 
     private void anadirProductoEnCarrito(int codigo){

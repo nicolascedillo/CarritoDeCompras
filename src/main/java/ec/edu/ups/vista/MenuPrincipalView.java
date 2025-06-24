@@ -1,8 +1,6 @@
 package ec.edu.ups.vista;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class MenuPrincipalView extends JFrame {
     private JMenuBar menuBar;
@@ -13,7 +11,7 @@ public class MenuPrincipalView extends JFrame {
     private JMenuItem menuItemEliminarProducto;
     private JMenuItem menuItemBuscarProducto;
     private JMenuItem menuItemModificarProdcuto;
-    private JMenuItem menuItemAnadirCarrito;
+    private JMenuItem menuItemCrearCarrito;
     private JMenuItem menuItemEliminarCarrito;
     private JMenuItem menuItemListaCarrito;
     private JMenuItem menuItemModificarCarrito;
@@ -37,7 +35,7 @@ public class MenuPrincipalView extends JFrame {
         menuItemModificarProdcuto = new JMenuItem("Modificar Producto");
         menuItemEliminarProducto = new JMenuItem("Eliminar Producto");
 
-        menuItemAnadirCarrito = new JMenuItem("Crear Carrito");
+        menuItemCrearCarrito = new JMenuItem("Crear Carrito");
         menuItemListaCarrito = new JMenuItem("Buscar Carrito");
         menuItemModificarCarrito = new JMenuItem("Modificar Carrito");
         menuItemEliminarCarrito = new JMenuItem("Eliminar Carrito");
@@ -60,7 +58,7 @@ public class MenuPrincipalView extends JFrame {
         menuProducto.add(menuItemBuscarProducto);
         menuProducto.add(menuItemModificarProdcuto);
 
-        menuCarrito.add(menuItemAnadirCarrito);
+        menuCarrito.add(menuItemCrearCarrito);
         menuCarrito.add(menuItemEliminarCarrito);
         menuCarrito.add(menuItemListaCarrito);
         menuCarrito.add(menuItemModificarCarrito);
@@ -91,6 +89,9 @@ public class MenuPrincipalView extends JFrame {
         getMenuItemBuscarProducto().setEnabled(false);
         getMenuItemModificarProdcuto().setEnabled(false);
         getMenuItemEliminarProducto().setEnabled(false);
+        getMenuItemListaCarrito().setEnabled(false);
+        getMenuItemCrearUsuario().setEnabled(false);
+        getMenuItemBuscarUsuario().setEnabled(false);
     }
 
     public JMenuItem getMenuItemCrearProducto() {
@@ -113,8 +114,8 @@ public class MenuPrincipalView extends JFrame {
         return menuItemModificarProdcuto;
     }
 
-    public JMenuItem getMenuItemAnadirCarrito() {
-        return menuItemAnadirCarrito;
+    public JMenuItem getMenuItemCrearCarrito() {
+        return menuItemCrearCarrito;
     }
 
     public JMenuItem getMenuItemEliminarCarrito() {
