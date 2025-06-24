@@ -217,12 +217,33 @@ public class CarritoController {
 
     private void anadirProductoEnCarrito(int codigo){
         Producto productoEncontrado =  productoDao.buscarPorCodigo(codigo);
-        int cantidad = (Integer) carritoCrearView.getCantidadComboBox().getSelectedItem();
-        carritoCrearView.cargarDatos(productoEncontrado);
-        carritoCrearView.getCarrito().agregarProducto(productoEncontrado, cantidad);
+        if(!verificarProductoEnCarrito(productoEncontrado)){
+            int cantidad = (Integer) carritoCrearView.getCantidadComboBox().getSelectedItem();
+            carritoCrearView.getCarrito().agregarProducto(productoEncontrado, cantidad);
+            carritoCrearView.cargarDatos(carritoCrearView.getCarrito());
+        }else{
+            for (ItemCarrito item : carritoCrearView.getCarrito().obtenerItems()) {
+                if (item.getProducto().getCodigo() == productoEncontrado.getCodigo()) {
+                    item.setCantidad(item.getCantidad() + (Integer) carritoCrearView.getCantidadComboBox().getSelectedItem());
+                }
+            }
+            carritoCrearView.cargarDatos(carritoCrearView.getCarrito());
+            carritoCrearView.mostrarMensaje("Producto ya está en el carrito, cantidad actualizada.");
+        }
         carritoCrearView.getSubtotalTextField().setText(String.valueOf(carritoCrearView.getCarrito().calcularSubtotal()));
         carritoCrearView.getIvaTextField().setText(String.valueOf(carritoCrearView.getCarrito().calcularIva()));
         carritoCrearView.getTotalTextField().setText(String.valueOf(carritoCrearView.getCarrito().calcularTotal()));
+
+    }
+
+    private boolean verificarProductoEnCarrito(Producto producto) {
+        for (ItemCarrito item : carritoCrearView.getCarrito().obtenerItems()) {
+            if (item.getProducto().getCodigo() == producto.getCodigo()) {
+                return true;
+            }
+        }
+        return false;
+
     }
 
 }

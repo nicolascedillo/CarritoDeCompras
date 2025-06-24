@@ -1,6 +1,7 @@
 package ec.edu.ups.vista.carrito;
 
 import ec.edu.ups.modelo.Carrito;
+import ec.edu.ups.modelo.ItemCarrito;
 import ec.edu.ups.modelo.Producto;
 
 import javax.swing.*;
@@ -47,23 +48,17 @@ public class CarritoCrearView extends JInternalFrame{
         JOptionPane.showMessageDialog(this, mensaje);
     }
 
-    public void cargarDatos(Producto producto) {
-
-        Object[] fila = {
-                producto.getCodigo(),
-                producto.getNombre(),
-                producto.getPrecio(),
-                cantidadComboBox.getSelectedItem()
-        };
-        modelo.addRow(fila);
-
-        String cantidadSeleccionada = cantidadComboBox.getSelectedItem().toString();
-        double subtotal = Double.parseDouble(subtotalTextField.getText()) + producto.getPrecio()*Integer.parseInt(cantidadSeleccionada);
-        subtotalTextField.setText(String.valueOf(subtotal));
-        double iva = subtotal * 0.14;
-        ivaTextField.setText(String.valueOf(iva));
-        double total = subtotal + iva;
-        totalTextField.setText(String.valueOf(total));
+    public void cargarDatos(Carrito carrito) {
+        modelo.setRowCount(0);
+        for(ItemCarrito item : carrito.obtenerItems()) {
+            Object[] fila = {
+                item.getProducto().getCodigo(),
+                item.getProducto().getNombre(),
+                item.getProducto().getPrecio(),
+                item.getCantidad()
+            };
+            modelo.addRow(fila);
+        }
 
     }
 
