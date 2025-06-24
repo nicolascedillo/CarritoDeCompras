@@ -2,6 +2,7 @@ package ec.edu.ups;
 
 import ec.edu.ups.controlador.CarritoController;
 import ec.edu.ups.controlador.ProductoController;
+import ec.edu.ups.controlador.LogInController;
 import ec.edu.ups.controlador.UsuarioController;
 import ec.edu.ups.dao.CarritoDAO;
 import ec.edu.ups.dao.ProductoDAO;
@@ -17,6 +18,10 @@ import ec.edu.ups.vista.producto.ProductoCrearView;
 import ec.edu.ups.vista.producto.ProductoEliminarView;
 import ec.edu.ups.vista.producto.ProductoListaView;
 import ec.edu.ups.vista.producto.ProductoModificarView;
+import ec.edu.ups.vista.usuario.UsuarioCrearView;
+import ec.edu.ups.vista.usuario.UsuarioEliminarView;
+import ec.edu.ups.vista.usuario.UsuarioListarView;
+import ec.edu.ups.vista.usuario.UsuarioModificarView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,14 +30,16 @@ import java.awt.event.WindowEvent;
 
 public class Main {
     public static void main(String[] args) {
+
+        UsuarioDAO usuarioDAO = new UsuarioDAOMemoria();
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
 
-                UsuarioDAO usuarioDAO = new UsuarioDAOMemoria();
                 LogInView logInView = new LogInView();
                 logInView.setVisible(true);
 
-                UsuarioController usuarioController = new UsuarioController(usuarioDAO, logInView);
+                LogInController logInController = new LogInController(usuarioDAO, logInView);
 
                 logInView.addWindowListener(new WindowAdapter() {
 
@@ -40,7 +47,7 @@ public class Main {
                     public void windowClosed(WindowEvent e) {
 
                         super.windowClosed(e);
-                        Usuario usuarioAutenticado = usuarioController.getUsuarioAutenticado();
+                        Usuario usuarioAutenticado = logInController.getUsuarioAutenticado();
 
                         if(usuarioAutenticado != null){
 
@@ -65,12 +72,22 @@ public class Main {
                             menuPrincipalView.getjDesktopPane().add(itemListaView);
 
 
+                            //Instancias vistas del usuario
+                            UsuarioCrearView usuarioCrearView = new UsuarioCrearView();
+                            UsuarioEliminarView usuarioEliminarView = new UsuarioEliminarView();
+                            UsuarioListarView usuarioListarView = new UsuarioListarView();
+                            UsuarioModificarView usuarioModificarView = new UsuarioModificarView();
+
+                            // Instanciar controladores
                             ProductoController productoController = new ProductoController(productoCrearView,
                                     productoListaView,productoDAO,productoEliminarView,
                                     productoModificarView, carritoCrearView);
 
                             CarritoController carritoController = new CarritoController(productoDAO, carritoDAO,
                                     carritoCrearView,carritoEliminarView,carritoModificarView,carritoListaView,itemListaView);
+
+                            UsuarioController usuarioController = new UsuarioController(usuarioDAO,usuarioCrearView,
+                                    usuarioEliminarView, usuarioListarView, usuarioModificarView);
 
                             menuPrincipalView.mostrarMensaje("Bienvenido: " + usuarioAutenticado.getUsername());
                             if (usuarioAutenticado.getRol().equals(Rol.USUARIO)) {
@@ -164,13 +181,60 @@ public class Main {
 
                             //USUARIO
 
-                            //CERRAR SESIÓN
+                            menuPrincipalView.getMenuItemCrearUsuario().addActionListener(new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e){
+                                    if(!usuarioCrearView.isVisible()){
+                                        usuarioCrearView.setVisible(true);
+                                        menuPrincipalView.getjDesktopPane().add(usuarioCrearView);
+                                    }
+                                }
+                            });
 
-                            menuPrincipalView.getBtnCerrarSesion().addActionListener(new ActionListener() {
+                            menuPrincipalView.getMenuItemEliminarUsuario().addActionListener(new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e){
+                                    if(!usuarioEliminarView.isVisible()){
+                                        usuarioEliminarView.setVisible(true);
+                                        menuPrincipalView.getjDesktopPane().add(usuarioEliminarView);
+                                    }
+                                }
+                            });
+
+                            menuPrincipalView.getMenuItemBuscarUsuario().addActionListener(new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e){
+                                    if(!usuarioListarView.isVisible()){
+                                        usuarioListarView.setVisible(true);
+                                        menuPrincipalView.getjDesktopPane().add(usuarioListarView);
+                                    }
+                                }
+                            });
+
+                            menuPrincipalView.getMenuItemModificarUsuario().addActionListener(new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e){
+                                    if(!usuarioModificarView.isVisible()){
+                                        usuarioModificarView.setVisible(true);
+                                        menuPrincipalView.getjDesktopPane().add(usuarioModificarView);
+                                    }
+                                }
+                            });
+
+                            //SALIR
+
+                            menuPrincipalView.getMenuItemCerrarSesion().addActionListener(new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
                                     menuPrincipalView.dispose();
                                     run();
+                                }
+                            });
+
+                            menuPrincipalView.getMenuItemSalir().addActionListener(new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    System.exit(0);
                                 }
                             });
 

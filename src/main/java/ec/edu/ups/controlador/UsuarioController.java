@@ -3,77 +3,170 @@ package ec.edu.ups.controlador;
 import ec.edu.ups.dao.UsuarioDAO;
 import ec.edu.ups.modelo.Rol;
 import ec.edu.ups.modelo.Usuario;
-import ec.edu.ups.vista.LogInView;
+import ec.edu.ups.vista.usuario.UsuarioCrearView;
+import ec.edu.ups.vista.usuario.UsuarioEliminarView;
+import ec.edu.ups.vista.usuario.UsuarioListarView;
+import ec.edu.ups.vista.usuario.UsuarioModificarView;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class UsuarioController {
-    private Usuario usuario;
     private final UsuarioDAO usuarioDAO;
-    private final LogInView logInView;
+    private final UsuarioCrearView usuarioCrearView;
+    private final UsuarioEliminarView usuarioEliminarView;
+    private final UsuarioListarView usuarioListarView;
+    private final UsuarioModificarView usuarioModificarView;
 
-    public UsuarioController(UsuarioDAO usuarioDAO, LogInView logInView) {
+    public UsuarioController(UsuarioDAO usuarioDAO,UsuarioCrearView usuarioCrearView, UsuarioEliminarView usuarioEliminarView, UsuarioListarView usuarioListarView, UsuarioModificarView usuarioModificarView) {
         this.usuarioDAO = usuarioDAO;
-        this.logInView = logInView;
-        this.usuario = null;
+        this.usuarioCrearView = usuarioCrearView;
+        this.usuarioEliminarView = usuarioEliminarView;
+        this.usuarioListarView = usuarioListarView;
+        this.usuarioModificarView = usuarioModificarView;
 
-        configurarEventosEnVista();
+        configurarEventosUsuarioCrear();
+        configurarEventosUsuarioEliminar();
+        configurarEventosUsuarioListar();
+        configurarEventosUsuarioModificar();
     }
 
-    private void configurarEventosEnVista(){
-        logInView.getIniciarSesionButton().addActionListener(new ActionListener() {
+    public void configurarEventosUsuarioCrear() {
+        usuarioCrearView.getCrearButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                autenticar();
+                String username = usuarioCrearView.getUsernameTextField().getText();
+                String password = usuarioCrearView.getContraseñaPasswordField().getText();
+                Rol rol = Rol.USUARIO;
+
+                if (username.isEmpty() || password.isEmpty()) {
+                    usuarioCrearView.mostrarMensaje("Por favor, complete todos los campos.");
+                    return;
+                }
+
+                if (usuarioDAO.buscarPorUsername(username) != null) {
+                    usuarioCrearView.mostrarMensaje("El usuario ya existe");
+                    return;
+                }
+
+                Usuario nuevoUsuario = new Usuario(username, password, rol);
+                usuarioDAO.crear(nuevoUsuario);
+                System.out.println("Usuario creado: " + usuarioDAO.listarTodos());
+                usuarioCrearView.mostrarMensaje("Usuario creado exitosamente");
+                usuarioCrearView.limpiarCampos();
             }
         });
 
-        logInView.getRegistrarseButton().addActionListener(new ActionListener() {
+        usuarioCrearView.getSalirButton().addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                registrarse();
+            public void actionPerformed(ActionEvent e) {
+                usuarioCrearView.dispose();
             }
         });
     }
 
-    private void autenticar(){
-        String username = logInView.getUsernameTextField().getText();
-        String password = logInView.getContrasenaPasswordField().getText();
+    public void configurarEventosUsuarioEliminar() {
+        usuarioEliminarView.getBuscarButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                String username = usuarioEliminarView.getUsernameTextField().getText();
+                Usuario usuario = usuarioDAO.buscarPorUsername(username);
+                if (usuario != null) {
+                    usuarioEliminarView.getContrasenaTextField().setText(usuario.getPassword());
+                } else {
+                    usuarioEliminarView.mostrarMensaje("Usuario no encontrado");
+                }
+            }
+        });
 
-        usuario = usuarioDAO.autenticar(username, password);
-        if(usuario == null){
-            logInView.mostrarMensaje("Usuario o contraseña incorrectos");
-        } else {
-            logInView.dispose();
-        }
+        usuarioEliminarView.getEliminarButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String username = usuarioEliminarView.getUsernameTextField().getText();
+                Usuario usuario = usuarioDAO.buscarPorUsername(username);
+                if (usuario != null) {
+                    usuarioDAO.eliminar(usuario.getUsername());
+                    usuarioEliminarView.mostrarMensaje("Usuario eliminado exitosamente");
+                    usuarioEliminarView.limpiarCampos();
+                } else {
+                    usuarioEliminarView.mostrarMensaje("Usuario no encontrado");
+                }
+            }
+        });
+
+        usuarioEliminarView.getSalirButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                usuarioEliminarView.dispose();
+            }
+        });
     }
 
-    private void registrarse() {
-        String username = logInView.getUsernameTextField().getText();
-        String password = logInView.getContrasenaPasswordField().getText();
+    public void configurarEventosUsuarioListar() {
+        usuarioListarView.getBuscarButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String username = usuarioListarView.getNombreTextField().getText();
+                Usuario usuario = usuarioDAO.buscarPorUsername(username);
+                if (usuario != null) {
+                    usuarioListarView.cargarDatosBusqueda(usuario);
+                } else {
+                    usuarioListarView.mostrarMensaje("Usuario no encontrado");
+                }
+            }
+        });
 
-        if (username.isEmpty() || password.isEmpty()) {
-            logInView.mostrarMensaje("Por favor, complete todos los campos.");
-            return;
-        }
+        usuarioListarView.getLisarButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                usuarioListarView.cargarDatosListar(usuarioDAO.listarTodos());
+            }
+        });
 
-        if (usuarioDAO.buscarPorUsername(username) != null) {
-            logInView.mostrarMensaje("El usuario ya existe");
-            limpiarCampos();
-            return;
-        }
-
-        usuario = new Usuario(username, password, Rol.USUARIO);
-        usuarioDAO.crear(usuario);
-        logInView.mostrarMensaje("Usuario registrado exitosamente");
+        usuarioListarView.getSalirButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                usuarioListarView.dispose();
+            }
+        });
     }
 
-    private void limpiarCampos() {
-        logInView.getUsernameTextField().setText("");
-        logInView.getContrasenaPasswordField().setText("");
-    }
+    public void configurarEventosUsuarioModificar() {
+        usuarioModificarView.getBuscarButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String username = usuarioModificarView.getUsernameTextField().getText();
+                Usuario usuario = usuarioDAO.buscarPorUsername(username);
+                if (usuario != null) {
+                    usuarioModificarView.getContrasenaTextField().setText(usuario.getPassword());
+                } else {
+                    usuarioModificarView.mostrarMensaje("Usuario no encontrado");
+                }
+            }
+        });
 
-    public Usuario getUsuarioAutenticado(){
-        return usuario;
+        usuarioModificarView.getModificarButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String username = usuarioModificarView.getUsernameTextField().getText();
+                String password = usuarioModificarView.getContrasenaTextField().getText();
+                Usuario usuario = usuarioDAO.buscarPorUsername(username);
+                if (usuario != null) {
+                    usuario.setPassword(password);
+                    usuarioDAO.actualizar(usuario);
+                    usuarioModificarView.mostrarMensaje("Usuario modificado exitosamente");
+                    usuarioModificarView.limpiarCampos();
+                } else {
+                    usuarioModificarView.mostrarMensaje("Usuario no encontrado");
+                }
+            }
+        });
+
+        usuarioModificarView.getSalirButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                usuarioModificarView.dispose();
+            }
+        });
     }
 }

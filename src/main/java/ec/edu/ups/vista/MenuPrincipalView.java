@@ -7,6 +7,8 @@ public class MenuPrincipalView extends JFrame {
     private JMenu menuProducto;
     private JMenu menuCarrito;
     private JMenu menuUsuario;
+    private JMenu menuIdioma;
+    private JMenu menuSalir;
     private JMenuItem menuItemCrearProducto;
     private JMenuItem menuItemEliminarProducto;
     private JMenuItem menuItemBuscarProducto;
@@ -19,7 +21,11 @@ public class MenuPrincipalView extends JFrame {
     private JMenuItem menuItemBuscarUsuario;
     private JMenuItem menuItemModificarUsuario;
     private JMenuItem menuItemEliminarUsuario;
-    private JButton btnCerrarSesion;
+    private JMenuItem menuItemEspanol;
+    private JMenuItem menuItemIngles;
+    private JMenuItem menuItemFrances;
+    private JMenuItem menuItemCerrarSesion;
+    private JMenuItem menuItemSalir;
     private JDesktopPane jDesktopPane;
 
     public MenuPrincipalView(){
@@ -29,6 +35,8 @@ public class MenuPrincipalView extends JFrame {
         menuProducto = new JMenu("Producto");
         menuCarrito = new JMenu("Carrito");
         menuUsuario = new JMenu("Usuario");
+        menuIdioma = new JMenu("Idioma");
+        menuSalir = new JMenu("Salir");
 
         menuItemCrearProducto = new JMenuItem("Crear Producto");
         menuItemBuscarProducto = new JMenuItem("Buscar Producto");
@@ -45,13 +53,18 @@ public class MenuPrincipalView extends JFrame {
         menuItemModificarUsuario = new JMenuItem("Modificar Usuario");
         menuItemEliminarUsuario = new JMenuItem("Eliminar Usuario");
 
+        menuItemEspanol = new JMenuItem("Español");
+        menuItemIngles = new JMenuItem("Inglés");
+        menuItemFrances = new JMenuItem("Francés");
+
+        menuItemCerrarSesion = new JMenuItem("Cerrar Sesión");
+        menuItemSalir = new JMenuItem("Salir");
+
         menuBar.add(menuProducto);
         menuBar.add(menuCarrito);
         menuBar.add(menuUsuario);
-
-        btnCerrarSesion = new JButton("Cerrar Sesión");
-        menuBar.add(Box.createHorizontalGlue());
-        menuBar.add(btnCerrarSesion);
+        menuBar.add(menuIdioma);
+        menuBar.add(menuSalir);
 
         menuProducto.add(menuItemCrearProducto);
         menuProducto.add(menuItemEliminarProducto);
@@ -67,6 +80,13 @@ public class MenuPrincipalView extends JFrame {
         menuUsuario.add(menuItemBuscarUsuario);
         menuUsuario.add(menuItemModificarUsuario);
         menuUsuario.add(menuItemEliminarUsuario);
+
+        menuIdioma.add(menuItemEspanol);
+        menuIdioma.add(menuItemIngles);
+        menuIdioma.add(menuItemFrances);
+
+        menuSalir.add(menuItemCerrarSesion);
+        menuSalir.add(menuItemSalir);
 
         setJMenuBar(menuBar);
         setContentPane(jDesktopPane);
@@ -146,7 +166,23 @@ public class MenuPrincipalView extends JFrame {
         return menuItemEliminarUsuario;
     }
 
-    public JButton getBtnCerrarSesion() {
-        return btnCerrarSesion;
+    public JMenuItem getMenuItemEspanol() {
+        return menuItemEspanol;
+    }
+
+    public JMenuItem getMenuItemIngles() {
+        return menuItemIngles;
+    }
+
+    public JMenuItem getMenuItemFrances() {
+        return menuItemFrances;
+    }
+
+    public JMenuItem getMenuItemCerrarSesion() {
+        return menuItemCerrarSesion;
+    }
+
+    public JMenuItem getMenuItemSalir() {
+        return menuItemSalir;
     }
 }
