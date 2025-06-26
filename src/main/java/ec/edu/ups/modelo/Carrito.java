@@ -12,11 +12,13 @@ public class Carrito {
     private static int contador = 1;
     private GregorianCalendar fechaCreacion;
     private List<ItemCarrito> items;
+    private Usuario usuario;
 
-    public Carrito() {
+    public Carrito(Usuario usuario) {
         codigo = contador++;
         items = new ArrayList<>();
         fechaCreacion = new GregorianCalendar();
+        this.usuario = usuario;
     }
 
     public int getCodigo() {
@@ -84,6 +86,14 @@ public class Carrito {
 
     public static void setContador(int contador) {
         Carrito.contador = contador;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
 

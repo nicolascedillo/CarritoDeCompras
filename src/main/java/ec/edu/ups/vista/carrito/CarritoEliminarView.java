@@ -17,6 +17,7 @@ public class CarritoEliminarView extends JInternalFrame{
     private JTextField totalTextField;
     private JButton eliminarButton;
     private JPanel panelPrincipal;
+    private JTextField usuarioTextField;
     private DefaultTableModel modelo;
 
     public CarritoEliminarView() {
@@ -96,6 +97,10 @@ public class CarritoEliminarView extends JInternalFrame{
 
     public DefaultTableModel getModelo() {
         return modelo;
+    }
+
+    public JTextField getUsuarioTextField() {
+        return usuarioTextField;
     }
 
     public void setModelo(DefaultTableModel modelo) {

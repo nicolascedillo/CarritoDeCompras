@@ -16,6 +16,7 @@ public class CarritoModificarView extends JInternalFrame {
     private JTextField ivaTextField;
     private JTextField totalTextField;
     private JButton editarButton;
+    private JTextField textField1;
     private DefaultTableModel modelo;
 
     public CarritoModificarView() {

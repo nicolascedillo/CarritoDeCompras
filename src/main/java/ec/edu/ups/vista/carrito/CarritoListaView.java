@@ -37,7 +37,7 @@ public class CarritoListaView extends JInternalFrame {
             Object[] fila = {
                 carrito.getCodigo(),
                 carrito.getFechaCreacion(),
-                "",
+                carrito.getUsuario().getUsername(),
                 carrito.calcularSubtotal(),
                 carrito.calcularIva(),
                 carrito.calcularTotal()
@@ -51,7 +51,7 @@ public class CarritoListaView extends JInternalFrame {
         Object[] fila = {
                 carrito.getCodigo(),
                 carrito.getFechaCreacion(),
-                "",
+                carrito.getUsuario().getUsername(),
                 carrito.calcularSubtotal(),
                 carrito.calcularIva(),
                 carrito.calcularTotal()

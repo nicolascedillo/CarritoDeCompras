@@ -32,6 +32,8 @@ public class Main {
     public static void main(String[] args) {
 
         UsuarioDAO usuarioDAO = new UsuarioDAOMemoria();
+        ProductoDAO productoDAO = new ProductoDAOMemoria();
+        CarritoDAO carritoDAO = new CarritoDAOMemoria();
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -51,9 +53,6 @@ public class Main {
 
                         if(usuarioAutenticado != null){
 
-                            // instanciamos DAO (Singleton)
-                            ProductoDAO productoDAO = new ProductoDAOMemoria();
-                            CarritoDAO carritoDAO = new CarritoDAOMemoria();
 
                             MenuPrincipalView menuPrincipalView = new MenuPrincipalView();
 
@@ -64,7 +63,7 @@ public class Main {
                             ProductoEliminarView productoEliminarView = new ProductoEliminarView();
 
                             //Instancias vistas del carrito
-                            CarritoCrearView carritoCrearView = new CarritoCrearView();
+                            CarritoCrearView carritoCrearView = new CarritoCrearView(usuarioAutenticado);
                             CarritoEliminarView carritoEliminarView = new CarritoEliminarView();
                             CarritoListaView carritoListaView = new CarritoListaView();
                             ItemListaView itemListaView = new ItemListaView();

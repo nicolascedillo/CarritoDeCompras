@@ -3,6 +3,7 @@ package ec.edu.ups.vista.carrito;
 import ec.edu.ups.modelo.Carrito;
 import ec.edu.ups.modelo.ItemCarrito;
 import ec.edu.ups.modelo.Producto;
+import ec.edu.ups.modelo.Usuario;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -23,9 +24,11 @@ public class CarritoCrearView extends JInternalFrame{
     private JComboBox cantidadComboBox;
     private DefaultTableModel modelo;
     private Carrito carrito;
+    private Usuario usuario;
 
-    public CarritoCrearView() {
+    public CarritoCrearView(Usuario usuario) {
         super("Crear Carrito",true,true,true,true);
+        this.usuario = usuario;
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(400,700);
@@ -34,7 +37,7 @@ public class CarritoCrearView extends JInternalFrame{
         Object[] columnas = {"Código", "Nombre", "Precio","Cantidad"};
         modelo.setColumnIdentifiers(columnas);
         table1.setModel(modelo);
-        carrito = new Carrito();
+        carrito = new Carrito(usuario);
     }
 
     private void cargarDatosComboBox(){
@@ -78,24 +81,12 @@ public class CarritoCrearView extends JInternalFrame{
         return codigoTextField;
     }
 
-    public void setCodigoTextField(JTextField codigoTextField) {
-        this.codigoTextField = codigoTextField;
-    }
-
     public JTextField getNombreTextField() {
         return nombreTextField;
     }
 
-    public void setNombreTextField(JTextField nombreTextField) {
-        this.nombreTextField = nombreTextField;
-    }
-
     public JTextField getPrecioTextField() {
         return precioTextField;
-    }
-
-    public void setPrecioTextField(JTextField precioTextField) {
-        this.precioTextField = precioTextField;
     }
 
     public JButton getBuscarButton() {
@@ -110,10 +101,6 @@ public class CarritoCrearView extends JInternalFrame{
         return anadirButton;
     }
 
-    public void setAnadirButton(JButton anadirButton) {
-        this.anadirButton = anadirButton;
-    }
-
     public JTable getTable1() {
         return table1;
     }
@@ -126,40 +113,20 @@ public class CarritoCrearView extends JInternalFrame{
         return subtotalTextField;
     }
 
-    public void setSubtotalTextField(JTextField subtotalTextField) {
-        this.subtotalTextField = subtotalTextField;
-    }
-
     public JTextField getIvaTextField() {
         return ivaTextField;
-    }
-
-    public void setIvaTextField(JTextField ivaTextField) {
-        this.ivaTextField = ivaTextField;
     }
 
     public JTextField getTotalTextField() {
         return totalTextField;
     }
 
-    public void setTotalTextField(JTextField totalTextField) {
-        this.totalTextField = totalTextField;
-    }
-
     public JButton getGuardarButton() {
         return guardarButton;
     }
 
-    public void setGuardarButton(JButton guardarButton) {
-        this.guardarButton = guardarButton;
-    }
-
     public JButton getCancelarButton() {
         return cancelarButton;
-    }
-
-    public void setCancelarButton(JButton cancelarButton) {
-        this.cancelarButton = cancelarButton;
     }
 
     public DefaultTableModel getModelo() {
@@ -174,12 +141,12 @@ public class CarritoCrearView extends JInternalFrame{
         return cantidadComboBox;
     }
 
-    public void setCantidadComboBox(JComboBox cantidadComboBox) {
-        this.cantidadComboBox = cantidadComboBox;
-    }
-
     public Carrito getCarrito() {
         return carrito;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
     }
 
     public void setCarrito(Carrito carrito) {

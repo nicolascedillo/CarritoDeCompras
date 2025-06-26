@@ -104,7 +104,7 @@ public class ProductoController {
             public void actionPerformed(ActionEvent e) {
                 int codigo = Integer.parseInt(productoModificarView.getTxtCodigo().getText());
                 Producto productoEncontrado = productoDAO.buscarPorCodigo(codigo);
-                productoModificarView.getTxtCodigo().setEnabled(false);
+                productoModificarView.getTxtCodigo().setEnabled(true);
                 productoModificarView.getTxtNombre().setEnabled(true);
                 productoModificarView.getTxtPrecio().setEnabled(true);
 

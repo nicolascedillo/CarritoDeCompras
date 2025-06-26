@@ -45,9 +45,8 @@ public class CarritoController {
                 carritoDao.crear(carritoCrearView.getCarrito());
                 carritoCrearView.mostrarMensaje("Carrito guardado correctamente");
                 carritoCrearView.limpiarCampos();
-                carritoCrearView.setCarrito(new Carrito());
+                carritoCrearView.setCarrito(new Carrito(carritoCrearView.getUsuario()));
                 carritoCrearView.getGuardarButton().setEnabled(false);
-
             }
         });
 
@@ -65,7 +64,8 @@ public class CarritoController {
             public void actionPerformed(ActionEvent e) {
                 carritoCrearView.limpiarCampos();
                 carritoCrearView.getCodigoTextField().setEnabled(true);
-                carritoCrearView.setCarrito(new ec.edu.ups.modelo.Carrito());
+                carritoCrearView.getCarrito().vaciarCarrito();
+                //carritoCrearView.setCarrito(new Carrito(carritoCrearView.getUsuario()));
                 carritoCrearView.mostrarMensaje("Creacion de carrito cancelada correctamente");
                 carritoCrearView.getGuardarButton().setEnabled(false);
             }
@@ -106,6 +106,7 @@ public class CarritoController {
                     carritoEliminarView.getNombreTextField().setText(carritoEncontrado.getFechaCreacion());
                     carritoEliminarView.getEliminarButton().setEnabled(true);
                     carritoEliminarView.cargarDatos(carritoEncontrado);
+                    carritoEliminarView.getUsuarioTextField().setText(carritoEncontrado.getUsuario().getUsername());
                     carritoEliminarView.getSubtotalTextField().setText(String.valueOf(carritoEncontrado.calcularSubtotal()));
                     carritoEliminarView.getIvaTextField().setText(String.valueOf(carritoEncontrado.calcularIva()));
                     carritoEliminarView.getTotalTextField().setText(String.valueOf(carritoEncontrado.calcularTotal()));
@@ -243,7 +244,6 @@ public class CarritoController {
             }
         }
         return false;
-
     }
 
 }
