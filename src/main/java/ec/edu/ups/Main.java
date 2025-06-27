@@ -12,6 +12,7 @@ import ec.edu.ups.dao.impl.ProductoDAOMemoria;
 import ec.edu.ups.dao.impl.UsuarioDAOMemoria;
 import ec.edu.ups.modelo.Rol;
 import ec.edu.ups.modelo.Usuario;
+import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 import ec.edu.ups.vista.*;
 import ec.edu.ups.vista.carrito.*;
 import ec.edu.ups.vista.producto.ProductoCrearView;
@@ -35,10 +36,34 @@ public class Main {
         ProductoDAO productoDAO = new ProductoDAOMemoria();
         CarritoDAO carritoDAO = new CarritoDAOMemoria();
 
+        MensajeInternacionalizacionHandler mIH = new MensajeInternacionalizacionHandler("es", "EC");
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
 
-                LogInView logInView = new LogInView();
+                LogInView logInView = new LogInView(mIH);
+                logInView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+
+                logInView.getIdiomaComboBox().addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String selectedLanguage = (String) logInView.getIdiomaComboBox().getSelectedItem();
+                        switch (selectedLanguage) {
+                            case "Español":
+                                mIH.setLenguaje("es", "EC");
+                                break;
+                            case "English":
+                                mIH.setLenguaje("en", "US");
+                                break;
+                            case "Français":
+                                mIH.setLenguaje("fr", "FR");
+                                break;
+                            default:
+                                mIH.setLenguaje("es", "EC");
+                        }
+                        logInView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                    }
+                });
                 logInView.setVisible(true);
 
                 LogInController logInController = new LogInController(usuarioDAO, logInView);
@@ -54,7 +79,8 @@ public class Main {
                         if(usuarioAutenticado != null){
 
 
-                            MenuPrincipalView menuPrincipalView = new MenuPrincipalView();
+                            MenuPrincipalView menuPrincipalView = new MenuPrincipalView(mIH);
+                            menuPrincipalView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
 
                             //Instanciar vistas del producto
                             ProductoCrearView productoCrearView = new ProductoCrearView();
@@ -217,6 +243,24 @@ public class Main {
                                         usuarioModificarView.setVisible(true);
                                         menuPrincipalView.getjDesktopPane().add(usuarioModificarView);
                                     }
+                                }
+                            });
+
+                            //INTERNACIONALIZACION
+
+                            menuPrincipalView.getMenuItemEspanol().addActionListener(new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    mIH.setLenguaje("es", "EC");
+                                    menuPrincipalView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                }
+                            });
+
+                            menuPrincipalView.getMenuItemIngles().addActionListener(new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    mIH.setLenguaje("en", "US");
+                                    menuPrincipalView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
                                 }
                             });
 

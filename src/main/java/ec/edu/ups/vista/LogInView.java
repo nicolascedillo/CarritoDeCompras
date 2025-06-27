@@ -1,5 +1,7 @@
 package ec.edu.ups.vista;
 
+import ec.edu.ups.util.MensajeInternacionalizacionHandler;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,12 +13,19 @@ public class LogInView extends JFrame {
     private JButton iniciarSesionButton;
     private JButton registrarseButton;
     private JButton salirButton;
+    private JComboBox idiomaComboBox;
+    private JLabel tituloLbl;
+    private JLabel usernameLbl;
+    private JLabel passwordLbl;
+    private JLabel idiomaLbl;
+    private MensajeInternacionalizacionHandler mIH;
 
-    public LogInView() {
-        setTitle("Iniciar Sesión");
+    public LogInView(MensajeInternacionalizacionHandler mIH) {
+        this.mIH = mIH;
+        setTitle(mIH.get("login.boton.iniciar"));
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(450, 250);
+        cambiarTamanio(mIH);
         setLocationRelativeTo(null);
         setResizable(false);
         salirButton.addActionListener(new ActionListener() {
@@ -25,6 +34,29 @@ public class LogInView extends JFrame {
                 dispose();
             }
         });
+    }
+
+    public void cambiarIdioma(String lenguaje, String pais) {
+        mIH.setLenguaje(lenguaje, pais);
+        cambiarTamanio(mIH);
+        setTitle(mIH.get("login.boton.iniciar"));
+        tituloLbl.setText(mIH.get("login.titulo"));
+        usernameLbl.setText(mIH.get("login.label.username"));
+        passwordLbl.setText(mIH.get("login.label.password"));
+        idiomaLbl.setText(mIH.get("login.label.idioma"));
+        iniciarSesionButton.setText(mIH.get("login.boton.iniciar"));
+        registrarseButton.setText(mIH.get("login.boton.registrarse"));
+        salirButton.setText(mIH.get("login.boton.salir"));
+    }
+
+    public void cambiarTamanio(MensajeInternacionalizacionHandler idioma) {
+        if (idioma.getLocale().getLanguage().equals("en")) {
+            setSize(400, 275);
+        } else if (idioma.getLocale().getLanguage().equals("es")) {
+            setSize(450, 300);
+        } else if (idioma.getLocale().getLanguage().equals("fr")) {
+            setSize(500, 325);
+        }
     }
 
     public void mostrarMensaje(String mensaje) {
@@ -53,6 +85,26 @@ public class LogInView extends JFrame {
 
     public JButton getSalirButton() {
         return salirButton;
+    }
+
+    public JComboBox getIdiomaComboBox() {
+        return idiomaComboBox;
+    }
+
+    public JLabel getTituloLbl() {
+        return tituloLbl;
+    }
+
+    public JLabel getUsernameLbl() {
+        return usernameLbl;
+    }
+
+    public JLabel getPasswordLbl() {
+        return passwordLbl;
+    }
+
+    public MensajeInternacionalizacionHandler getMensajeInternacionalizacionHandler() {
+        return mIH;
     }
 
 }
