@@ -83,10 +83,10 @@ public class Main {
                             menuPrincipalView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
 
                             //Instanciar vistas del producto
-                            ProductoCrearView productoCrearView = new ProductoCrearView();
-                            ProductoListaView productoListaView = new ProductoListaView();
-                            ProductoModificarView productoModificarView = new ProductoModificarView();
-                            ProductoEliminarView productoEliminarView = new ProductoEliminarView();
+                            ProductoCrearView productoCrearView = new ProductoCrearView(mIH);
+                            ProductoListaView productoListaView = new ProductoListaView(mIH);
+                            ProductoModificarView productoModificarView = new ProductoModificarView(mIH);
+                            ProductoEliminarView productoEliminarView = new ProductoEliminarView(mIH);
 
                             //Instancias vistas del carrito
                             CarritoCrearView carritoCrearView = new CarritoCrearView(usuarioAutenticado);
@@ -114,7 +114,7 @@ public class Main {
                             UsuarioController usuarioController = new UsuarioController(usuarioDAO,usuarioCrearView,
                                     usuarioEliminarView, usuarioListarView, usuarioModificarView);
 
-                            menuPrincipalView.mostrarMensaje("Bienvenido: " + usuarioAutenticado.getUsername());
+                            menuPrincipalView.mostrarMensaje(mIH.get("app.bienvenida") + ": " + usuarioAutenticado.getUsername());
                             if (usuarioAutenticado.getRol().equals(Rol.USUARIO)) {
                                 menuPrincipalView.deshabilitarMenusAdministrador();
                             }
@@ -253,6 +253,10 @@ public class Main {
                                 public void actionPerformed(ActionEvent e) {
                                     mIH.setLenguaje("es", "EC");
                                     menuPrincipalView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    productoCrearView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    productoEliminarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    productoListaView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    productoModificarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
                                 }
                             });
 
@@ -261,6 +265,11 @@ public class Main {
                                 public void actionPerformed(ActionEvent e) {
                                     mIH.setLenguaje("en", "US");
                                     menuPrincipalView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    productoCrearView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    productoEliminarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    productoListaView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    productoModificarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+
                                 }
                             });
 
@@ -292,5 +301,4 @@ public class Main {
         });
 
     }
-
 }

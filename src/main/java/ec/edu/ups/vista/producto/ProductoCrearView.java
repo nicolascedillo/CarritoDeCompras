@@ -1,6 +1,7 @@
 package ec.edu.ups.vista.producto;
 
 import ec.edu.ups.modelo.Producto;
+import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -18,16 +19,25 @@ public class ProductoCrearView extends JInternalFrame {
     private JLabel lblCodigo;
     private JLabel lblPrecio;
     private JLabel lblNombre;
+    private JLabel lblTitulo;
+    private MensajeInternacionalizacionHandler mIH;
 
-    public ProductoCrearView() {
-
+    public ProductoCrearView(MensajeInternacionalizacionHandler mIH) {
+        this.mIH = mIH;
         setContentPane(panelPrincipal);
-        setTitle("Crear un Producto");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(400,200);
         setClosable(true);
         setIconifiable(true);
         setResizable(true);
+
+        setTitle(mIH.get("menu.producto.crear"));
+        lblTitulo.setText(mIH.get("ventana.producto.crear.titulo"));
+        lblCodigo.setText(mIH.get("ventana.producto.codigo"));
+        lblNombre.setText(mIH.get("ventana.producto.nombre"));
+        lblPrecio.setText(mIH.get("ventana.producto.precio"));
+        btnAceptar.setText(mIH.get("ventana.aceptar"));
+        btnLimpiar.setText(mIH.get("ventana.limpiar"));
 
         btnLimpiar.addActionListener(new ActionListener() {
             @Override
@@ -53,6 +63,19 @@ public class ProductoCrearView extends JInternalFrame {
             System.out.println(producto);
         }
     }
+
+    public void cambiarIdioma(String lenguaje, String pais) {
+        mIH.setLenguaje(lenguaje, pais);
+        setTitle(mIH.get("menu.producto.crear"));
+        lblTitulo.setText(mIH.get("ventana.producto.crear.titulo"));
+        lblCodigo.setText(mIH.get("ventana.producto.codigo"));
+        lblNombre.setText(mIH.get("ventana.producto.nombre"));
+        lblPrecio.setText(mIH.get("ventana.producto.precio"));
+        btnAceptar.setText(mIH.get("ventana.aceptar"));
+        btnLimpiar.setText(mIH.get("ventana.limpiar"));
+    }
+
+    // GETTERS Y SETTERS
 
     public JPanel getPanelPrincipal() {
         return panelPrincipal;
