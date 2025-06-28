@@ -42,6 +42,15 @@ public class ProductoModificarView extends JInternalFrame{
         JOptionPane.showMessageDialog(this, mensaje);
     }
 
+    public void limpiarCampos(){
+        txtCodigo.setText("");
+        txtNombre.setText("");
+        txtPrecio.setText("");
+        txtCodigo.setEnabled(true);
+        txtNombre.setEnabled(false);
+        txtPrecio.setEnabled(false);
+    }
+
     public void cambiarIdioma(String lenguaje, String pais) {
         mIH.setLenguaje(lenguaje, pais);
         setTitle(mIH.get("menu.producto.modificar"));

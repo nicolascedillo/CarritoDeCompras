@@ -1,6 +1,7 @@
 package ec.edu.ups.vista.carrito;
 
 import ec.edu.ups.modelo.Carrito;
+import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -14,17 +15,23 @@ public class CarritoListaView extends JInternalFrame {
     private JButton buscarButton;
     private JTable table1;
     private JButton verDetallesButton;
+    private JLabel lblTitulo;
+    private JLabel lblCodigo;
+    private JLabel lblCarrito;
     private DefaultTableModel modelo;
+    private MensajeInternacionalizacionHandler mIH;
 
-    public CarritoListaView() {
-        super("Buscar o Listar Carritos", true, true, true, true);
+    public CarritoListaView(MensajeInternacionalizacionHandler mIH) {
+        super(mIH.get("menu.carrito.buscar"), true, true, true, true);
+        this.mIH = mIH;
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(400, 700);
+
         modelo = new DefaultTableModel();
-        String[] columnas = {"Código", "Fecha", "Usuario", "Subtotal", "IVA", "Total"};
-        modelo.setColumnIdentifiers(columnas);
         table1.setModel(modelo);
+
+        cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
     }
 
     public void mostrarMensaje(String mensaje) {
@@ -63,6 +70,21 @@ public class CarritoListaView extends JInternalFrame {
         codigoTextField.setText("");
         modelo.setRowCount(0);
     }
+
+    public void cambiarIdioma(String lenguaje, String pais) {
+        mIH.setLenguaje(lenguaje, pais);
+        setTitle(mIH.get("menu.carrito.buscar"));
+        String[] columnas = {mIH.get("ventana.carrito.codigo"), mIH.get("ventana.carrito.fecha"), mIH.get("ventana.carrito.usuario"), mIH.get("ventana.carrito.subtotal"), mIH.get("ventana.carrito.iva"), mIH.get("ventana.carrito.total")};
+        modelo.setColumnIdentifiers(columnas);
+        lblTitulo.setText(mIH.get("ventana.carrito.buscar.titulo"));
+        lblCodigo.setText(mIH.get("ventana.carrito.codigo"));
+        listarButton.setText(mIH.get("ventana.listar"));
+        buscarButton.setText(mIH.get("ventana.buscar"));
+        verDetallesButton.setText(mIH.get("ventana.carrito.buscar.detalles"));
+        lblCarrito.setText(mIH.get("ventana.carrito.buscar.encontrados"));
+    }
+
+    //GETTERS Y SETTERS
 
     public JTextField getCodigoTextField() {
         return codigoTextField;

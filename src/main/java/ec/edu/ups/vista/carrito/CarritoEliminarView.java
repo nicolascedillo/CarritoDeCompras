@@ -3,6 +3,7 @@ package ec.edu.ups.vista.carrito;
 import ec.edu.ups.modelo.Carrito;
 import ec.edu.ups.modelo.ItemCarrito;
 import ec.edu.ups.modelo.Producto;
+import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -18,17 +19,31 @@ public class CarritoEliminarView extends JInternalFrame{
     private JButton eliminarButton;
     private JPanel panelPrincipal;
     private JTextField usuarioTextField;
+    private JLabel lblTitulo;
+    private JLabel lblCodigo;
+    private JLabel lblFecha;
+    private JLabel lblUsuario;
+    private JLabel lblSubtotal;
+    private JLabel lblIva;
+    private JLabel lblTotal;
+    private JLabel lblPago;
+    private JLabel lblLista;
+    private JLabel lblDatos;
     private DefaultTableModel modelo;
+    private MensajeInternacionalizacionHandler mIH;
 
-    public CarritoEliminarView() {
-        super("Eliminar Carrito",true,true,true,true);
+    public CarritoEliminarView(MensajeInternacionalizacionHandler mIH) {
+        super(mIH.get("menu.carrito.eliminar"),true,true,true,true);
+        this.mIH = mIH;
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(400,700);
+
         modelo = new DefaultTableModel();
-        Object[] columnas = {"Código", "Nombre", "Precio","Cantidad"};
-        modelo.setColumnIdentifiers(columnas);
         table1.setModel(modelo);
+
+        cambiarIdioma(mIH.getLocale().getLanguage(),mIH.getLocale().getCountry());
+
     }
 
     public void mostrarMensaje(String mensaje) {
@@ -62,7 +77,27 @@ public class CarritoEliminarView extends JInternalFrame{
         modelo.setRowCount(0);
     }
 
-    //Getters y Setters
+    public void cambiarIdioma(String lenguaje, String pais) {
+        mIH.setLenguaje(lenguaje, pais);
+        setTitle(mIH.get("menu.carrito.eliminar"));
+        lblTitulo.setText(mIH.get("ventana.carrito.eliminar.titulo"));
+        Object[] columnas = {mIH.get("ventana.producto.codigo"), mIH.get("ventana.producto.nombre"), mIH.get("ventana.producto.precio"),mIH.get("ventana.carrito.cantidad")};
+        modelo.setColumnIdentifiers(columnas);
+        lblCodigo.setText(mIH.get("ventana.carrito.codigo"));
+        lblFecha.setText(mIH.get("ventana.carrito.fecha"));
+        lblUsuario.setText(mIH.get("ventana.carrito.usuario"));
+        lblSubtotal.setText(mIH.get("ventana.carrito.subtotal"));
+        lblIva.setText(mIH.get("ventana.carrito.iva"));
+        lblTotal.setText(mIH.get("ventana.carrito.total"));
+        lblPago.setText(mIH.get("ventana.carrito.pago"));
+        lblLista.setText(mIH.get("ventana.carrito.lista"));
+        lblDatos.setText(mIH.get("ventana.carrito.datos"));
+        buscarButton.setText(mIH.get("ventana.buscar"));
+        eliminarButton.setText(mIH.get("ventana.eliminar"));
+    }
+
+    //GETTERS Y SETTERS
+
     public JTextField getCodigoTextField() {
         return codigoTextField;
     }

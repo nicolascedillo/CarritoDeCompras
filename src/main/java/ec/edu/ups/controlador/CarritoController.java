@@ -5,6 +5,7 @@ import ec.edu.ups.dao.ProductoDAO;
 import ec.edu.ups.modelo.Carrito;
 import ec.edu.ups.modelo.ItemCarrito;
 import ec.edu.ups.modelo.Producto;
+import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 import ec.edu.ups.vista.carrito.*;
 
 import javax.swing.*;
@@ -20,8 +21,16 @@ public class CarritoController {
     private final CarritoModificarView carritoModificarView;
     private final CarritoListaView carritoListaView;
     private final ItemListaView itemListaView;
+    private MensajeInternacionalizacionHandler mIH;
 
-    public CarritoController(ProductoDAO productoDAO, CarritoDAO carritoDao, CarritoCrearView carritoCrearView, CarritoEliminarView carritoEliminarView, CarritoModificarView carritoModificarView, CarritoListaView carritoListaView,ItemListaView itemListaView) {
+    public CarritoController(ProductoDAO productoDAO,
+                             CarritoDAO carritoDao,
+                             CarritoCrearView carritoCrearView,
+                             CarritoEliminarView carritoEliminarView,
+                             CarritoModificarView carritoModificarView,
+                             CarritoListaView carritoListaView,
+                             ItemListaView itemListaView,
+                             MensajeInternacionalizacionHandler mIH) {
         this.carritoDao = carritoDao;
         this.carritoCrearView = carritoCrearView;
         this.productoDao = productoDAO;
@@ -29,6 +38,7 @@ public class CarritoController {
         this.carritoModificarView = carritoModificarView;
         this.carritoListaView = carritoListaView;
         this.itemListaView = itemListaView;
+        this.mIH = mIH;
         configurarEventosAnadir();
         configurarEventosEliminar();
         configurarEventosModificar();
@@ -43,7 +53,7 @@ public class CarritoController {
             public void actionPerformed(ActionEvent e) {
 
                 carritoDao.crear(carritoCrearView.getCarrito());
-                carritoCrearView.mostrarMensaje("Carrito guardado correctamente");
+                carritoCrearView.mostrarMensaje(mIH.get("mensaje.carrito.creado"));
                 carritoCrearView.limpiarCampos();
                 carritoCrearView.setCarrito(new Carrito(carritoCrearView.getUsuario()));
                 carritoCrearView.getGuardarButton().setEnabled(false);
@@ -65,8 +75,7 @@ public class CarritoController {
                 carritoCrearView.limpiarCampos();
                 carritoCrearView.getCodigoTextField().setEnabled(true);
                 carritoCrearView.getCarrito().vaciarCarrito();
-                //carritoCrearView.setCarrito(new Carrito(carritoCrearView.getUsuario()));
-                carritoCrearView.mostrarMensaje("Creacion de carrito cancelada correctamente");
+                carritoCrearView.mostrarMensaje(mIH.get("mensaje.cancelar"));
                 carritoCrearView.getGuardarButton().setEnabled(false);
             }
         });
@@ -80,18 +89,18 @@ public class CarritoController {
             public void actionPerformed(ActionEvent e) {
                 int respuesta = JOptionPane.showConfirmDialog(
                         carritoEliminarView,
-                        "Estás seguro de que quieres eliminar este producto?",
-                        "Confirmar eliminación",
+                        mIH.get("mensaje.carrito.confirmacion"),
+                        mIH.get("mensaje.confirmacion.titulo"),
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.WARNING_MESSAGE
                 );
 
                 if (respuesta == JOptionPane.YES_OPTION) {
                     carritoDao.eliminar(Integer.parseInt(carritoEliminarView.getCodigoTextField().getText()));
-                    carritoEliminarView.mostrarMensaje("Carrito eliminado");
+                    carritoEliminarView.mostrarMensaje(mIH.get("mensaje.carrito.eliminado"));
                     carritoEliminarView.limpiarCampos();
                 } else {
-                    carritoEliminarView.mostrarMensaje("Acción cancelada");
+                    carritoEliminarView.mostrarMensaje(mIH.get("mensaje.cancelar"));
                 }
             }
         });
@@ -99,6 +108,10 @@ public class CarritoController {
         carritoEliminarView.getBuscarButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(carritoEliminarView.getCodigoTextField().getText().isEmpty()) {
+                    carritoEliminarView.mostrarMensaje(mIH.get("mensaje.carrito.buscar.codigo"));
+                    return;
+                }
                 carritoEliminarView.limpiarTabla();
                 int codigo = Integer.parseInt(carritoEliminarView.getCodigoTextField().getText());
                 Carrito carritoEncontrado = carritoDao.buscarPorCodigo(codigo);
@@ -112,7 +125,7 @@ public class CarritoController {
                     carritoEliminarView.getTotalTextField().setText(String.valueOf(carritoEncontrado.calcularTotal()));
                     carritoEliminarView.getEliminarButton().setEnabled(true);
                 } else {
-                    carritoEliminarView.mostrarMensaje("Carrito no encontrado");
+                    carritoEliminarView.mostrarMensaje(mIH.get("mensaje.carrito.noencontrado"));
                     carritoEliminarView.getEliminarButton().setEnabled(false);
                 }
             }
@@ -124,6 +137,10 @@ public class CarritoController {
         carritoModificarView.getBuscarButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(carritoModificarView.getCodigoTextField().getText().isEmpty()) {
+                    carritoModificarView.mostrarMensaje(mIH.get("mensaje.carrito.buscar.codigo"));
+                    return;
+                }
                 int codigo = Integer.parseInt(carritoModificarView.getCodigoTextField().getText());
                 Carrito carritoEncontrado = carritoDao.buscarPorCodigo(codigo);
                 if (carritoEncontrado != null) {
@@ -133,7 +150,7 @@ public class CarritoController {
                     carritoModificarView.getIvaTextField().setText(String.valueOf(carritoEncontrado.calcularIva()));
                     carritoModificarView.getTotalTextField().setText(String.valueOf(carritoEncontrado.calcularTotal()));
                 } else {
-                    carritoModificarView.mostrarMensaje("Carrito no encontrado");
+                    carritoModificarView.mostrarMensaje(mIH.get("mensaje.carrito.noencontrado"));
                 }
             }
         });
@@ -142,17 +159,19 @@ public class CarritoController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(carritoModificarView.getTable1().getSelectedRow() != -1) {
-                    int nuevaCantidad = Integer.parseInt(JOptionPane.showInputDialog(carritoModificarView, "Ingrese la nueva cantidad:"));
+                    int nuevaCantidad = Integer.parseInt(JOptionPane.showInputDialog(carritoModificarView, mIH.get("mensaje.carrito.ingresar.cantidad")));
 
                     int codigoCarrito = Integer.parseInt(carritoModificarView.getCodigoTextField().getText());
                     Carrito carritoEncontrado = carritoDao.buscarPorCodigo(codigoCarrito);
 
                     for (ItemCarrito item: carritoEncontrado.obtenerItems()) {
-                        if (item.getProducto().getCodigo() == (Integer) carritoModificarView.getTable1().getValueAt(carritoModificarView.getTable1().getSelectedRow(), 0)) {
+                        if (item.getProducto().getCodigo() == (Integer) carritoModificarView.getTable1().
+                                getValueAt(carritoModificarView.getTable1().getSelectedRow(), 0)) {
                             item.setCantidad(nuevaCantidad);
                         }
                     }
                     carritoDao.actualizar(carritoEncontrado);
+                    carritoModificarView.mostrarMensaje(mIH.get("mensaje.carrito.modificado"));
                     carritoModificarView.cargarDatos(carritoEncontrado);
 
                     carritoModificarView.getSubtotalTextField().setText(String.valueOf(carritoEncontrado.calcularSubtotal()));
@@ -160,7 +179,7 @@ public class CarritoController {
                     carritoModificarView.getTotalTextField().setText(String.valueOf(carritoEncontrado.calcularTotal()));
 
                 } else {
-                    carritoModificarView.mostrarMensaje("Seleccione un Item para editar");
+                    carritoModificarView.mostrarMensaje(mIH.get("mensaje.carrito.seleccionar.editar"));
 
                 }
             }
@@ -177,7 +196,7 @@ public class CarritoController {
                 if(!carritoDao.listarTodos().isEmpty()){
                     carritoListaView.cargarDatosLista(carritoDao.listarTodos());
                 } else {
-                    carritoListaView.mostrarMensaje("No hay carritos registrados");
+                    carritoListaView.mostrarMensaje(mIH.get("mensaje.carrito.inexistentes"));
                 }
             }
         });
@@ -186,7 +205,7 @@ public class CarritoController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(carritoListaView.getCodigoTextField().getText().isEmpty()) {
-                    carritoListaView.mostrarMensaje("Ingrese un código para buscar");
+                    carritoListaView.mostrarMensaje(mIH.get("mensaje.carrito.buscar.codigo"));
                     return;
                 }
                 int codigo = Integer.parseInt(carritoListaView.getCodigoTextField().getText());
@@ -194,7 +213,7 @@ public class CarritoController {
                 if (carritoEncontrado != null) {
                     carritoListaView.cargarDatosBusqueda(carritoDao.buscarPorCodigo(codigo));
                 } else {
-                    carritoListaView.mostrarMensaje("Carrito no encontrado");
+                    carritoListaView.mostrarMensaje(mIH.get("mensaje.carrito.noencontrado"));
                 }
             }
         });
@@ -203,14 +222,15 @@ public class CarritoController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (carritoListaView.getTable1().getSelectedRow() != -1) {
-                    int codigoCarrito = (Integer) carritoListaView.getTable1().getValueAt(carritoListaView.getTable1().getSelectedRow(), 0);
+                    int codigoCarrito = (Integer) carritoListaView.getTable1().getValueAt(
+                            carritoListaView.getTable1().getSelectedRow(), 0);
                     Carrito carritoEncontrado = carritoDao.buscarPorCodigo(codigoCarrito);
                     itemListaView.cargarDatos(carritoEncontrado);
                     if(!itemListaView.isVisible()){
                         itemListaView.setVisible(true);
                     }
                 } else {
-                    carritoListaView.mostrarMensaje("Seleccione un Carrito para ver detalles");
+                    carritoListaView.mostrarMensaje(mIH.get("mensaje.carrito.detalles.ver"));
                 }
             }
         });
@@ -229,7 +249,7 @@ public class CarritoController {
                 }
             }
             carritoCrearView.cargarDatos(carritoCrearView.getCarrito());
-            carritoCrearView.mostrarMensaje("Producto ya está en el carrito, cantidad actualizada.");
+            carritoCrearView.mostrarMensaje(mIH.get("mensaje.carrito.producto.ya.registrado"));
         }
         carritoCrearView.getSubtotalTextField().setText(String.valueOf(carritoCrearView.getCarrito().calcularSubtotal()));
         carritoCrearView.getIvaTextField().setText(String.valueOf(carritoCrearView.getCarrito().calcularIva()));

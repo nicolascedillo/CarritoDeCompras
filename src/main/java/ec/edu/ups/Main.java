@@ -89,11 +89,11 @@ public class Main {
                             ProductoEliminarView productoEliminarView = new ProductoEliminarView(mIH);
 
                             //Instancias vistas del carrito
-                            CarritoCrearView carritoCrearView = new CarritoCrearView(usuarioAutenticado);
-                            CarritoEliminarView carritoEliminarView = new CarritoEliminarView();
-                            CarritoListaView carritoListaView = new CarritoListaView();
-                            ItemListaView itemListaView = new ItemListaView();
-                            CarritoModificarView carritoModificarView = new CarritoModificarView();
+                            CarritoCrearView carritoCrearView = new CarritoCrearView(usuarioAutenticado, mIH);
+                            CarritoEliminarView carritoEliminarView = new CarritoEliminarView(mIH);
+                            CarritoListaView carritoListaView = new CarritoListaView(mIH);
+                            ItemListaView itemListaView = new ItemListaView(mIH);
+                            CarritoModificarView carritoModificarView = new CarritoModificarView(mIH);
                             menuPrincipalView.getjDesktopPane().add(itemListaView);
 
 
@@ -106,10 +106,11 @@ public class Main {
                             // Instanciar controladores
                             ProductoController productoController = new ProductoController(productoCrearView,
                                     productoListaView,productoDAO,productoEliminarView,
-                                    productoModificarView, carritoCrearView);
+                                    productoModificarView, carritoCrearView, mIH);
 
                             CarritoController carritoController = new CarritoController(productoDAO, carritoDAO,
-                                    carritoCrearView,carritoEliminarView,carritoModificarView,carritoListaView,itemListaView);
+                                    carritoCrearView,carritoEliminarView,carritoModificarView,carritoListaView,
+                                    itemListaView, mIH);
 
                             UsuarioController usuarioController = new UsuarioController(usuarioDAO,usuarioCrearView,
                                     usuarioEliminarView, usuarioListarView, usuarioModificarView);
@@ -257,6 +258,11 @@ public class Main {
                                     productoEliminarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
                                     productoListaView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
                                     productoModificarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    carritoCrearView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    carritoEliminarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    carritoListaView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    carritoModificarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    itemListaView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
                                 }
                             });
 
@@ -269,6 +275,11 @@ public class Main {
                                     productoEliminarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
                                     productoListaView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
                                     productoModificarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    carritoCrearView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    carritoEliminarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    carritoListaView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    carritoModificarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    itemListaView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
 
                                 }
                             });

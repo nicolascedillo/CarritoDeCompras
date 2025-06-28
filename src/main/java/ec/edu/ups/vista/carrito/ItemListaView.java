@@ -3,6 +3,7 @@ package ec.edu.ups.vista.carrito;
 import ec.edu.ups.modelo.Carrito;
 import ec.edu.ups.modelo.ItemCarrito;
 import ec.edu.ups.modelo.Producto;
+import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -13,18 +14,22 @@ public class ItemListaView extends JInternalFrame {
     private JTextField codigoDelCarritoTextField;
     private JTable table1;
     private JButton salirButton;
+    private JLabel lblTitulo;
+    private JLabel lblCodigo;
     private DefaultTableModel modelo;
+    private MensajeInternacionalizacionHandler mIH;
 
-    public ItemListaView() {
-        super("Lista de Items del Carrito", true, true, true, true);
+    public ItemListaView(MensajeInternacionalizacionHandler mIH) {
+        super(mIH.get("ventana.carrito.items"), true, true, true, true);
+        this.mIH = mIH;
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setSize(400, 500);
 
         modelo = new DefaultTableModel();
-        Object[] columnas = {"Código", "Nombre", "Precio","Cantidad"};
-        modelo.setColumnIdentifiers(columnas);
         table1.setModel(modelo);
+
+        cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
 
         salirButton.addActionListener(new ActionListener() {
             @Override
@@ -47,5 +52,20 @@ public class ItemListaView extends JInternalFrame {
             };
             modelo.addRow(fila);
         }
+    }
+
+    public void cambiarIdioma(String lenguaje, String pais) {
+        mIH.setLenguaje(lenguaje, pais);
+        Object[] columnas = {
+                mIH.get("ventana.producto.codigo"),
+                mIH.get("ventana.producto.nombre"),
+                mIH.get("ventana.producto.precio"),
+                mIH.get("ventana.carrito.cantidad")
+        };
+        modelo.setColumnIdentifiers(columnas);
+        setTitle(mIH.get("ventana.carrito.items"));
+        salirButton.setText(mIH.get("ventana.salir"));
+        lblCodigo.setText(mIH.get("ventana.carrito.codigo"));
+        lblTitulo.setText(mIH.get("ventana.carrito.items"));
     }
 }

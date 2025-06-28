@@ -41,6 +41,10 @@ public class ProductoListaView extends JInternalFrame {
 
     }
 
+    public void mostrarMensaje(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
     public void cargarDatos(List<Producto> listaProductos) {
         modelo.setNumRows(0);
 
