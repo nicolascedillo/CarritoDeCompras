@@ -3,6 +3,8 @@ package ec.edu.ups.vista;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 
 import javax.swing.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class MenuPrincipalView extends JFrame {
     private JMenuBar menuBar;
@@ -28,7 +30,7 @@ public class MenuPrincipalView extends JFrame {
     private JMenuItem menuItemFrances;
     private JMenuItem menuItemCerrarSesion;
     private JMenuItem menuItemSalir;
-    private JDesktopPane jDesktopPane;
+    private MiDesktopPane jDesktopPane;
     private MensajeInternacionalizacionHandler mIH;
 
 
@@ -36,7 +38,7 @@ public class MenuPrincipalView extends JFrame {
     public MenuPrincipalView(MensajeInternacionalizacionHandler mIH){
         this.mIH = mIH;
 
-        jDesktopPane = new JDesktopPane();
+        jDesktopPane = new MiDesktopPane();
         setTitle(mIH.get("app.titulo"));
 
         menuBar = new JMenuBar();
