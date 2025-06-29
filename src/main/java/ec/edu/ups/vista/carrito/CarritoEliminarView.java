@@ -3,6 +3,7 @@ package ec.edu.ups.vista.carrito;
 import ec.edu.ups.modelo.Carrito;
 import ec.edu.ups.modelo.ItemCarrito;
 import ec.edu.ups.modelo.Producto;
+import ec.edu.ups.util.FormateadorUtils;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 
 import javax.swing.*;
@@ -10,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class CarritoEliminarView extends JInternalFrame{
     private JTextField codigoTextField;
-    private JTextField nombreTextField;
+    private JTextField fechaTextField;
     private JButton buscarButton;
     private JTable table1;
     private JTextField subtotalTextField;
@@ -51,13 +52,13 @@ public class CarritoEliminarView extends JInternalFrame{
     }
 
     public void cargarDatos(Carrito carrito) {
-
+        modelo.setRowCount(0);
         for(ItemCarrito itemCarrito: carrito.obtenerItems()){
             Producto producto = itemCarrito.getProducto();
             Object[] fila = {
                     producto.getCodigo(),
                     producto.getNombre(),
-                    producto.getPrecio(),
+                    FormateadorUtils.formatearMoneda(producto.getPrecio(), mIH.getLocale()),
                     itemCarrito.getCantidad()
             };
             modelo.addRow(fila);
@@ -66,7 +67,7 @@ public class CarritoEliminarView extends JInternalFrame{
 
     public void limpiarCampos() {
         codigoTextField.setText("");
-        nombreTextField.setText("");
+        fechaTextField.setText("");
         subtotalTextField.setText("0.0");
         ivaTextField.setText("0.0");
         totalTextField.setText("0.0");
@@ -102,8 +103,8 @@ public class CarritoEliminarView extends JInternalFrame{
         return codigoTextField;
     }
 
-    public JTextField getNombreTextField() {
-        return nombreTextField;
+    public JTextField getFechaTextField() {
+        return fechaTextField;
     }
 
     public JButton getBuscarButton() {

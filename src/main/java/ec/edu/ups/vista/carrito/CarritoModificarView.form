@@ -53,7 +53,7 @@
               <enabled value="true"/>
             </properties>
           </component>
-          <component id="122b3" class="javax.swing.JTextField" binding="nombreTextField" default-binding="true">
+          <component id="122b3" class="javax.swing.JTextField" binding="fechaTextField" default-binding="true">
             <constraints>
               <grid row="2" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -90,10 +90,11 @@
             </constraints>
             <properties>
               <font name="DialogInput"/>
+              <labelFor value="4110b"/>
               <text value="Usuario:"/>
             </properties>
           </component>
-          <component id="4110b" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+          <component id="4110b" class="javax.swing.JTextField" binding="usuarioTextField" default-binding="true">
             <constraints>
               <grid row="3" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>

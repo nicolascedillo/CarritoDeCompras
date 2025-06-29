@@ -4,6 +4,7 @@ import ec.edu.ups.modelo.Carrito;
 import ec.edu.ups.modelo.ItemCarrito;
 import ec.edu.ups.modelo.Producto;
 import ec.edu.ups.modelo.Usuario;
+import ec.edu.ups.util.FormateadorUtils;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 
 import javax.swing.*;
@@ -71,7 +72,7 @@ public class CarritoCrearView extends JInternalFrame{
             Object[] fila = {
                 item.getProducto().getCodigo(),
                 item.getProducto().getNombre(),
-                item.getProducto().getPrecio(),
+                    FormateadorUtils.formatearMoneda(item.getProducto().getPrecio(), mIH.getLocale()),
                 item.getCantidad()
             };
             modelo.addRow(fila);

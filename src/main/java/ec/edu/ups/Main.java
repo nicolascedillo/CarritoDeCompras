@@ -10,6 +10,7 @@ import ec.edu.ups.dao.UsuarioDAO;
 import ec.edu.ups.dao.impl.CarritoDAOMemoria;
 import ec.edu.ups.dao.impl.ProductoDAOMemoria;
 import ec.edu.ups.dao.impl.UsuarioDAOMemoria;
+import ec.edu.ups.modelo.Carrito;
 import ec.edu.ups.modelo.Rol;
 import ec.edu.ups.modelo.Usuario;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
@@ -106,7 +107,7 @@ public class Main {
                             // Instanciar controladores
                             ProductoController productoController = new ProductoController(productoCrearView,
                                     productoListaView,productoDAO,productoEliminarView,
-                                    productoModificarView, carritoCrearView, mIH);
+                                    productoModificarView, mIH);
 
                             CarritoController carritoController = new CarritoController(productoDAO, carritoDAO,
                                     carritoCrearView,carritoEliminarView,carritoModificarView,carritoListaView,
@@ -254,20 +255,12 @@ public class Main {
                                 public void actionPerformed(ActionEvent e) {
                                     mIH.setLenguaje("es", "EC");
                                     menuPrincipalView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    productoCrearView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    productoEliminarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    productoListaView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    productoModificarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    carritoCrearView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    carritoEliminarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    carritoListaView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    carritoModificarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    itemListaView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    productoController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    carritoController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
                                     usuarioCrearView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
                                     usuarioEliminarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
                                     usuarioListarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
                                     usuarioModificarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-
                                 }
                             });
 
@@ -276,15 +269,8 @@ public class Main {
                                 public void actionPerformed(ActionEvent e) {
                                     mIH.setLenguaje("en", "US");
                                     menuPrincipalView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    productoCrearView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    productoEliminarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    productoListaView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    productoModificarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    carritoCrearView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    carritoEliminarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    carritoListaView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    carritoModificarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    itemListaView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    productoController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    carritoController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
                                     usuarioCrearView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
                                     usuarioEliminarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
                                     usuarioListarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
@@ -297,15 +283,8 @@ public class Main {
                                 public void actionPerformed(ActionEvent e) {
                                     mIH.setLenguaje("fr", "FR");
                                     menuPrincipalView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    productoCrearView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    productoEliminarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    productoListaView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    productoModificarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    carritoCrearView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    carritoEliminarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    carritoListaView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    carritoModificarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    itemListaView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    productoController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    carritoController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
                                     usuarioCrearView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
                                     usuarioEliminarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
                                     usuarioListarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
@@ -318,8 +297,10 @@ public class Main {
                             menuPrincipalView.getMenuItemCerrarSesion().addActionListener(new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
-                                    menuPrincipalView.dispose();
-                                    run();
+                                    menuPrincipalView.setVisible(false);
+                                    logInView.setVisible(true);
+                                    Carrito.setContador(Carrito.getContador() - 1);
+                                    logInView.getContrasenaPasswordField().setText("");
                                 }
                             });
 

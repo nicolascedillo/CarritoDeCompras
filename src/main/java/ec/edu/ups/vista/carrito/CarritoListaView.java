@@ -1,6 +1,7 @@
 package ec.edu.ups.vista.carrito;
 
 import ec.edu.ups.modelo.Carrito;
+import ec.edu.ups.util.FormateadorUtils;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 
 import javax.swing.*;
@@ -43,11 +44,11 @@ public class CarritoListaView extends JInternalFrame {
         for (Carrito carrito : carritos) {
             Object[] fila = {
                 carrito.getCodigo(),
-                carrito.getFechaCreacion(),
+                    FormateadorUtils.formatearFecha(carrito.getFechaCreacionDate(),mIH.getLocale()),
                 carrito.getUsuario().getUsername(),
-                carrito.calcularSubtotal(),
-                carrito.calcularIva(),
-                carrito.calcularTotal()
+                FormateadorUtils.formatearMoneda(carrito.calcularSubtotal(),mIH.getLocale()),
+                FormateadorUtils.formatearMoneda(carrito.calcularIva(),mIH.getLocale()),
+                FormateadorUtils.formatearMoneda(carrito.calcularTotal(),mIH.getLocale())
             };
             modelo.addRow(fila);
         }
@@ -57,11 +58,11 @@ public class CarritoListaView extends JInternalFrame {
         modelo.setRowCount(0);
         Object[] fila = {
                 carrito.getCodigo(),
-                carrito.getFechaCreacion(),
+                FormateadorUtils.formatearFecha(carrito.getFechaCreacionDate(),mIH.getLocale()),
                 carrito.getUsuario().getUsername(),
-                carrito.calcularSubtotal(),
-                carrito.calcularIva(),
-                carrito.calcularTotal()
+                FormateadorUtils.formatearMoneda(carrito.calcularSubtotal(),mIH.getLocale()),
+                FormateadorUtils.formatearMoneda(carrito.calcularIva(),mIH.getLocale()),
+                FormateadorUtils.formatearMoneda(carrito.calcularTotal(),mIH.getLocale())
         };
         modelo.addRow(fila);
     }

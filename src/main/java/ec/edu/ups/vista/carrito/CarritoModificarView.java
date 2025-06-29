@@ -3,6 +3,7 @@ package ec.edu.ups.vista.carrito;
 import ec.edu.ups.modelo.Carrito;
 import ec.edu.ups.modelo.ItemCarrito;
 import ec.edu.ups.modelo.Producto;
+import ec.edu.ups.util.FormateadorUtils;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 
 import javax.swing.*;
@@ -11,14 +12,14 @@ import javax.swing.table.DefaultTableModel;
 public class CarritoModificarView extends JInternalFrame {
     private JPanel panelPrincipal;
     private JTextField codigoTextField;
-    private JTextField nombreTextField;
+    private JTextField fechaTextField;
     private JButton buscarButton;
     private JTable table1;
     private JTextField subtotalTextField;
     private JTextField ivaTextField;
     private JTextField totalTextField;
     private JButton editarButton;
-    private JTextField textField1;
+    private JTextField usuarioTextField;
     private JLabel lblTitulo;
     private JLabel lblSubtotal;
     private JLabel lblIva;
@@ -59,7 +60,7 @@ public class CarritoModificarView extends JInternalFrame {
             Object[] fila = {
                     producto.getCodigo(),
                     producto.getNombre(),
-                    producto.getPrecio(),
+                    FormateadorUtils.formatearMoneda(producto.getPrecio(), mIH.getLocale()),
                     itemCarrito.getCantidad(),
             };
             modelo.addRow(fila);
@@ -99,8 +100,8 @@ public class CarritoModificarView extends JInternalFrame {
         return codigoTextField;
     }
 
-    public JTextField getNombreTextField() {
-        return nombreTextField;
+    public JTextField getFechaTextField() {
+        return fechaTextField;
     }
 
     public JButton getBuscarButton() {
@@ -125,6 +126,10 @@ public class CarritoModificarView extends JInternalFrame {
 
     public JTextField getTotalTextField() {
         return totalTextField;
+    }
+
+    public JTextField getUsuarioTextField() {
+        return usuarioTextField;
     }
 
     public DefaultTableModel getModelo() {

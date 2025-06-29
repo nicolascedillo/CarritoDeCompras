@@ -1,10 +1,7 @@
 package ec.edu.ups.modelo;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class Carrito {
 
@@ -32,6 +29,10 @@ public class Carrito {
     public String getFechaCreacion() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         return dateFormat.format(fechaCreacion.getTime());
+    }
+
+    public Date getFechaCreacionDate() {
+        return fechaCreacion.getTime();
     }
 
     public void setFechaCreacion(GregorianCalendar fechaCreacion) {

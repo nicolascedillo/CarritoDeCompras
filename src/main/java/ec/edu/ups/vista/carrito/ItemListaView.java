@@ -3,6 +3,7 @@ package ec.edu.ups.vista.carrito;
 import ec.edu.ups.modelo.Carrito;
 import ec.edu.ups.modelo.ItemCarrito;
 import ec.edu.ups.modelo.Producto;
+import ec.edu.ups.util.FormateadorUtils;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 
 import javax.swing.*;
@@ -47,7 +48,7 @@ public class ItemListaView extends JInternalFrame {
             Object[] fila = {
                     producto.getCodigo(),
                     producto.getNombre(),
-                    producto.getPrecio(),
+                    FormateadorUtils.formatearMoneda(producto.getPrecio(), mIH.getLocale()),
                     itemCarrito.getCantidad()
             };
             modelo.addRow(fila);
@@ -68,4 +69,16 @@ public class ItemListaView extends JInternalFrame {
         lblCodigo.setText(mIH.get("ventana.carrito.codigo"));
         lblTitulo.setText(mIH.get("ventana.carrito.items"));
     }
+
+    //GETTERS Y SETTERS
+
+
+    public JTable getTable1() {
+        return table1;
+    }
+
+    public DefaultTableModel getModelo() {
+        return modelo;
+    }
+
 }

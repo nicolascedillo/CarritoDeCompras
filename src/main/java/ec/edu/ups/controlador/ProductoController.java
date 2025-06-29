@@ -2,17 +2,18 @@ package ec.edu.ups.controlador;
 
 import ec.edu.ups.dao.ProductoDAO;
 import ec.edu.ups.modelo.Producto;
+import ec.edu.ups.util.FormateadorUtils;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 import ec.edu.ups.vista.carrito.CarritoCrearView;
 import ec.edu.ups.vista.producto.ProductoCrearView;
 import ec.edu.ups.vista.producto.ProductoEliminarView;
 import ec.edu.ups.vista.producto.ProductoListaView;
 import ec.edu.ups.vista.producto.ProductoModificarView;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.Locale;
 
 public class ProductoController {
     private final ProductoCrearView productoCrearView;
@@ -20,7 +21,6 @@ public class ProductoController {
     private final ProductoDAO productoDAO;
     private final ProductoEliminarView productoEliminarView;
     private final ProductoModificarView productoModificarView;
-    private final CarritoCrearView carritoCrearView;
     private MensajeInternacionalizacionHandler mIH;
 
     public ProductoController(ProductoCrearView productoCrearView,
@@ -28,7 +28,6 @@ public class ProductoController {
                               ProductoDAO productoDAO,
                               ProductoEliminarView productoEliminarView,
                               ProductoModificarView productoModificarView,
-                              CarritoCrearView carritoCrearView,
                               MensajeInternacionalizacionHandler mIH) {
         this.mIH = mIH;
         this.productoCrearView = productoCrearView;
@@ -36,12 +35,10 @@ public class ProductoController {
         this.productoDAO = productoDAO;
         this.productoEliminarView = productoEliminarView;
         this.productoModificarView = productoModificarView;
-        this.carritoCrearView = carritoCrearView;
         configurarEventosListar();
         configurarEventosEliminar();
         configurarEventosModificar();
         configurarEventosAnadir();
-        configurarEventosCarritoAnadir();
 
     }
 
@@ -59,16 +56,20 @@ public class ProductoController {
         productoEliminarView.getBuscarButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(productoEliminarView.getTxtCodigo().getText().isEmpty()) {
+                    return;
+                }
                 int codigo = Integer.parseInt(productoEliminarView.getTxtCodigo().getText());
                 Producto productoEncontrado = productoDAO.buscarPorCodigo(codigo);
                 if (productoEncontrado != null) {
                     productoEliminarView.getTxtNombre().setText(productoEncontrado.getNombre());
-                    productoEliminarView.getTxtPrecio().setText(String.valueOf(productoEncontrado.getPrecio()));
+                    productoEliminarView.getTxtPrecio().setText(FormateadorUtils.formatearMoneda(productoEncontrado.getPrecio(), mIH.getLocale()));
                     productoEliminarView.getTxtNombre().setEnabled(false);
                     productoEliminarView.getTxtPrecio().setEnabled(false);
                 }else{
                     productoEliminarView.mostrarMensaje(mIH.get("mensaje.producto.noencontrado"));
                 }
+
             }
         });
 
@@ -145,17 +146,6 @@ public class ProductoController {
         });
     }
 
-    private void configurarEventosCarritoAnadir(){
-
-        carritoCrearView.getBuscarButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int codigo = Integer.parseInt(carritoCrearView.getCodigoTextField().getText());
-                buscarProductoEnCarrito(codigo);
-            }
-        });
-
-    }
 
     private void guardarProducto() {
         int codigo = Integer.parseInt(productoCrearView.getTxtCodigo().getText());
@@ -199,16 +189,41 @@ public class ProductoController {
         productoDAO.actualizar(producto);
     }
 
-    private void buscarProductoEnCarrito(int codigo){
-        Producto productoEncontrado =  productoDAO.buscarPorCodigo(codigo);
+    private void refrescarTabla(Locale locale) {
+        int rowCount = productoListaView.getModelo().getRowCount();
 
-        if(productoEncontrado == null){
-            carritoCrearView.mostrarMensaje(mIH.get("mensaje.producto.noencontrado"));
-        }else{
-            carritoCrearView.getCodigoTextField().setText(String.valueOf(productoEncontrado.getCodigo()));
-            carritoCrearView.getNombreTextField().setText(productoEncontrado.getNombre());
-            carritoCrearView.getPrecioTextField().setText(String.valueOf(productoEncontrado.getPrecio()));
+        for (int i = 0; i < rowCount; i++) {
+
+            int codigo = (Integer) productoListaView.getModelo().getValueAt(i, 0);
+
+            Producto producto = productoDAO.buscarPorCodigo(codigo);
+            String nuevoPrecioFormateado = FormateadorUtils.formatearMoneda(producto.getPrecio(), locale);
+
+            productoListaView.getModelo().setValueAt(nuevoPrecioFormateado, i, 2);
         }
     }
+
+    private void refrescarPrecioEliminar(Locale locale) {
+        if(productoEliminarView.getTxtCodigo().getText().isEmpty()) {
+            return;
+        }
+        int codigo = Integer.parseInt(productoEliminarView.getTxtCodigo().getText());
+        Producto producto = productoDAO.buscarPorCodigo(codigo);
+        if (producto != null) {
+            String nuevoPrecioFormateado = FormateadorUtils.formatearMoneda(producto.getPrecio(), locale);
+            productoEliminarView.getTxtPrecio().setText(nuevoPrecioFormateado);
+        }
+    }
+
+    public void cambiarIdioma(String lenguaje, String pais) {
+        mIH.setLenguaje(lenguaje, pais);
+        productoCrearView.cambiarIdioma(lenguaje, pais);
+        productoListaView.cambiarIdioma(lenguaje, pais);
+        productoEliminarView.cambiarIdioma(lenguaje, pais);
+        productoModificarView.cambiarIdioma(lenguaje, pais);
+        refrescarTabla(mIH.getLocale());
+        refrescarPrecioEliminar(mIH.getLocale());
+    }
+
 
 }
