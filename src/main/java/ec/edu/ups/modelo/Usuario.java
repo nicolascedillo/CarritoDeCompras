@@ -8,9 +8,11 @@ public class Usuario {
     private String password;
     private Rol rol;
     private List<Carrito> carritos;
+    private List<PreguntaRespondida> preguntasVerificacion;
 
     public Usuario() {
         this.carritos = new ArrayList<>();
+        this.preguntasVerificacion = new ArrayList<>();
     }
 
     public Usuario(String username, String password, Rol rol) {
@@ -18,7 +20,9 @@ public class Usuario {
         this.password = password;
         this.rol = rol;
         this.carritos = new ArrayList<>();
+        this.preguntasVerificacion = new ArrayList<>();
     }
+
 
     public String getUsername() {
         return username;
@@ -50,6 +54,14 @@ public class Usuario {
 
     public void addCarrito(Carrito carrito) {
         carritos.add(carrito);
+    }
+
+    public List<PreguntaRespondida> getPreguntasVerificacion() {
+        return preguntasVerificacion;
+    }
+
+    public void setPreguntasVerificacion(List<PreguntaRespondida> preguntasVerificacion) {
+        this.preguntasVerificacion = preguntasVerificacion;
     }
 
     @Override

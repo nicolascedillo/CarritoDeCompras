@@ -1,4 +1,4 @@
-package ec.edu.ups.vista;
+package ec.edu.ups.vista.login;
 
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 
@@ -18,6 +18,7 @@ public class LogInView extends JFrame {
     private JLabel usernameLbl;
     private JLabel passwordLbl;
     private JLabel idiomaLbl;
+    private JButton olvidadaButton;
     private MensajeInternacionalizacionHandler mIH;
 
     public LogInView(MensajeInternacionalizacionHandler mIH) {
@@ -28,6 +29,8 @@ public class LogInView extends JFrame {
         cambiarTamanio(mIH);
         setLocationRelativeTo(null);
         setResizable(false);
+        cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+
         salirButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -47,15 +50,16 @@ public class LogInView extends JFrame {
         iniciarSesionButton.setText(mIH.get("login.boton.iniciar"));
         registrarseButton.setText(mIH.get("login.boton.registrarse"));
         salirButton.setText(mIH.get("login.boton.salir"));
+        olvidadaButton.setText(mIH.get("login.boton.olvidar"));
     }
 
     public void cambiarTamanio(MensajeInternacionalizacionHandler idioma) {
         if (idioma.getLocale().getLanguage().equals("en")) {
-            setSize(400, 275);
+            setSize(500, 275);
         } else if (idioma.getLocale().getLanguage().equals("es")) {
-            setSize(450, 300);
+            setSize(550, 275);
         } else if (idioma.getLocale().getLanguage().equals("fr")) {
-            setSize(500, 325);
+            setSize(600, 275);
         }
     }
 

@@ -54,7 +54,7 @@ public class UsuarioController {
                 }
 
                 if (usuarioDAO.buscarPorUsername(username) != null) {
-                    usuarioCrearView.mostrarMensaje(mIH.get("mensaje.usuario,existe"));
+                    usuarioCrearView.mostrarMensaje(mIH.get("mensaje.usuario.existe"));
                     return;
                 }
 
@@ -183,5 +183,13 @@ public class UsuarioController {
                 usuarioModificarView.dispose();
             }
         });
+    }
+
+    public void cambiarIdioma(String lenguaje, String pais) {
+        mIH.setLenguaje(lenguaje, pais);
+        usuarioCrearView.cambiarIdioma(lenguaje, pais);
+        usuarioEliminarView.cambiarIdioma(lenguaje, pais);
+        usuarioListarView.cambiarIdioma(lenguaje, pais);
+        usuarioModificarView.cambiarIdioma(lenguaje, pais);
     }
 }

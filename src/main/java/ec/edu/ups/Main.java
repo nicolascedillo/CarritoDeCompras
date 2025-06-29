@@ -5,9 +5,11 @@ import ec.edu.ups.controlador.ProductoController;
 import ec.edu.ups.controlador.LogInController;
 import ec.edu.ups.controlador.UsuarioController;
 import ec.edu.ups.dao.CarritoDAO;
+import ec.edu.ups.dao.PreguntaDAO;
 import ec.edu.ups.dao.ProductoDAO;
 import ec.edu.ups.dao.UsuarioDAO;
 import ec.edu.ups.dao.impl.CarritoDAOMemoria;
+import ec.edu.ups.dao.impl.PreguntaDAOMeroria;
 import ec.edu.ups.dao.impl.ProductoDAOMemoria;
 import ec.edu.ups.dao.impl.UsuarioDAOMemoria;
 import ec.edu.ups.modelo.Carrito;
@@ -16,6 +18,8 @@ import ec.edu.ups.modelo.Usuario;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 import ec.edu.ups.vista.*;
 import ec.edu.ups.vista.carrito.*;
+import ec.edu.ups.vista.login.LogInView;
+import ec.edu.ups.vista.login.RegistraseView;
 import ec.edu.ups.vista.producto.ProductoCrearView;
 import ec.edu.ups.vista.producto.ProductoEliminarView;
 import ec.edu.ups.vista.producto.ProductoListaView;
@@ -36,6 +40,7 @@ public class Main {
         UsuarioDAO usuarioDAO = new UsuarioDAOMemoria();
         ProductoDAO productoDAO = new ProductoDAOMemoria();
         CarritoDAO carritoDAO = new CarritoDAOMemoria();
+        PreguntaDAO preguntaDAO = new PreguntaDAOMeroria();
 
         MensajeInternacionalizacionHandler mIH = new MensajeInternacionalizacionHandler("es", "EC");
 
@@ -43,7 +48,8 @@ public class Main {
             public void run() {
 
                 LogInView logInView = new LogInView(mIH);
-                logInView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                RegistraseView registraseView = new RegistraseView(mIH);
+                LogInController logInController = new LogInController(usuarioDAO,preguntaDAO, logInView, registraseView, mIH);
 
                 logInView.getIdiomaComboBox().addActionListener(new ActionListener() {
                     @Override
@@ -62,12 +68,10 @@ public class Main {
                             default:
                                 mIH.setLenguaje("es", "EC");
                         }
-                        logInView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                        logInController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
                     }
                 });
                 logInView.setVisible(true);
-
-                LogInController logInController = new LogInController(usuarioDAO, logInView);
 
                 logInView.addWindowListener(new WindowAdapter() {
 
@@ -257,10 +261,7 @@ public class Main {
                                     menuPrincipalView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
                                     productoController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
                                     carritoController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    usuarioCrearView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    usuarioEliminarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    usuarioListarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    usuarioModificarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    usuarioController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
                                 }
                             });
 
@@ -271,10 +272,8 @@ public class Main {
                                     menuPrincipalView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
                                     productoController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
                                     carritoController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    usuarioCrearView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    usuarioEliminarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    usuarioListarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    usuarioModificarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    usuarioController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+
                                 }
                             });
 
@@ -285,10 +284,7 @@ public class Main {
                                     menuPrincipalView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
                                     productoController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
                                     carritoController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    usuarioCrearView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    usuarioEliminarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    usuarioListarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                    usuarioModificarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    usuarioController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
                                 }
                             });
 
