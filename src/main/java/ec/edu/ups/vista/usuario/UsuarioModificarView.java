@@ -1,5 +1,7 @@
 package ec.edu.ups.vista.usuario;
 
+import ec.edu.ups.util.MensajeInternacionalizacionHandler;
+
 import javax.swing.*;
 
 public class UsuarioModificarView extends JInternalFrame {
@@ -9,12 +11,19 @@ public class UsuarioModificarView extends JInternalFrame {
     private JButton buscarButton;
     private JButton modificarButton;
     private JButton salirButton;
+    private JLabel lblTitulo;
+    private JLabel lblUsuario;
+    private JLabel lblContrasena;
+    private MensajeInternacionalizacionHandler mIH;
 
-    public UsuarioModificarView() {
-        super("Modificar Usuario", true, true, true, true);
+    public UsuarioModificarView(MensajeInternacionalizacionHandler mIH) {
+        super(mIH.get("menu.usuario.modificar"), true, true, true, true);
+        this.mIH = mIH;
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(400, 300);
+        setSize(350, 200);
+
+        cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
     }
 
     public void mostrarMensaje(String mensaje) {
@@ -25,6 +34,19 @@ public class UsuarioModificarView extends JInternalFrame {
         usernameTextField.setText("");
         contrasenaTextField.setText("");
     }
+
+    public void cambiarIdioma(String lenguaje,String pais) {
+        mIH.setLenguaje(lenguaje, pais);
+        setTitle(mIH.get("menu.usuario.modificar"));
+        lblTitulo.setText(mIH.get("ventana.usuario.modificar.titulo"));
+        lblUsuario.setText(mIH.get("ventana.usuario.usuario"));
+        lblContrasena.setText(mIH.get("ventana.usuario.contrasena"));
+        buscarButton.setText(mIH.get("ventana.buscar"));
+        modificarButton.setText(mIH.get("ventana.editar"));
+        salirButton.setText(mIH.get("ventana.salir"));
+    }
+
+    //GETTERS Y SETTERS
 
     public JTextField getUsernameTextField() {
         return usernameTextField;

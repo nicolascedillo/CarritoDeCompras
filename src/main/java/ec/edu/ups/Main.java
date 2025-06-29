@@ -98,10 +98,10 @@ public class Main {
 
 
                             //Instancias vistas del usuario
-                            UsuarioCrearView usuarioCrearView = new UsuarioCrearView();
-                            UsuarioEliminarView usuarioEliminarView = new UsuarioEliminarView();
-                            UsuarioListarView usuarioListarView = new UsuarioListarView();
-                            UsuarioModificarView usuarioModificarView = new UsuarioModificarView();
+                            UsuarioCrearView usuarioCrearView = new UsuarioCrearView(mIH);
+                            UsuarioEliminarView usuarioEliminarView = new UsuarioEliminarView(mIH);
+                            UsuarioListarView usuarioListarView = new UsuarioListarView(mIH);
+                            UsuarioModificarView usuarioModificarView = new UsuarioModificarView(mIH);
 
                             // Instanciar controladores
                             ProductoController productoController = new ProductoController(productoCrearView,
@@ -113,7 +113,7 @@ public class Main {
                                     itemListaView, mIH);
 
                             UsuarioController usuarioController = new UsuarioController(usuarioDAO,usuarioCrearView,
-                                    usuarioEliminarView, usuarioListarView, usuarioModificarView);
+                                    usuarioEliminarView, usuarioListarView, usuarioModificarView, mIH);
 
                             menuPrincipalView.mostrarMensaje(mIH.get("app.bienvenida") + ": " + usuarioAutenticado.getUsername());
                             if (usuarioAutenticado.getRol().equals(Rol.USUARIO)) {
@@ -263,6 +263,11 @@ public class Main {
                                     carritoListaView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
                                     carritoModificarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
                                     itemListaView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    usuarioCrearView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    usuarioEliminarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    usuarioListarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    usuarioModificarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+
                                 }
                             });
 
@@ -280,7 +285,10 @@ public class Main {
                                     carritoListaView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
                                     carritoModificarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
                                     itemListaView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-
+                                    usuarioCrearView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    usuarioEliminarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    usuarioListarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    usuarioModificarView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
                                 }
                             });
 

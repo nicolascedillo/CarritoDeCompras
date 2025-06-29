@@ -1,6 +1,7 @@
 package ec.edu.ups.vista.usuario;
 
 import ec.edu.ups.modelo.Usuario;
+import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -13,18 +14,22 @@ public class UsuarioListarView extends JInternalFrame {
     private JTable table1;
     private JButton buscarButton;
     private JButton salirButton;
+    private JLabel lblTitulo;
+    private JLabel lblUsuario;
     private DefaultTableModel modelo;
+    private MensajeInternacionalizacionHandler mIH;
 
-    public UsuarioListarView() {
-        super("Listar Usuarios", true, true, true, true);
+    public UsuarioListarView(MensajeInternacionalizacionHandler mIH) {
+        super(mIH.get("menu.usuario.buscar"), true, true, true, true);
+        this.mIH = mIH;
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(400, 300);
+        setSize(400, 250);
 
         modelo = new DefaultTableModel();
-        Object[] columnas = {"Username", "Contraseña", "Rol"};
-        modelo.setColumnIdentifiers(columnas);
         table1.setModel(modelo);
+
+        cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
     }
 
     public void mostrarMensaje(String mensaje) {
@@ -56,6 +61,17 @@ public class UsuarioListarView extends JInternalFrame {
         };
         modelo.addRow(fila);
     }
+
+    public void cambiarIdioma(String lenguaje, String pais){
+        mIH.setLenguaje(lenguaje, pais);
+        Object[] columnas = {mIH.get("ventana.usuario.usuario"), mIH.get("ventana.usuario.contrasena"), mIH.get("ventana.usuario.rol")};
+        modelo.setColumnIdentifiers(columnas);
+        setTitle(mIH.get("menu.usuario.buscar"));
+        lblTitulo.setText(mIH.get("ventana.usuario.buscar.titulo"));
+        lblUsuario.setText(mIH.get("ventana.usuario.usuario"));
+    }
+
+    //GETTERS Y SETTERS
 
     public JTextField getNombreTextField() {
         return nombreTextField;

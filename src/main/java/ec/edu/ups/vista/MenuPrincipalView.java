@@ -75,14 +75,14 @@ public class MenuPrincipalView extends JFrame {
         menuBar.add(menuSalir);
 
         menuProducto.add(menuItemCrearProducto);
-        menuProducto.add(menuItemEliminarProducto);
         menuProducto.add(menuItemBuscarProducto);
         menuProducto.add(menuItemModificarProdcuto);
+        menuProducto.add(menuItemEliminarProducto);
 
         menuCarrito.add(menuItemCrearCarrito);
-        menuCarrito.add(menuItemEliminarCarrito);
         menuCarrito.add(menuItemListaCarrito);
         menuCarrito.add(menuItemModificarCarrito);
+        menuCarrito.add(menuItemEliminarCarrito);
 
         menuUsuario.add(menuItemCrearUsuario);
         menuUsuario.add(menuItemBuscarUsuario);

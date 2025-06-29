@@ -3,11 +3,13 @@ package ec.edu.ups.controlador;
 import ec.edu.ups.dao.UsuarioDAO;
 import ec.edu.ups.modelo.Rol;
 import ec.edu.ups.modelo.Usuario;
+import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 import ec.edu.ups.vista.usuario.UsuarioCrearView;
 import ec.edu.ups.vista.usuario.UsuarioEliminarView;
 import ec.edu.ups.vista.usuario.UsuarioListarView;
 import ec.edu.ups.vista.usuario.UsuarioModificarView;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,13 +19,20 @@ public class UsuarioController {
     private final UsuarioEliminarView usuarioEliminarView;
     private final UsuarioListarView usuarioListarView;
     private final UsuarioModificarView usuarioModificarView;
+    private MensajeInternacionalizacionHandler mIH;
 
-    public UsuarioController(UsuarioDAO usuarioDAO,UsuarioCrearView usuarioCrearView, UsuarioEliminarView usuarioEliminarView, UsuarioListarView usuarioListarView, UsuarioModificarView usuarioModificarView) {
+    public UsuarioController(UsuarioDAO usuarioDAO,
+                             UsuarioCrearView usuarioCrearView,
+                             UsuarioEliminarView usuarioEliminarView,
+                             UsuarioListarView usuarioListarView,
+                             UsuarioModificarView usuarioModificarView,
+                             MensajeInternacionalizacionHandler mIH) {
         this.usuarioDAO = usuarioDAO;
         this.usuarioCrearView = usuarioCrearView;
         this.usuarioEliminarView = usuarioEliminarView;
         this.usuarioListarView = usuarioListarView;
         this.usuarioModificarView = usuarioModificarView;
+        this.mIH = mIH;
 
         configurarEventosUsuarioCrear();
         configurarEventosUsuarioEliminar();
@@ -36,23 +45,22 @@ public class UsuarioController {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 String username = usuarioCrearView.getUsernameTextField().getText();
-                String password = usuarioCrearView.getContraseñaPasswordField().getText();
+                String password = usuarioCrearView.getContrasenaPasswordField().getText();
                 Rol rol = Rol.USUARIO;
 
                 if (username.isEmpty() || password.isEmpty()) {
-                    usuarioCrearView.mostrarMensaje("Por favor, complete todos los campos.");
+                    usuarioCrearView.mostrarMensaje(mIH.get("mensaje.completar.campos"));
                     return;
                 }
 
                 if (usuarioDAO.buscarPorUsername(username) != null) {
-                    usuarioCrearView.mostrarMensaje("El usuario ya existe");
+                    usuarioCrearView.mostrarMensaje(mIH.get("mensaje.usuario,existe"));
                     return;
                 }
 
                 Usuario nuevoUsuario = new Usuario(username, password, rol);
                 usuarioDAO.crear(nuevoUsuario);
-                System.out.println("Usuario creado: " + usuarioDAO.listarTodos());
-                usuarioCrearView.mostrarMensaje("Usuario creado exitosamente");
+                usuarioCrearView.mostrarMensaje(mIH.get("mensaje.usuario.creado"));
                 usuarioCrearView.limpiarCampos();
             }
         });
@@ -74,7 +82,7 @@ public class UsuarioController {
                 if (usuario != null) {
                     usuarioEliminarView.getContrasenaTextField().setText(usuario.getPassword());
                 } else {
-                    usuarioEliminarView.mostrarMensaje("Usuario no encontrado");
+                    usuarioEliminarView.mostrarMensaje(mIH.get("mensaje.usuario.noencontrado"));
                 }
             }
         });
@@ -82,14 +90,21 @@ public class UsuarioController {
         usuarioEliminarView.getEliminarButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int respuesta = JOptionPane.showConfirmDialog(
+                        usuarioEliminarView,
+                        mIH.get("mensaje.usuario.confirmacion"),
+                        mIH.get("mensaje.confirmacion.titulo"),
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE
+                );
                 String username = usuarioEliminarView.getUsernameTextField().getText();
                 Usuario usuario = usuarioDAO.buscarPorUsername(username);
-                if (usuario != null) {
+                if (respuesta == JOptionPane.YES_OPTION) {
                     usuarioDAO.eliminar(usuario.getUsername());
-                    usuarioEliminarView.mostrarMensaje("Usuario eliminado exitosamente");
+                    usuarioEliminarView.mostrarMensaje(mIH.get("mensaje.usuario.eliminado"));
                     usuarioEliminarView.limpiarCampos();
                 } else {
-                    usuarioEliminarView.mostrarMensaje("Usuario no encontrado");
+                    usuarioEliminarView.mostrarMensaje(mIH.get("mensaje.usuario.noencontrado"));
                 }
             }
         });
@@ -111,7 +126,7 @@ public class UsuarioController {
                 if (usuario != null) {
                     usuarioListarView.cargarDatosBusqueda(usuario);
                 } else {
-                    usuarioListarView.mostrarMensaje("Usuario no encontrado");
+                    usuarioListarView.mostrarMensaje(mIH.get("mensaje.usuario.noencontrado"));
                 }
             }
         });
@@ -140,7 +155,7 @@ public class UsuarioController {
                 if (usuario != null) {
                     usuarioModificarView.getContrasenaTextField().setText(usuario.getPassword());
                 } else {
-                    usuarioModificarView.mostrarMensaje("Usuario no encontrado");
+                    usuarioModificarView.mostrarMensaje(mIH.get("mensaje.usuario.noencontrado"));
                 }
             }
         });
@@ -154,10 +169,10 @@ public class UsuarioController {
                 if (usuario != null) {
                     usuario.setPassword(password);
                     usuarioDAO.actualizar(usuario);
-                    usuarioModificarView.mostrarMensaje("Usuario modificado exitosamente");
+                    usuarioModificarView.mostrarMensaje(mIH.get("mensaje.usuario.modificado"));
                     usuarioModificarView.limpiarCampos();
                 } else {
-                    usuarioModificarView.mostrarMensaje("Usuario no encontrado");
+                    usuarioModificarView.mostrarMensaje(mIH.get("mensaje.usuario.noencontrado"));
                 }
             }
         });
