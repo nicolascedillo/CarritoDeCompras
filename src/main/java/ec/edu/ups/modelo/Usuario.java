@@ -67,9 +67,10 @@ public class Usuario {
     @Override
     public String toString() {
         return "Usuario{" +
-                "username='" + username + '\'' +
+                "rol=" + rol +
                 ", password='" + password + '\'' +
-                ", rol=" + rol +
+                ", username='" + username + '\'' +
+                ", preguntasVerificacion=" + preguntasVerificacion +
                 '}';
     }
 }

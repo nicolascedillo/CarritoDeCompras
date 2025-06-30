@@ -19,6 +19,7 @@ import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 import ec.edu.ups.vista.*;
 import ec.edu.ups.vista.carrito.*;
 import ec.edu.ups.vista.login.LogInView;
+import ec.edu.ups.vista.login.RecuperarContraseniaView;
 import ec.edu.ups.vista.login.RegistraseView;
 import ec.edu.ups.vista.producto.ProductoCrearView;
 import ec.edu.ups.vista.producto.ProductoEliminarView;
@@ -49,7 +50,8 @@ public class Main {
 
                 LogInView logInView = new LogInView(mIH);
                 RegistraseView registraseView = new RegistraseView(mIH);
-                LogInController logInController = new LogInController(usuarioDAO,preguntaDAO, logInView, registraseView, mIH);
+                RecuperarContraseniaView recuperarContraseniaView = new RecuperarContraseniaView(mIH);
+                LogInController logInController = new LogInController(usuarioDAO,preguntaDAO, logInView, registraseView, mIH, recuperarContraseniaView);
 
                 logInView.getIdiomaComboBox().addActionListener(new ActionListener() {
                     @Override
@@ -94,7 +96,7 @@ public class Main {
                             ProductoEliminarView productoEliminarView = new ProductoEliminarView(mIH);
 
                             //Instancias vistas del carrito
-                            CarritoCrearView carritoCrearView = new CarritoCrearView(usuarioAutenticado, mIH);
+                            CarritoCrearView carritoCrearView = new CarritoCrearView(mIH);
                             CarritoEliminarView carritoEliminarView = new CarritoEliminarView(mIH);
                             CarritoListaView carritoListaView = new CarritoListaView(mIH);
                             ItemListaView itemListaView = new ItemListaView(mIH);
@@ -115,7 +117,7 @@ public class Main {
 
                             CarritoController carritoController = new CarritoController(productoDAO, carritoDAO,
                                     carritoCrearView,carritoEliminarView,carritoModificarView,carritoListaView,
-                                    itemListaView, mIH);
+                                    itemListaView, usuarioAutenticado,mIH);
 
                             UsuarioController usuarioController = new UsuarioController(usuarioDAO,usuarioCrearView,
                                     usuarioEliminarView, usuarioListarView, usuarioModificarView, mIH);
@@ -229,6 +231,11 @@ public class Main {
                                         usuarioEliminarView.setVisible(true);
                                         menuPrincipalView.getjDesktopPane().add(usuarioEliminarView);
                                     }
+                                    if(usuarioAutenticado.getRol() == Rol.USUARIO){
+                                        usuarioEliminarView.getBuscarButton().setEnabled(false);
+                                        usuarioEliminarView.getUsernameTextField().setText(usuarioAutenticado.getUsername());
+                                        usuarioEliminarView.getContrasenaTextField().setText(usuarioAutenticado.getPassword());
+                                    }
                                 }
                             });
 
@@ -248,6 +255,11 @@ public class Main {
                                     if(!usuarioModificarView.isVisible()){
                                         usuarioModificarView.setVisible(true);
                                         menuPrincipalView.getjDesktopPane().add(usuarioModificarView);
+                                    }
+                                    if(usuarioAutenticado.getRol() == Rol.USUARIO){
+                                        usuarioModificarView.getBuscarButton().setEnabled(false);
+                                        usuarioModificarView.getUsernameTextField().setText(usuarioAutenticado.getUsername());
+                                        usuarioModificarView.getContrasenaTextField().setText(usuarioAutenticado.getPassword());
                                     }
                                 }
                             });

@@ -36,21 +36,17 @@ public class CarritoCrearView extends JInternalFrame{
     private JLabel lblDatosProducto;
     private JLabel lblLista;
     private DefaultTableModel modelo;
-    private Carrito carrito;
-    private Usuario usuario;
     private MensajeInternacionalizacionHandler mIH;
 
-    public CarritoCrearView(Usuario usuario, MensajeInternacionalizacionHandler mIH) {
+    public CarritoCrearView( MensajeInternacionalizacionHandler mIH) {
         super(mIH.get("menu.carrito.crear"),true,true,true,true);
         this.mIH = mIH;
-        this.usuario = usuario;
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(400,700);
         cargarDatosComboBox();
         modelo = new DefaultTableModel();
         table1.setModel(modelo);
-        carrito = new Carrito(usuario);
 
         cambiarIdioma(mIH.getLocale().getLanguage(),mIH.getLocale().getCountry());
     }
@@ -177,18 +173,6 @@ public class CarritoCrearView extends JInternalFrame{
 
     public JComboBox getCantidadComboBox() {
         return cantidadComboBox;
-    }
-
-    public Carrito getCarrito() {
-        return carrito;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setCarrito(Carrito carrito) {
-        this.carrito = carrito;
     }
 
     public JLabel getLblCodigo() {

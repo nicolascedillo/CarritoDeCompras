@@ -25,7 +25,7 @@ public class LogInView extends JFrame {
         this.mIH = mIH;
         setTitle(mIH.get("login.boton.iniciar"));
         setContentPane(panelPrincipal);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         cambiarTamanio(mIH);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -55,11 +55,11 @@ public class LogInView extends JFrame {
 
     public void cambiarTamanio(MensajeInternacionalizacionHandler idioma) {
         if (idioma.getLocale().getLanguage().equals("en")) {
-            setSize(500, 275);
+            setSize(470, 275);
         } else if (idioma.getLocale().getLanguage().equals("es")) {
-            setSize(550, 275);
+            setSize(520, 275);
         } else if (idioma.getLocale().getLanguage().equals("fr")) {
-            setSize(600, 275);
+            setSize(570, 275);
         }
     }
 
@@ -109,6 +109,10 @@ public class LogInView extends JFrame {
 
     public MensajeInternacionalizacionHandler getMensajeInternacionalizacionHandler() {
         return mIH;
+    }
+
+    public JButton getOlvidadaButton() {
+        return olvidadaButton;
     }
 
 }

@@ -24,4 +24,12 @@ public class Pregunta {
     public void setEnunciado(String enunciado) {
         this.enunciado = enunciado;
     }
+
+    @Override
+    public String toString() {
+        return "Pregunta{" +
+                "codigo=" + codigo +
+                ", enunciado='" + enunciado + '\'' +
+                '}';
+    }
 }

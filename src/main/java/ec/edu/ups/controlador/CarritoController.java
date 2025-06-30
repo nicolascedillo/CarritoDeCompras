@@ -5,6 +5,7 @@ import ec.edu.ups.dao.ProductoDAO;
 import ec.edu.ups.modelo.Carrito;
 import ec.edu.ups.modelo.ItemCarrito;
 import ec.edu.ups.modelo.Producto;
+import ec.edu.ups.modelo.Usuario;
 import ec.edu.ups.util.FormateadorUtils;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 import ec.edu.ups.vista.carrito.*;
@@ -23,6 +24,8 @@ public class CarritoController {
     private final CarritoModificarView carritoModificarView;
     private final CarritoListaView carritoListaView;
     private final ItemListaView itemListaView;
+    private Carrito carrito;
+    private Usuario usuario;
     private MensajeInternacionalizacionHandler mIH;
 
     public CarritoController(ProductoDAO productoDAO,
@@ -32,6 +35,7 @@ public class CarritoController {
                              CarritoModificarView carritoModificarView,
                              CarritoListaView carritoListaView,
                              ItemListaView itemListaView,
+                             Usuario usuario,
                              MensajeInternacionalizacionHandler mIH) {
         this.carritoDao = carritoDao;
         this.carritoCrearView = carritoCrearView;
@@ -40,6 +44,8 @@ public class CarritoController {
         this.carritoModificarView = carritoModificarView;
         this.carritoListaView = carritoListaView;
         this.itemListaView = itemListaView;
+        this.usuario = usuario;
+        this.carrito = new Carrito(usuario);
         this.mIH = mIH;
         configurarEventosAnadir();
         configurarEventosEliminar();
@@ -54,10 +60,10 @@ public class CarritoController {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                carritoDao.crear(carritoCrearView.getCarrito());
+                carritoDao.crear(carrito);
                 carritoCrearView.mostrarMensaje(mIH.get("mensaje.carrito.creado"));
                 carritoCrearView.limpiarCampos();
-                carritoCrearView.setCarrito(new Carrito(carritoCrearView.getUsuario()));
+                carrito = new Carrito(usuario);
                 carritoCrearView.getGuardarButton().setEnabled(false);
             }
         });
@@ -84,7 +90,7 @@ public class CarritoController {
             public void actionPerformed(ActionEvent e) {
                 carritoCrearView.limpiarCampos();
                 carritoCrearView.getCodigoTextField().setEnabled(true);
-                carritoCrearView.getCarrito().vaciarCarrito();
+                carrito.vaciarCarrito();
                 carritoCrearView.mostrarMensaje(mIH.get("mensaje.cancelar"));
                 carritoCrearView.getGuardarButton().setEnabled(false);
             }
@@ -328,25 +334,25 @@ public class CarritoController {
         Producto productoEncontrado =  productoDao.buscarPorCodigo(codigo);
         if(!verificarProductoEnCarrito(productoEncontrado)){
             int cantidad = (Integer) carritoCrearView.getCantidadComboBox().getSelectedItem();
-            carritoCrearView.getCarrito().agregarProducto(productoEncontrado, cantidad);
-            carritoCrearView.cargarDatos(carritoCrearView.getCarrito());
+            carrito.agregarProducto(productoEncontrado, cantidad);
+            carritoCrearView.cargarDatos(carrito);
         }else{
-            for (ItemCarrito item : carritoCrearView.getCarrito().obtenerItems()) {
+            for (ItemCarrito item : carrito.obtenerItems()) {
                 if (item.getProducto().getCodigo() == productoEncontrado.getCodigo()) {
                     item.setCantidad(item.getCantidad() + (Integer) carritoCrearView.getCantidadComboBox().getSelectedItem());
                 }
             }
-            carritoCrearView.cargarDatos(carritoCrearView.getCarrito());
+            carritoCrearView.cargarDatos(carrito);
             carritoCrearView.mostrarMensaje(mIH.get("mensaje.carrito.producto.ya.registrado"));
         }
-        carritoCrearView.getSubtotalTextField().setText(FormateadorUtils.formatearMoneda(carritoCrearView.getCarrito().calcularSubtotal(), mIH.getLocale()));
-        carritoCrearView.getIvaTextField().setText(FormateadorUtils.formatearMoneda(carritoCrearView.getCarrito().calcularIva(), mIH.getLocale()));
-        carritoCrearView.getTotalTextField().setText(FormateadorUtils.formatearMoneda(carritoCrearView.getCarrito().calcularTotal(), mIH.getLocale()));
+        carritoCrearView.getSubtotalTextField().setText(FormateadorUtils.formatearMoneda(carrito.calcularSubtotal(), mIH.getLocale()));
+        carritoCrearView.getIvaTextField().setText(FormateadorUtils.formatearMoneda(carrito.calcularIva(), mIH.getLocale()));
+        carritoCrearView.getTotalTextField().setText(FormateadorUtils.formatearMoneda(carrito.calcularTotal(), mIH.getLocale()));
 
     }
 
     private boolean verificarProductoEnCarrito(Producto producto) {
-        for (ItemCarrito item : carritoCrearView.getCarrito().obtenerItems()) {
+        for (ItemCarrito item : carrito.obtenerItems()) {
             if (item.getProducto().getCodigo() == producto.getCodigo()) {
                 return true;
             }
@@ -462,9 +468,9 @@ public class CarritoController {
             carritoCrearView.getPrecioTextField().setText(FormateadorUtils.formatearMoneda(producto.getPrecio(), locale));
         }
 
-        carritoCrearView.getSubtotalTextField().setText(FormateadorUtils.formatearMoneda(carritoCrearView.getCarrito().calcularSubtotal(), mIH.getLocale()));
-        carritoCrearView.getIvaTextField().setText(FormateadorUtils.formatearMoneda(carritoCrearView.getCarrito().calcularIva(), mIH.getLocale()));
-        carritoCrearView.getTotalTextField().setText(FormateadorUtils.formatearMoneda(carritoCrearView.getCarrito().calcularTotal(), mIH.getLocale()));
+        carritoCrearView.getSubtotalTextField().setText(FormateadorUtils.formatearMoneda(carrito.calcularSubtotal(), mIH.getLocale()));
+        carritoCrearView.getIvaTextField().setText(FormateadorUtils.formatearMoneda(carrito.calcularIva(), mIH.getLocale()));
+        carritoCrearView.getTotalTextField().setText(FormateadorUtils.formatearMoneda(carrito.calcularTotal(), mIH.getLocale()));
     }
 
     private void refrescarItemLista(Locale locale) {

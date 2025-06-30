@@ -7,10 +7,13 @@ import ec.edu.ups.modelo.Rol;
 import ec.edu.ups.modelo.Usuario;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 import ec.edu.ups.vista.login.LogInView;
+import ec.edu.ups.vista.login.RecuperarContraseniaView;
 import ec.edu.ups.vista.login.RegistraseView;
 
+import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class LogInController {
@@ -19,16 +22,18 @@ public class LogInController {
     private final LogInView logInView;
     private final RegistraseView registraseView;
     private final PreguntaDAO preguntaDAO;
+    private final RecuperarContraseniaView recuperarContraseniaView;
     private MensajeInternacionalizacionHandler mIH;
 
     public LogInController(UsuarioDAO usuarioDAO,PreguntaDAO preguntaDAO, LogInView logInView,
-                           RegistraseView registraseView, MensajeInternacionalizacionHandler mIH) {
+                           RegistraseView registraseView, MensajeInternacionalizacionHandler mIH, RecuperarContraseniaView recuperarContraseniaView) {
         this.usuarioDAO = usuarioDAO;
         this.mIH = mIH;
         this.logInView = logInView;
         this.registraseView = registraseView;
         this.usuario = null;
         this.preguntaDAO = preguntaDAO;
+        this.recuperarContraseniaView = recuperarContraseniaView;
 
         configurarEventosEnVista();
     }
@@ -48,8 +53,25 @@ public class LogInController {
                 registrarse();
             }
         });
-    }
 
+        logInView.getOlvidadaButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                if(logInView.getUsernameTextField().getText().isEmpty()){
+                    recuperarContraseniaView.mostrarMensaje(mIH.get("recuperacion.usuario.vacio"));
+                    return;
+                }
+                if(usuarioDAO.buscarPorUsername(logInView.getUsernameTextField().getText()) == null){
+                    recuperarContraseniaView.mostrarMensaje(mIH.get("mensaje.usuario.noencontrado"));
+                    return;
+                }
+                logInView.setVisible(false);
+                configurarEventosEnOlvidada();
+                recuperarContraseniaView.setVisible(true);
+
+            }
+        });
+    }
 
     private void autenticar(){
         String username = logInView.getUsernameTextField().getText();
@@ -75,11 +97,15 @@ public class LogInController {
     }
 
     private void configurarEventosEnRegistrarse() {
+        registraseView.getUsuarioTextField().setText("");
+        registraseView.getPasswordField1().setText("");
         final int[] contadorPreguntas = {1};
         final int[] contadorPreguntasRespondidas = {0};
         List<PreguntaRespondida> preguntasRespondidas = new ArrayList<>();
         cargarPregunta(contadorPreguntas[0]);
-        contadorPreguntas[0]++;
+
+        quitarActionListeners(registraseView.getGuardarButton());
+        quitarActionListeners(registraseView.getSiguienteButton());
 
         registraseView.getGuardarButton().addActionListener(new ActionListener() {
             @Override
@@ -90,6 +116,8 @@ public class LogInController {
                 }
                 String username = registraseView.getUsuarioTextField().getText();
                 String password = registraseView.getPasswordField1().getText();
+                registraseView.getUsuarioTextField().setText("");
+                registraseView.getPasswordField1().setText("");
 
                 if (username.isEmpty() || password.isEmpty()) {
                     registraseView.mostrarMensaje(mIH.get("mensaje.completar.campos"));
@@ -101,12 +129,14 @@ public class LogInController {
                     return;
                 }
 
-                usuario = new Usuario(username, password, Rol.USUARIO);
-                usuario.setPreguntasVerificacion(preguntasRespondidas);
-                usuarioDAO.crear(usuario);
+                Usuario usuario1 = new Usuario(username, password, Rol.USUARIO);
+                usuario1.setPreguntasVerificacion(preguntasRespondidas);
+                usuarioDAO.crear(usuario1);
                 registraseView.mostrarMensaje(mIH.get("mensaje.usuario.creado"));
                 logInView.setVisible(true);
                 registraseView.dispose();
+                contadorPreguntas[0] = 1;
+                contadorPreguntasRespondidas[0] = 0;
             }
         });
 
@@ -116,13 +146,13 @@ public class LogInController {
                 if(contadorPreguntas[0] > 12){
                     return;
                 }
-                cargarPregunta(contadorPreguntas[0]);
-                contadorPreguntas[0]++;
                 if(!registraseView.getRespuestaTextField().getText().isEmpty()){
                     contadorPreguntasRespondidas[0]++;
                     PreguntaRespondida preguntaRespondida = new PreguntaRespondida(preguntaDAO.buscarPorCodigo(contadorPreguntas[0]), registraseView.getRespuestaTextField().getText());
                     preguntasRespondidas.add(preguntaRespondida);
                 }
+                contadorPreguntas[0]++;
+                cargarPregunta(contadorPreguntas[0]);
                 registraseView.getRespuestaTextField().setText("");
 
             }
@@ -134,10 +164,97 @@ public class LogInController {
         registraseView.getLblEnunciado().setText(mIH.get(preguntaDAO.buscarPorCodigo(codigo).getEnunciado()));
     }
 
+    private void configurarEventosEnOlvidada() {
+        Usuario usuarioRecuperacion = usuarioDAO.buscarPorUsername(logInView.getUsernameTextField().getText());
+        List<PreguntaRespondida> preguntas = usuarioRecuperacion.getPreguntasVerificacion();
+        randomizarListaPreguntaRespondida(preguntas);
+        List<Integer> codigos = new ArrayList<>();
+        List<String> respuestas = new ArrayList<>();
+        for (PreguntaRespondida preguntaRespondida : preguntas) {
+            codigos.add(preguntaRespondida.getPregunta().getCodigo());
+            respuestas.add(preguntaRespondida.getRespuesta());
+        }
+        final int[] iteradorCodigo = {0};
+        final int[] correctas = {0};
+        cargarPreguntaOlvidada(codigos.get(iteradorCodigo[0]));
+
+        quitarActionListeners(recuperarContraseniaView.getRestablecerButton());
+        quitarActionListeners(recuperarContraseniaView.getSiguienteButton());
+
+        recuperarContraseniaView.getSiguienteButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+
+                if(correctas[0] >= 2){
+                    recuperarContraseniaView.getSiguienteButton().setEnabled(false);
+                    recuperarContraseniaView.getRestablecerButton().setEnabled(true);
+                    recuperarContraseniaView.getLblEnunciado().setText("");
+                    recuperarContraseniaView.getLblPreguntaCodigo().setText("");
+                    recuperarContraseniaView.getRespuestaTextField().setText("");
+                    recuperarContraseniaView.getLblTituloPreguntas().setText(mIH.get("recuperacion.nueva.contrasena"));
+                    return;
+                }
+
+                if (recuperarContraseniaView.getRespuestaTextField().getText().isEmpty() ||
+                        !recuperarContraseniaView.getRespuestaTextField().getText().toLowerCase().equals(respuestas.get(iteradorCodigo[0]).toLowerCase())) {
+                    recuperarContraseniaView.mostrarMensaje(mIH.get("recuperacion.respuesta.erronea"));
+                    return;
+                }
+                iteradorCodigo[0]++;
+                correctas[0]++;
+                recuperarContraseniaView.getRespuestaTextField().setText("");
+                cargarPreguntaOlvidada(codigos.get(iteradorCodigo[0]));
+
+            }
+        });
+
+        recuperarContraseniaView.getRestablecerButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                if (recuperarContraseniaView.getRespuestaTextField().getText().isEmpty()) {
+                    recuperarContraseniaView.mostrarMensaje(mIH.get("recuperacion.nueva.contrasena"));
+                    return;
+                }
+                String nuevaContrasenia = recuperarContraseniaView.getRespuestaTextField().getText();
+                usuarioRecuperacion.setPassword(nuevaContrasenia);
+                usuarioDAO.actualizar(usuarioRecuperacion);
+                recuperarContraseniaView.mostrarMensaje(mIH.get("recuperacion.contrasena.actualizada"));
+                recuperarContraseniaView.getRespuestaTextField().setText("");
+                recuperarContraseniaView.getSiguienteButton().setEnabled(true);
+                recuperarContraseniaView.getRestablecerButton().setEnabled(false);
+                iteradorCodigo[0] = 0;
+                correctas[0] = 0;
+                logInView.setVisible(true);
+                recuperarContraseniaView.dispose();
+            }
+        });
+    }
+
+    private void cargarPreguntaOlvidada(int codigo){
+        recuperarContraseniaView.getLblPreguntaCodigo().setText(mIH.get("registro.numero.pregunta") + " " + codigo);
+        recuperarContraseniaView.getLblEnunciado().setText(mIH.get(preguntaDAO.buscarPorCodigo(codigo).getEnunciado()));
+    }
+
     public void cambiarIdioma(String lenguaje, String pais) {
         mIH.setLenguaje(lenguaje, pais);
         logInView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
         registraseView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+        recuperarContraseniaView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+    }
+
+    private void randomizarListaPreguntaRespondida(List<PreguntaRespondida> lista) {
+        List<PreguntaRespondida> listaRandomizada = new LinkedList<>();
+        while (!lista.isEmpty()) {
+            int randomIndex = (int) (Math.random() * lista.size());
+            listaRandomizada.add(lista.remove(randomIndex));
+        }
+        lista.addAll(listaRandomizada);
+    }
+
+    private void quitarActionListeners(JButton button) {
+        for (ActionListener al : button.getActionListeners()) {
+            button.removeActionListener(al);
+        }
     }
 
     public Usuario getUsuarioAutenticado(){

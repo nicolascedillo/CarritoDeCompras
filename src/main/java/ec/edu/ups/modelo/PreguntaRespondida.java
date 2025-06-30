@@ -24,4 +24,12 @@ public class PreguntaRespondida {
     public void setRespuesta(String respuesta) {
         this.respuesta = respuesta;
     }
+
+    @Override
+    public String toString() {
+        return "PreguntaRespondida{" +
+                "pregunta=" + pregunta +
+                ", respuesta='" + respuesta + '\'' +
+                '}';
+    }
 }
