@@ -157,7 +157,11 @@ public class CarritoController {
                 if (carritoEncontrado != null) {
                     carritoModificarView.getFechaTextField().setText(FormateadorUtils.formatearFecha(carritoEncontrado.getFechaCreacionDate(), mIH.getLocale()));
                     carritoModificarView.getUsuarioTextField().setText(carritoEncontrado.getUsuario().getUsername());
-                    carritoModificarView.cargarDatos(carritoEncontrado);
+                    if(carritoEncontrado.obtenerItems().isEmpty()) {
+                        carritoModificarView.mostrarMensaje(mIH.get("mensaje.carrito.vacio"));
+                    }else {
+                        carritoModificarView.cargarDatos(carritoEncontrado);
+                    }
                     carritoModificarView.getSubtotalTextField().setText(FormateadorUtils.formatearMoneda(carritoEncontrado.calcularSubtotal(), mIH.getLocale()));
                     carritoModificarView.getIvaTextField().setText(FormateadorUtils.formatearMoneda(carritoEncontrado.calcularIva(), mIH.getLocale()));
                     carritoModificarView.getTotalTextField().setText(FormateadorUtils.formatearMoneda(carritoEncontrado.calcularTotal(), mIH.getLocale()));
@@ -197,6 +201,66 @@ public class CarritoController {
             }
         });
 
+        carritoModificarView.getEliminarButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(carritoModificarView.getTable1().getSelectedRow() != -1) {
+                    int respuesta = JOptionPane.showConfirmDialog(
+                            carritoModificarView,
+                            mIH.get("mensaje.carrito.confirmacion.producto"),
+                            mIH.get("mensaje.confirmacion.titulo"),
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.WARNING_MESSAGE
+                    );
+
+                    if (respuesta == JOptionPane.YES_OPTION) {
+                        int codigoCarrito = Integer.parseInt(carritoModificarView.getCodigoTextField().getText());
+                        Carrito carritoEncontrado = carritoDao.buscarPorCodigo(codigoCarrito);
+                        int codigoProducto = (Integer) carritoModificarView.getTable1().getValueAt(
+                                carritoModificarView.getTable1().getSelectedRow(), 0);
+                        carritoEncontrado.eliminarProducto(codigoProducto);
+                        carritoDao.actualizar(carritoEncontrado);
+                        carritoModificarView.mostrarMensaje(mIH.get("mensaje.carrito.producto.eliminado"));
+                        carritoModificarView.cargarDatos(carritoEncontrado);
+
+                        carritoModificarView.getSubtotalTextField().setText(FormateadorUtils.formatearMoneda(carritoEncontrado.calcularSubtotal(), mIH.getLocale()));
+                        carritoModificarView.getIvaTextField().setText(FormateadorUtils.formatearMoneda(carritoEncontrado.calcularIva(), mIH.getLocale()));
+                        carritoModificarView.getTotalTextField().setText(FormateadorUtils.formatearMoneda(carritoEncontrado.calcularTotal(), mIH.getLocale()));
+
+                    } else {
+                        carritoModificarView.mostrarMensaje(mIH.get("mensaje.cancelar"));
+                    }
+                } else {
+                    carritoModificarView.mostrarMensaje(mIH.get("mensaje.carrito.seleccionar.eliminar"));
+                }
+            }
+        });
+
+        carritoModificarView.getAnadirButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int codigoCarrito = Integer.parseInt(carritoModificarView.getCodigoTextField().getText());
+                Carrito carritoEncontrado = carritoDao.buscarPorCodigo(codigoCarrito);
+
+                int codigoNuevoProducto = Integer.parseInt(JOptionPane.showInputDialog(carritoModificarView, mIH.get("mensaje.carrito.ingresar.producto")));
+                for(ItemCarrito item : carritoEncontrado.obtenerItems()) {
+                    if (item.getProducto().getCodigo() == codigoNuevoProducto) {
+                        carritoModificarView.mostrarMensaje(mIH.get("mensaje.carrito.producto.ya.registrado.editar"));
+                        return;
+                    }
+                }
+                int cantidad = Integer.parseInt(JOptionPane.showInputDialog(carritoModificarView, mIH.get("mensaje.carrito.ingresar.cantidad")));
+
+                carritoEncontrado.agregarProducto(productoDao.buscarPorCodigo(codigoNuevoProducto), cantidad);
+                carritoDao.actualizar(carritoEncontrado);
+                carritoModificarView.mostrarMensaje(mIH.get("mensaje.carrito.modificado"));
+                carritoModificarView.cargarDatos(carritoEncontrado);
+                carritoModificarView.getSubtotalTextField().setText(FormateadorUtils.formatearMoneda(carritoEncontrado.calcularSubtotal(), mIH.getLocale()));
+                carritoModificarView.getIvaTextField().setText(FormateadorUtils.formatearMoneda(carritoEncontrado.calcularIva(), mIH.getLocale()));
+                carritoModificarView.getTotalTextField().setText(FormateadorUtils.formatearMoneda(carritoEncontrado.calcularTotal(), mIH.getLocale()));
+
+            }
+        });
 
     }
 

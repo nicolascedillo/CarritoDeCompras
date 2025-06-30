@@ -136,4 +136,11 @@ public class CarritoModificarView extends JInternalFrame {
         return modelo;
     }
 
+    public JButton getAnadirButton() {
+        return anadirButton;
+    }
+
+    public JButton getEliminarButton() {
+        return eliminarButton;
+    }
 }
