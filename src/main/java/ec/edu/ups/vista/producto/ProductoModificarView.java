@@ -1,6 +1,8 @@
 package ec.edu.ups.vista.producto;
 
+import ec.edu.ups.util.Icono;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
+import ec.edu.ups.util.Url;
 
 import javax.swing.*;
 
@@ -27,6 +29,10 @@ public class ProductoModificarView extends JInternalFrame{
         setResizable(true);
         txtNombre.setEnabled(false);
         txtPrecio.setEnabled(false);
+        setFrameIcon(Icono.icono(Url.MODIFICAR));
+
+        btnGuardar.setIcon(Icono.icono(Url.GUARDAR));
+        buscarButton.setIcon(Icono.icono(Url.BUSCAR));
 
         setTitle(mIH.get("menu.producto.modificar"));
         lblTitulo.setText(mIH.get("ventana.producto.modificar.titulo"));

@@ -2,7 +2,9 @@ package ec.edu.ups.vista.carrito;
 
 import ec.edu.ups.modelo.Carrito;
 import ec.edu.ups.util.FormateadorUtils;
+import ec.edu.ups.util.Icono;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
+import ec.edu.ups.util.Url;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -27,10 +29,15 @@ public class CarritoListaView extends JInternalFrame {
         this.mIH = mIH;
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(400, 700);
+        setSize(420, 700);
+        setFrameIcon(Icono.icono(Url.BUSCAR));
 
         modelo = new DefaultTableModel();
         table1.setModel(modelo);
+
+        buscarButton.setIcon(Icono.icono(Url.BUSCAR));
+        listarButton.setIcon(Icono.icono(Url.LISTAR));
+        verDetallesButton.setIcon(Icono.icono(Url.VER));
 
         cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
     }

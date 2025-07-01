@@ -1,6 +1,8 @@
 package ec.edu.ups.vista.usuario;
 
+import ec.edu.ups.util.Icono;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
+import ec.edu.ups.util.Url;
 
 import javax.swing.*;
 
@@ -22,7 +24,12 @@ public class UsuarioEliminarView extends JInternalFrame {
         this.mIH = mIH;
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(350, 200);
+        setSize(380, 200);
+        setFrameIcon(Icono.icono(Url.ELIMINAR));
+
+        buscarButton.setIcon(Icono.icono(Url.BUSCAR));
+        eliminarButton.setIcon(Icono.icono(Url.ELIMINAR));
+        salirButton.setIcon(Icono.icono(Url.CERRAR));
 
         cambiarIdioma(mIH.getLocale().getLanguage(),mIH.getLocale().getCountry());
     }

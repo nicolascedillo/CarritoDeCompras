@@ -2,7 +2,9 @@ package ec.edu.ups.vista.producto;
 
 import ec.edu.ups.modelo.Producto;
 import ec.edu.ups.util.FormateadorUtils;
+import ec.edu.ups.util.Icono;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
+import ec.edu.ups.util.Url;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -28,6 +30,10 @@ public class ProductoListaView extends JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setResizable(true);
+        setFrameIcon(Icono.icono(Url.BUSCAR));
+
+        btnListar.setIcon(Icono.icono(Url.LISTAR));
+        btnBuscar.setIcon(Icono.icono(Url.BUSCAR));
 
         modelo = new DefaultTableModel();
         Object[] columnas = {mIH.get("ventana.producto.codigo"), mIH.get("ventana.producto.nombre"), mIH.get("ventana.producto.precio")};

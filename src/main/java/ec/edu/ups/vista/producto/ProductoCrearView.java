@@ -1,7 +1,9 @@
 package ec.edu.ups.vista.producto;
 
 import ec.edu.ups.modelo.Producto;
+import ec.edu.ups.util.Icono;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
+import ec.edu.ups.util.Url;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -30,6 +32,7 @@ public class ProductoCrearView extends JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setResizable(true);
+        setFrameIcon(Icono.icono(Url.CREAR));
 
         setTitle(mIH.get("menu.producto.crear"));
         lblTitulo.setText(mIH.get("ventana.producto.crear.titulo"));
@@ -38,6 +41,9 @@ public class ProductoCrearView extends JInternalFrame {
         lblPrecio.setText(mIH.get("ventana.producto.precio"));
         btnAceptar.setText(mIH.get("ventana.aceptar"));
         btnLimpiar.setText(mIH.get("ventana.limpiar"));
+
+        btnAceptar.setIcon(Icono.icono(Url.CREAR));
+        btnLimpiar.setIcon(Icono.icono(Url.LIMPIAR));
 
         btnLimpiar.addActionListener(new ActionListener() {
             @Override

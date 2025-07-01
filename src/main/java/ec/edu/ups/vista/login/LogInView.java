@@ -1,6 +1,8 @@
 package ec.edu.ups.vista.login;
 
+import ec.edu.ups.util.Icono;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
+import ec.edu.ups.util.Url;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -30,6 +32,10 @@ public class LogInView extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+
+        registrarseButton.setIcon(Icono.icono(Url.CREAR));
+        iniciarSesionButton.setIcon(Icono.icono(Url.INICIAR));
+        salirButton.setIcon(Icono.icono(Url.SALIR));
 
         salirButton.addActionListener(new ActionListener() {
             @Override

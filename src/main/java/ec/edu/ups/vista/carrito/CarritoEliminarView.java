@@ -4,7 +4,9 @@ import ec.edu.ups.modelo.Carrito;
 import ec.edu.ups.modelo.ItemCarrito;
 import ec.edu.ups.modelo.Producto;
 import ec.edu.ups.util.FormateadorUtils;
+import ec.edu.ups.util.Icono;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
+import ec.edu.ups.util.Url;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -39,9 +41,13 @@ public class CarritoEliminarView extends JInternalFrame{
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(400,700);
+        setFrameIcon(Icono.icono(Url.ELIMINAR));
 
         modelo = new DefaultTableModel();
         table1.setModel(modelo);
+
+        buscarButton.setIcon(Icono.icono(Url.BUSCAR));
+        eliminarButton.setIcon(Icono.icono(Url.ELIMINAR));
 
         cambiarIdioma(mIH.getLocale().getLanguage(),mIH.getLocale().getCountry());
 

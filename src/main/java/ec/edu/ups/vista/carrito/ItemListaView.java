@@ -4,7 +4,9 @@ import ec.edu.ups.modelo.Carrito;
 import ec.edu.ups.modelo.ItemCarrito;
 import ec.edu.ups.modelo.Producto;
 import ec.edu.ups.util.FormateadorUtils;
+import ec.edu.ups.util.Icono;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
+import ec.edu.ups.util.Url;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -26,11 +28,14 @@ public class ItemListaView extends JInternalFrame {
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setSize(400, 500);
+        setFrameIcon(Icono.icono(Url.VER));
 
         modelo = new DefaultTableModel();
         table1.setModel(modelo);
 
         cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+
+        salirButton.setIcon(Icono.icono(Url.CERRAR));
 
         salirButton.addActionListener(new ActionListener() {
             @Override

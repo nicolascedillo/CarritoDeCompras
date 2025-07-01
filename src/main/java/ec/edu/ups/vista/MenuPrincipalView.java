@@ -1,10 +1,10 @@
 package ec.edu.ups.vista;
 
+import ec.edu.ups.util.Icono;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
+import ec.edu.ups.util.Url;
 
 import javax.swing.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 
 public class MenuPrincipalView extends JFrame {
     private JMenuBar menuBar;
@@ -43,32 +43,54 @@ public class MenuPrincipalView extends JFrame {
 
         menuBar = new JMenuBar();
         menuProducto = new JMenu(mIH.get("menu.producto"));
+        menuProducto.setIcon(Icono.icono(Url.PRODUCTO));
         menuCarrito = new JMenu(mIH.get("menu.carrito"));
+        menuCarrito.setIcon(Icono.icono(Url.CARRITO));
         menuUsuario = new JMenu(mIH.get("menu.usuario"));
+        menuUsuario.setIcon(Icono.icono(Url.USUARIO));
         menuIdioma = new JMenu(mIH.get("menu.idiomas"));
+        menuIdioma.setIcon(Icono.icono(Url.IDIOMA));
         menuSalir = new JMenu(mIH.get("menu.salir"));
+        menuSalir.setIcon(Icono.icono(Url.SALIR));
 
         menuItemCrearProducto = new JMenuItem(mIH.get("menu.producto.crear"));
+        menuItemCrearProducto.setIcon(Icono.icono(Url.CREAR));
         menuItemBuscarProducto = new JMenuItem(mIH.get("menu.producto.buscar"));
+        menuItemBuscarProducto.setIcon(Icono.icono(Url.BUSCAR));
         menuItemModificarProdcuto = new JMenuItem(mIH.get("menu.producto.modificar"));
+        menuItemModificarProdcuto.setIcon(Icono.icono(Url.MODIFICAR));
         menuItemEliminarProducto = new JMenuItem(mIH.get("menu.producto.eliminar"));
+        menuItemEliminarProducto.setIcon(Icono.icono(Url.ELIMINAR));
 
         menuItemCrearCarrito = new JMenuItem(mIH.get("menu.carrito.crear"));
+        menuItemCrearCarrito.setIcon(Icono.icono(Url.CREAR));
         menuItemListaCarrito = new JMenuItem(mIH.get("menu.carrito.buscar"));
+        menuItemListaCarrito.setIcon(Icono.icono(Url.LISTAR));
         menuItemModificarCarrito = new JMenuItem(mIH.get("menu.carrito.modificar"));
+        menuItemModificarCarrito.setIcon(Icono.icono(Url.MODIFICAR));
         menuItemEliminarCarrito = new JMenuItem(mIH.get("menu.carrito.eliminar"));
+        menuItemEliminarCarrito.setIcon(Icono.icono(Url.ELIMINAR));
 
         menuItemCrearUsuario = new JMenuItem(mIH.get("menu.usuario.crear"));
+        menuItemCrearUsuario.setIcon(Icono.icono(Url.CREAR));
         menuItemBuscarUsuario = new JMenuItem(mIH.get("menu.usuario.buscar"));
+        menuItemBuscarUsuario.setIcon(Icono.icono(Url.BUSCAR));
         menuItemModificarUsuario = new JMenuItem(mIH.get("menu.usuario.modificar"));
+        menuItemModificarUsuario.setIcon(Icono.icono(Url.MODIFICAR));
         menuItemEliminarUsuario = new JMenuItem(mIH.get("menu.usuario.eliminar"));
+        menuItemEliminarUsuario.setIcon(Icono.icono(Url.ELIMINAR));
 
         menuItemEspanol = new JMenuItem(mIH.get("menu.idioma.es"));
+        menuItemEspanol.setIcon(Icono.icono(Url.IDIOMA));
         menuItemIngles = new JMenuItem(mIH.get("menu.idioma.en"));
+        menuItemIngles.setIcon(Icono.icono(Url.IDIOMA));
         menuItemFrances = new JMenuItem(mIH.get("menu.idioma.fr"));
+        menuItemFrances.setIcon(Icono.icono(Url.IDIOMA));
 
         menuItemCerrarSesion = new JMenuItem(mIH.get("menu.salir.cerrar"));
+        menuItemCerrarSesion.setIcon(Icono.icono(Url.CERRAR));
         menuItemSalir = new JMenuItem(mIH.get("menu.salir.salir"));
+        menuItemSalir.setIcon(Icono.icono(Url.SALIR));
 
         menuBar.add(menuProducto);
         menuBar.add(menuCarrito);

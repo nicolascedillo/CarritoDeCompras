@@ -5,7 +5,9 @@ import ec.edu.ups.modelo.ItemCarrito;
 import ec.edu.ups.modelo.Producto;
 import ec.edu.ups.modelo.Usuario;
 import ec.edu.ups.util.FormateadorUtils;
+import ec.edu.ups.util.Icono;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
+import ec.edu.ups.util.Url;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -44,9 +46,15 @@ public class CarritoCrearView extends JInternalFrame{
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(400,700);
+        setFrameIcon(Icono.icono(Url.CREAR));
         cargarDatosComboBox();
         modelo = new DefaultTableModel();
         table1.setModel(modelo);
+
+        buscarButton.setIcon(Icono.icono(Url.BUSCAR));
+        guardarButton.setIcon(Icono.icono(Url.GUARDAR));
+        anadirButton.setIcon(Icono.icono(Url.CREAR));
+        cancelarButton.setIcon(Icono.icono(Url.CERRAR));
 
         cambiarIdioma(mIH.getLocale().getLanguage(),mIH.getLocale().getCountry());
     }

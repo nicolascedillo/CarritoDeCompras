@@ -1,6 +1,8 @@
 package ec.edu.ups.vista.usuario;
 
+import ec.edu.ups.util.Icono;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
+import ec.edu.ups.util.Url;
 
 import javax.swing.*;
 
@@ -21,6 +23,10 @@ public class UsuarioCrearView extends JInternalFrame{
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(350, 200);
+        setFrameIcon(Icono.icono(Url.CREAR));
+
+        crearButton.setIcon(Icono.icono(Url.CREAR));
+        salirButton.setIcon(Icono.icono(Url.CERRAR));
 
         cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
     }

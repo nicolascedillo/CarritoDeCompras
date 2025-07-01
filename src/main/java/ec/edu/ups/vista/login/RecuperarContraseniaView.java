@@ -1,6 +1,8 @@
 package ec.edu.ups.vista.login;
 
+import ec.edu.ups.util.Icono;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
+import ec.edu.ups.util.Url;
 
 import javax.swing.*;
 
@@ -22,6 +24,9 @@ public class RecuperarContraseniaView extends JFrame{
         setResizable(false);
         setSize(400, 200);
         this.mIH = mIH;
+
+        siguienteButton.setIcon(Icono.icono(Url.SIGUIENTE));
+        restablecerButton.setIcon(Icono.icono(Url.CREAR));
 
         cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
     }

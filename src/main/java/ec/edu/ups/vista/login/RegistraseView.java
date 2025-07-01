@@ -1,6 +1,8 @@
 package ec.edu.ups.vista.login;
 
+import ec.edu.ups.util.Icono;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
+import ec.edu.ups.util.Url;
 
 import javax.swing.*;
 
@@ -27,6 +29,9 @@ public class RegistraseView extends JFrame{
         setSize(400, 300);
         setLocationRelativeTo(null);
         setResizable(false);
+
+        siguienteButton.setIcon(Icono.icono(Url.SIGUIENTE));
+        guardarButton.setIcon(Icono.icono(Url.GUARDAR));
 
         cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
 
