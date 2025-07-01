@@ -15,8 +15,21 @@ public class UsuarioEliminarView extends JInternalFrame {
     private JButton eliminarButton;
     private JButton salirButton;
     private JLabel lblTitulo;
-    private JLabel lblContrasena;
     private JLabel lblUsuario;
+    private JLabel lblNombre;
+    private JLabel lblTelefono;
+    private JLabel lblCorreo;
+    private JTextField nombreTextField;
+    private JTextField telefonoTextField;
+    private JTextField correoTextField;
+    private JLabel lblNacimiento;
+    private JLabel lblDia;
+    private JLabel lblMes;
+    private JLabel lblAnio;
+    private JTextField anioTextField;
+    private JComboBox diaComboBox;
+    private JComboBox mesComboBox;
+    private JLabel lblContrasena;
     private MensajeInternacionalizacionHandler mIH;
 
     public UsuarioEliminarView(MensajeInternacionalizacionHandler mIH) {
@@ -24,7 +37,7 @@ public class UsuarioEliminarView extends JInternalFrame {
         this.mIH = mIH;
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(380, 200);
+        setSize(450, 450);
         setFrameIcon(Icono.icono(Url.ELIMINAR));
 
         buscarButton.setIcon(Icono.icono(Url.BUSCAR));

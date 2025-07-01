@@ -8,13 +8,26 @@ import javax.swing.*;
 
 public class UsuarioCrearView extends JInternalFrame{
     private JPanel panelPrincipal;
-    private JTextField usernameTextField;
-    private JButton crearButton;
-    private JPasswordField contrasenaPasswordField;
-    private JButton salirButton;
     private JLabel lblTitulo;
-    private JLabel lblUsername;
     private JLabel lblContrasena;
+    private JLabel lblUsuario;
+    private JLabel lblNombre;
+    private JLabel lblTelefono;
+    private JLabel lblCorreo;
+    private JLabel lblNacimiento;
+    private JLabel lblDia;
+    private JLabel lblMes;
+    private JLabel lblAnio;
+    private JButton crearButton;
+    private JButton salirButton;
+    private JTextField usernameTextField;
+    private JTextField nombreTextField;
+    private JTextField telefonoTextField;
+    private JTextField correoTextField;
+    private JTextField anioTextField;
+    private JPasswordField passwordField;
+    private JComboBox diaComboBox;
+    private JComboBox mesComboBox;
     private MensajeInternacionalizacionHandler mIH;
 
     public UsuarioCrearView(MensajeInternacionalizacionHandler mIH) {
@@ -22,7 +35,7 @@ public class UsuarioCrearView extends JInternalFrame{
         this.mIH = mIH;
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(350, 200);
+        setSize(350, 430);
         setFrameIcon(Icono.icono(Url.CREAR));
 
         crearButton.setIcon(Icono.icono(Url.CREAR));
@@ -37,14 +50,14 @@ public class UsuarioCrearView extends JInternalFrame{
 
     public void limpiarCampos() {
         usernameTextField.setText("");
-        contrasenaPasswordField.setText("");
+        passwordField.setText("");
     }
 
     public void cambiarIdioma(String lenguaje, String pais) {
         mIH.setLenguaje(lenguaje, pais);
         setTitle(mIH.get("menu.usuario.crear"));
         lblTitulo.setText(mIH.get("ventana.usuario.crear.titulo"));
-        lblUsername.setText(mIH.get("ventana.usuario.usuario"));
+        lblUsuario.setText(mIH.get("ventana.usuario.usuario"));
         lblContrasena.setText(mIH.get("ventana.usuario.contrasena"));
         crearButton.setText(mIH.get("ventana.aceptar"));
         salirButton.setText(mIH.get("ventana.salir"));
@@ -52,12 +65,13 @@ public class UsuarioCrearView extends JInternalFrame{
 
     //GETTERS Y SETTERS
 
+
     public JTextField getUsernameTextField() {
         return usernameTextField;
     }
 
-    public JPasswordField getContrasenaPasswordField() {
-        return contrasenaPasswordField;
+    public JPasswordField getPasswordField() {
+        return passwordField;
     }
 
     public JButton getCrearButton() {

@@ -45,7 +45,7 @@ public class UsuarioController {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 String username = usuarioCrearView.getUsernameTextField().getText();
-                String password = usuarioCrearView.getContrasenaPasswordField().getText();
+                String password = usuarioCrearView.getPasswordField().getText();
                 Rol rol = Rol.USUARIO;
 
                 if (username.isEmpty() || password.isEmpty()) {

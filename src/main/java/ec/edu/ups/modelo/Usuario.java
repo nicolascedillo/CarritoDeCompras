@@ -1,16 +1,33 @@
 package ec.edu.ups.modelo;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class Usuario {
     private String username;
     private String password;
     private Rol rol;
+    private String nombreCompleto;
+    private String email;
+    private String telefono;
+    private GregorianCalendar fechaNacimiento;
     private List<Carrito> carritos;
     private List<PreguntaRespondida> preguntasVerificacion;
 
     public Usuario() {
+        this.carritos = new ArrayList<>();
+        this.preguntasVerificacion = new ArrayList<>();
+    }
+
+    public Usuario(String username, String password, Rol rol, String nombreCompleto, String email, String telefono, GregorianCalendar fechaNacimiento) {
+        this.username = username;
+        this.password = password;
+        this.rol = rol;
+        this.nombreCompleto = nombreCompleto;
+        this.email = email;
+        this.telefono = telefono;
+        this.fechaNacimiento = fechaNacimiento;
         this.carritos = new ArrayList<>();
         this.preguntasVerificacion = new ArrayList<>();
     }
@@ -62,6 +79,38 @@ public class Usuario {
 
     public void setPreguntasVerificacion(List<PreguntaRespondida> preguntasVerificacion) {
         this.preguntasVerificacion = preguntasVerificacion;
+    }
+
+    public String getNombreCompleto() {
+        return nombreCompleto;
+    }
+
+    public void setNombreCompleto(String nombreCompleto) {
+        this.nombreCompleto = nombreCompleto;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public GregorianCalendar getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(GregorianCalendar fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
     }
 
     @Override

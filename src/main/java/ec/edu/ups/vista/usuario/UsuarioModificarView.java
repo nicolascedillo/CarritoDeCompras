@@ -16,6 +16,19 @@ public class UsuarioModificarView extends JInternalFrame {
     private JLabel lblTitulo;
     private JLabel lblUsuario;
     private JLabel lblContrasena;
+    private JLabel lblNombre;
+    private JLabel lblTelefono;
+    private JLabel lblCorreo;
+    private JTextField nombreTextField;
+    private JTextField telefonoTextField;
+    private JTextField correoTextField;
+    private JLabel lblNacimiento;
+    private JLabel lblDia;
+    private JLabel lblMes;
+    private JLabel lblAnio;
+    private JTextField anioTextField;
+    private JComboBox diaComboBox;
+    private JComboBox mesComboBox;
     private MensajeInternacionalizacionHandler mIH;
 
     public UsuarioModificarView(MensajeInternacionalizacionHandler mIH) {
@@ -23,7 +36,7 @@ public class UsuarioModificarView extends JInternalFrame {
         this.mIH = mIH;
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(380, 200);
+        setSize(450, 450);
         setFrameIcon(Icono.icono(Url.MODIFICAR));
 
         buscarButton.setIcon(Icono.icono(Url.BUSCAR));

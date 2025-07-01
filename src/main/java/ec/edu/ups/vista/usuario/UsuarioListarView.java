@@ -26,7 +26,7 @@ public class UsuarioListarView extends JInternalFrame {
         this.mIH = mIH;
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(430, 250);
+        setSize(600, 300);
         setFrameIcon(Icono.icono(Url.BUSCAR));
 
         buscarButton.setIcon(Icono.icono(Url.BUSCAR));
@@ -53,7 +53,11 @@ public class UsuarioListarView extends JInternalFrame {
             Object[] fila = {
                 usuario.getUsername(),
                 usuario.getPassword(),
-                usuario.getRol()
+                usuario.getRol(),
+                usuario.getNombreCompleto(),
+                usuario.getEmail(),
+                usuario.getTelefono(),
+                usuario.getFechaNacimiento().toString()
             };
             modelo.addRow(fila);
         }
@@ -71,7 +75,8 @@ public class UsuarioListarView extends JInternalFrame {
 
     public void cambiarIdioma(String lenguaje, String pais){
         mIH.setLenguaje(lenguaje, pais);
-        Object[] columnas = {mIH.get("ventana.usuario.usuario"), mIH.get("ventana.usuario.contrasena"), mIH.get("ventana.usuario.rol")};
+        Object[] columnas = {mIH.get("ventana.usuario.usuario"), mIH.get("ventana.usuario.contrasena"), mIH.get("ventana.usuario.rol"),
+        "nombreCompleto", "email", "telefono", "fechaNacimiento"};
         modelo.setColumnIdentifiers(columnas);
         setTitle(mIH.get("menu.usuario.buscar"));
         lblTitulo.setText(mIH.get("ventana.usuario.buscar.titulo"));

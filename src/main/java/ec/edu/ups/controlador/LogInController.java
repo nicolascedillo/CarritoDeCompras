@@ -13,6 +13,7 @@ import ec.edu.ups.vista.login.RegistraseView;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -114,22 +115,76 @@ public class LogInController {
                     registraseView.mostrarMensaje(mIH.get("registro.preguntas.requeridas"));
                     return;
                 }
-                String username = registraseView.getUsuarioTextField().getText();
-                String password = registraseView.getPasswordField1().getText();
-                registraseView.getUsuarioTextField().setText("");
-                registraseView.getPasswordField1().setText("");
-
-                if (username.isEmpty() || password.isEmpty()) {
+                if (registraseView.getUsuarioTextField().getText().isEmpty() ||
+                        registraseView.getPasswordField1().getText().isEmpty() ||
+                        registraseView.getNombreTextField().getText().isEmpty() ||
+                        registraseView.getTelefonoTextField().getText().isEmpty() ||
+                        registraseView.getCorreoTextField().getText().isEmpty() ||
+                        registraseView.getAnioTextField().getText().isEmpty() ||
+                        registraseView.getDiaComboBox().getSelectedItem() == null ||
+                        registraseView.getMesComboBox().getSelectedItem() == null ) {
                     registraseView.mostrarMensaje(mIH.get("mensaje.completar.campos"));
                     return;
                 }
-
-                if (usuarioDAO.buscarPorUsername(username) != null) {
+                if (usuarioDAO.buscarPorUsername(registraseView.getUsuarioTextField().getText()) != null) {
                     registraseView.mostrarMensaje(mIH.get("mensaje.usuario.existe"));
                     return;
                 }
+                String username = registraseView.getUsuarioTextField().getText();
+                String password = registraseView.getPasswordField1().getText();
+                String nombre = registraseView.getNombreTextField().getText();
+                String telefono = registraseView.getTelefonoTextField().getText();
+                String correo = registraseView.getCorreoTextField().getText();
+                GregorianCalendar fecha = new GregorianCalendar();
+                int dia =(Integer) registraseView.getDiaComboBox().getSelectedItem();
+                int mes = -1;
+                switch ((String) registraseView.getMesComboBox().getSelectedItem()) {
+                    case "Enero":
+                        mes = 0;
+                        break;
+                    case "Febrero":
+                        mes = 1;
+                        break;
+                    case "Marzo":
+                        mes = 2;
+                        break;
+                    case "Abril":
+                        mes = 3;
+                        break;
+                    case "Mayo":
+                        mes = 4;
+                        break;
+                    case "Junio":
+                        mes = 5;
+                        break;
+                    case "Julio":
+                        mes = 6;
+                        break;
+                    case "Agosto":
+                        mes = 7;
+                        break;
+                    case "Septiembre":
+                        mes = 8;
+                        break;
+                    case "Octubre":
+                        mes = 9;
+                        break;
+                    case "Noviembre":
+                        mes = 10;
+                        break;
+                    case "Diciembre":
+                        mes = 11;
+                        break;
+                    default:
+                        registraseView.mostrarMensaje("Seleccione un mes válido");
+                }
+                int anio = Integer.parseInt(registraseView.getAnioTextField().getText()) ;
+                fecha.set(anio, mes, dia);
 
-                Usuario usuario1 = new Usuario(username, password, Rol.USUARIO);
+                registraseView.limpiarCampos();
+
+                Usuario usuario1 = new Usuario(username, password, Rol.USUARIO,
+                        nombre, telefono, correo, fecha);
                 usuario1.setPreguntasVerificacion(preguntasRespondidas);
                 usuarioDAO.crear(usuario1);
                 registraseView.mostrarMensaje(mIH.get("mensaje.usuario.creado"));
