@@ -1,5 +1,6 @@
 package ec.edu.ups.modelo;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -109,16 +110,38 @@ public class Usuario {
         return fechaNacimiento;
     }
 
+    public String getFechaNacimientoString() {
+        return fechaNacimiento.get(GregorianCalendar.DAY_OF_MONTH) + "/" +
+               (fechaNacimiento.get(GregorianCalendar.MONTH) + 1) + "/" +
+               fechaNacimiento.get(GregorianCalendar.YEAR);
+    }
+
+    public String getDiaNacimientoString() {
+        return String.valueOf(fechaNacimiento.get(GregorianCalendar.DAY_OF_MONTH));
+    }
+    public String getMesNacimientoString() {
+        return String.valueOf(fechaNacimiento.get(GregorianCalendar.MONTH));
+    }
+    public String getAnioNacimientoString() {
+        return String.valueOf(fechaNacimiento.get(GregorianCalendar.YEAR));
+    }
+
     public void setFechaNacimiento(GregorianCalendar fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
     @Override
     public String toString() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         return "Usuario{" +
-                "rol=" + rol +
+                "username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", username='" + username + '\'' +
+                ", rol=" + rol +
+                ", nombreCompleto='" + nombreCompleto + '\'' +
+                ", email='" + email + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", fechaNacimiento=" + dateFormat.format(fechaNacimiento.getTime()) +
+                ", carritos=" + carritos +
                 ", preguntasVerificacion=" + preguntasVerificacion +
                 '}';
     }

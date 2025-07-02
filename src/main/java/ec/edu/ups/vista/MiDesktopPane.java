@@ -60,8 +60,7 @@ public class MiDesktopPane extends JDesktopPane {
         }
 
         // Nombre creativo del sistema
-        String nombre = "GiftCartopia";
-        String subtitulo = "¡Donde las compras y los regalos se encuentran!";
+        String nombre = "Sistema de Compras";
 
         g2d.setFont(new Font("Serif", Font.BOLD, 54));
         FontMetrics fm = g2d.getFontMetrics();
@@ -71,7 +70,6 @@ public class MiDesktopPane extends JDesktopPane {
 
         g2d.setFont(new Font("SansSerif", Font.PLAIN, 22));
         g2d.setColor(new Color(60, 60, 80, 180));
-        //g2d.drawString(subtitulo, (w - g2d.getFontMetrics().stringWidth(subtitulo)) / 2, 120);
 
         g2d.dispose();
     }

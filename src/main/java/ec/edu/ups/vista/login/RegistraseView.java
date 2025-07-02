@@ -63,12 +63,21 @@ public class RegistraseView extends JFrame{
         lblTituloPreguntas.setText(mIH.get("registro.titulo.preguntas"));
         siguienteButton.setText(mIH.get("ventana.siguiente"));
         guardarButton.setText(mIH.get("ventana.guardar"));
-        if( mIH.getLocale().getLanguage().equals("en")) {
+        lblNombre.setText(mIH.get("ventana.usuario.nombre"));
+        lblTelefono.setText(mIH.get("ventana.usuario.telefono"));
+        lblCorreo.setText(mIH.get("ventana.usuario.email"));
+        lblNacimiento.setText(mIH.get("ventana.usuario.fecha"));
+        lblAnio.setText(mIH.get("ventana.usuario.anio"));
+        if(lenguaje.equals("en")){
             cargarDias(mesComboBox);
             cargarMeses(diaComboBox);
-        } else {
+            lblDia.setText(mIH.get("ventana.usuario.mes"));
+            lblMes.setText(mIH.get("ventana.usuario.dia"));
+        }else{
             cargarDias(diaComboBox);
             cargarMeses(mesComboBox);
+            lblDia.setText(mIH.get("ventana.usuario.dia"));
+            lblMes.setText(mIH.get("ventana.usuario.mes"));
         }
     }
 
@@ -93,18 +102,18 @@ public class RegistraseView extends JFrame{
 
     private void cargarMeses(JComboBox mesComboBox) {
         mesComboBox.removeAllItems();
-        mesComboBox.addItem("Enero");
-        mesComboBox.addItem("Febrero");
-        mesComboBox.addItem("Marzo");
-        mesComboBox.addItem("Abril");
-        mesComboBox.addItem("Mayo");
-        mesComboBox.addItem("Junio");
-        mesComboBox.addItem("Julio");
-        mesComboBox.addItem("Agosto");
-        mesComboBox.addItem("Septiembre");
-        mesComboBox.addItem("Octubre");
-        mesComboBox.addItem("Noviembre");
-        mesComboBox.addItem("Diciembre");
+        mesComboBox.addItem(mIH.get("mes.enero"));
+        mesComboBox.addItem(mIH.get("mes.febrero"));
+        mesComboBox.addItem(mIH.get("mes.marzo"));
+        mesComboBox.addItem(mIH.get("mes.abril"));
+        mesComboBox.addItem(mIH.get("mes.mayo"));
+        mesComboBox.addItem(mIH.get("mes.junio"));
+        mesComboBox.addItem(mIH.get("mes.julio"));
+        mesComboBox.addItem(mIH.get("mes.agosto"));
+        mesComboBox.addItem(mIH.get("mes.septiembre"));
+        mesComboBox.addItem(mIH.get("mes.octubre"));
+        mesComboBox.addItem(mIH.get("mes.noviembre"));
+        mesComboBox.addItem(mIH.get("mes.diciembre"));
     }
 
     //GETTERS Y SETTERS

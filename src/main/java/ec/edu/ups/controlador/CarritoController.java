@@ -2,10 +2,7 @@ package ec.edu.ups.controlador;
 
 import ec.edu.ups.dao.CarritoDAO;
 import ec.edu.ups.dao.ProductoDAO;
-import ec.edu.ups.modelo.Carrito;
-import ec.edu.ups.modelo.ItemCarrito;
-import ec.edu.ups.modelo.Producto;
-import ec.edu.ups.modelo.Usuario;
+import ec.edu.ups.modelo.*;
 import ec.edu.ups.util.FormateadorUtils;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 import ec.edu.ups.vista.carrito.*;
@@ -130,7 +127,13 @@ public class CarritoController {
                 }
                 carritoEliminarView.limpiarTabla();
                 int codigo = Integer.parseInt(carritoEliminarView.getCodigoTextField().getText());
-                Carrito carritoEncontrado = carritoDao.buscarPorCodigo(codigo);
+                Carrito carritoEncontrado = null;
+                if(usuario.getRol().equals(Rol.USUARIO)){
+                    carritoEncontrado = carritoDao.buscarPorCodigoYUsuario(codigo, usuario);
+
+                }else{
+                    carritoEncontrado = carritoDao.buscarPorCodigo(codigo);
+                }
                 if (carritoEncontrado != null) {
                     carritoEliminarView.getFechaTextField().setText(FormateadorUtils.formatearFecha(carritoEncontrado.getFechaCreacionDate(), mIH.getLocale()));
                     carritoEliminarView.getEliminarButton().setEnabled(true);
@@ -159,7 +162,13 @@ public class CarritoController {
                     return;
                 }
                 int codigo = Integer.parseInt(carritoModificarView.getCodigoTextField().getText());
-                Carrito carritoEncontrado = carritoDao.buscarPorCodigo(codigo);
+                Carrito carritoEncontrado = null;
+                if(usuario.getRol().equals(Rol.USUARIO)){
+                    carritoEncontrado = carritoDao.buscarPorCodigoYUsuario(codigo, usuario);
+
+                }else{
+                    carritoEncontrado = carritoDao.buscarPorCodigo(codigo);
+                }
                 if (carritoEncontrado != null) {
                     carritoModificarView.getFechaTextField().setText(FormateadorUtils.formatearFecha(carritoEncontrado.getFechaCreacionDate(), mIH.getLocale()));
                     carritoModificarView.getUsuarioTextField().setText(carritoEncontrado.getUsuario().getUsername());
@@ -276,7 +285,11 @@ public class CarritoController {
             public void actionPerformed(ActionEvent e) {
                 carritoListaView.limpiarCampos();
                 if(!carritoDao.listarTodos().isEmpty()){
-                    carritoListaView.cargarDatosLista(carritoDao.listarTodos());
+                    if(usuario.getRol().equals(Rol.USUARIO)){
+                        carritoListaView.cargarDatosLista(carritoDao.listarPorUsuario(usuario));
+                    }else{
+                        carritoListaView.cargarDatosLista(carritoDao.listarTodos());
+                    }
                 } else {
                     carritoListaView.mostrarMensaje(mIH.get("mensaje.carrito.inexistentes"));
                 }
@@ -291,7 +304,13 @@ public class CarritoController {
                     return;
                 }
                 int codigo = Integer.parseInt(carritoListaView.getCodigoTextField().getText());
-                Carrito carritoEncontrado = carritoDao.buscarPorCodigo(codigo);
+                Carrito carritoEncontrado = null;
+                if(usuario.getRol().equals(Rol.USUARIO)){
+                    carritoEncontrado = carritoDao.buscarPorCodigoYUsuario(codigo, usuario);
+
+                }else{
+                    carritoEncontrado = carritoDao.buscarPorCodigo(codigo);
+                }
                 if (carritoEncontrado != null) {
                     carritoListaView.cargarDatosBusqueda(carritoDao.buscarPorCodigo(codigo));
                 } else {

@@ -28,6 +28,8 @@ public class MenuPrincipalView extends JFrame {
     private JMenuItem menuItemEspanol;
     private JMenuItem menuItemIngles;
     private JMenuItem menuItemFrances;
+    private JMenuItem menuItemAleman;
+    private JMenuItem menuItemItaliano;
     private JMenuItem menuItemCerrarSesion;
     private JMenuItem menuItemSalir;
     private MiDesktopPane jDesktopPane;
@@ -86,6 +88,10 @@ public class MenuPrincipalView extends JFrame {
         menuItemIngles.setIcon(Icono.icono(Url.IDIOMA));
         menuItemFrances = new JMenuItem(mIH.get("menu.idioma.fr"));
         menuItemFrances.setIcon(Icono.icono(Url.IDIOMA));
+        menuItemAleman = new JMenuItem(mIH.get("menu.idioma.de"));
+        menuItemAleman.setIcon(Icono.icono(Url.IDIOMA));
+        menuItemItaliano = new JMenuItem(mIH.get("menu.idioma.it"));
+        menuItemItaliano.setIcon(Icono.icono(Url.IDIOMA));
 
         menuItemCerrarSesion = new JMenuItem(mIH.get("menu.salir.cerrar"));
         menuItemCerrarSesion.setIcon(Icono.icono(Url.CERRAR));
@@ -116,6 +122,8 @@ public class MenuPrincipalView extends JFrame {
         menuIdioma.add(menuItemEspanol);
         menuIdioma.add(menuItemIngles);
         menuIdioma.add(menuItemFrances);
+        menuIdioma.add(menuItemAleman);
+        menuIdioma.add(menuItemItaliano);
 
         menuSalir.add(menuItemCerrarSesion);
         menuSalir.add(menuItemSalir);
@@ -124,7 +132,7 @@ public class MenuPrincipalView extends JFrame {
         setContentPane(jDesktopPane);
         jDesktopPane.setDragMode(JDesktopPane.OUTLINE_DRAG_MODE);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Sistema de Carrito de Compras En Linea");
+        setTitle(mIH.get("app.titulo"));
         setLocationRelativeTo(null);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setVisible(true);
@@ -137,13 +145,11 @@ public class MenuPrincipalView extends JFrame {
     }
 
     public void deshabilitarMenusAdministrador() {
-        getMenuItemCrearProducto().setEnabled(false);
-        getMenuItemBuscarProducto().setEnabled(false);
-        getMenuItemModificarProdcuto().setEnabled(false);
-        getMenuItemEliminarProducto().setEnabled(false);
-        getMenuItemListaCarrito().setEnabled(false);
-        getMenuItemCrearUsuario().setEnabled(false);
-        getMenuItemBuscarUsuario().setEnabled(false);
+        getMenuItemCrearProducto().setVisible(false);
+        getMenuItemModificarProdcuto().setVisible(false);
+        getMenuItemEliminarProducto().setVisible(false);
+        getMenuItemCrearUsuario().setVisible(false);
+        getMenuItemBuscarUsuario().setVisible(false);
     }
 
     public void cambiarIdioma(String lenguaje, String pais) {
@@ -173,6 +179,8 @@ public class MenuPrincipalView extends JFrame {
         menuItemEspanol.setText(mIH.get("menu.idioma.es"));
         menuItemIngles.setText(mIH.get("menu.idioma.en"));
         menuItemFrances.setText(mIH.get("menu.idioma.fr"));
+        menuItemAleman.setText(mIH.get("menu.idioma.de"));
+        menuItemItaliano.setText(mIH.get("menu.idioma.it"));
 
         menuItemCerrarSesion.setText(mIH.get("menu.salir.cerrar"));
         menuItemSalir.setText(mIH.get("menu.salir.salir"));
@@ -242,6 +250,14 @@ public class MenuPrincipalView extends JFrame {
 
     public JMenuItem getMenuItemFrances() {
         return menuItemFrances;
+    }
+
+    public JMenuItem getMenuItemAleman() {
+        return menuItemAleman;
+    }
+
+    public JMenuItem getMenuItemItaliano() {
+        return menuItemItaliano;
     }
 
     public JMenuItem getMenuItemCerrarSesion() {

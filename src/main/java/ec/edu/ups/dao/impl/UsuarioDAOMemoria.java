@@ -15,7 +15,7 @@ public class UsuarioDAOMemoria implements UsuarioDAO {
     public UsuarioDAOMemoria() {
         this.usuarios = new ArrayList<>();
         crear(new Usuario("admin", "12345", Rol.ADMINISTRADOR));
-        crear(new Usuario("user", "12345", Rol.USUARIO));
+        crear(new Usuario("user", "12345", Rol.USUARIO,"User name", "user@gmail.com", "0987654321", new java.util.GregorianCalendar(1990, 1, 1)));
     }
 
     @Override

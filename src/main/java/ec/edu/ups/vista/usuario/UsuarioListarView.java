@@ -1,6 +1,7 @@
 package ec.edu.ups.vista.usuario;
 
 import ec.edu.ups.modelo.Usuario;
+import ec.edu.ups.util.FormateadorUtils;
 import ec.edu.ups.util.Icono;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 import ec.edu.ups.util.Url;
@@ -43,13 +44,15 @@ public class UsuarioListarView extends JInternalFrame {
         JOptionPane.showMessageDialog(this, mensaje);
     }
 
-    public void limpiarCampos() {
-        nombreTextField.setText("");
-    }
 
     public void cargarDatosListar(List<Usuario> usuarios){
         modelo.setRowCount(0);
+        String fecha = "sin fecha";
         for (Usuario usuario : usuarios) {
+            if(usuario.getFechaNacimiento() != null){
+                FormateadorUtils.formatearFecha(usuario.getFechaNacimiento().getTime()
+                        ,mIH.getLocale());
+            }
             Object[] fila = {
                 usuario.getUsername(),
                 usuario.getPassword(),
@@ -57,7 +60,7 @@ public class UsuarioListarView extends JInternalFrame {
                 usuario.getNombreCompleto(),
                 usuario.getEmail(),
                 usuario.getTelefono(),
-                usuario.getFechaNacimiento().toString()
+                fecha
             };
             modelo.addRow(fila);
         }
@@ -76,7 +79,8 @@ public class UsuarioListarView extends JInternalFrame {
     public void cambiarIdioma(String lenguaje, String pais){
         mIH.setLenguaje(lenguaje, pais);
         Object[] columnas = {mIH.get("ventana.usuario.usuario"), mIH.get("ventana.usuario.contrasena"), mIH.get("ventana.usuario.rol"),
-        "nombreCompleto", "email", "telefono", "fechaNacimiento"};
+        mIH.get("ventana.usuario.nombre"),mIH.get("ventana.usuario.email"),
+                mIH.get("ventana.usuario.telefono"), mIH.get("ventana.usuario.fecha")};
         modelo.setColumnIdentifiers(columnas);
         setTitle(mIH.get("menu.usuario.buscar"));
         lblTitulo.setText(mIH.get("ventana.usuario.buscar.titulo"));

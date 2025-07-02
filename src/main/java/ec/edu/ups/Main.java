@@ -38,15 +38,15 @@ import java.awt.event.WindowEvent;
 public class Main {
     public static void main(String[] args) {
 
-        UsuarioDAO usuarioDAO = new UsuarioDAOMemoria();
-        ProductoDAO productoDAO = new ProductoDAOMemoria();
-        CarritoDAO carritoDAO = new CarritoDAOMemoria();
-        PreguntaDAO preguntaDAO = new PreguntaDAOMeroria();
-
-        MensajeInternacionalizacionHandler mIH = new MensajeInternacionalizacionHandler("es", "EC");
-
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+
+                UsuarioDAO usuarioDAO = new UsuarioDAOMemoria();
+                ProductoDAO productoDAO = new ProductoDAOMemoria();
+                CarritoDAO carritoDAO = new CarritoDAOMemoria();
+                PreguntaDAO preguntaDAO = new PreguntaDAOMeroria();
+
+                MensajeInternacionalizacionHandler mIH = new MensajeInternacionalizacionHandler("es", "EC");
 
                 LogInView logInView = new LogInView(mIH);
                 RegistraseView registraseView = new RegistraseView(mIH);
@@ -56,6 +56,7 @@ public class Main {
                 logInView.getIdiomaComboBox().addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+
                         String selectedLanguage = (String) logInView.getIdiomaComboBox().getSelectedItem();
                         switch (selectedLanguage) {
                             case "Español":
@@ -66,6 +67,12 @@ public class Main {
                                 break;
                             case "Français":
                                 mIH.setLenguaje("fr", "FR");
+                                break;
+                            case "Deutsch":
+                                mIH.setLenguaje("de", "DE");
+                                break;
+                            case "Italiano":
+                                mIH.setLenguaje("it", "IT");
                                 break;
                             default:
                                 mIH.setLenguaje("es", "EC");
@@ -90,12 +97,14 @@ public class Main {
                             menuPrincipalView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
 
                             //Instanciar vistas del producto
+
                             ProductoCrearView productoCrearView = new ProductoCrearView(mIH);
                             ProductoListaView productoListaView = new ProductoListaView(mIH);
                             ProductoModificarView productoModificarView = new ProductoModificarView(mIH);
                             ProductoEliminarView productoEliminarView = new ProductoEliminarView(mIH);
 
                             //Instancias vistas del carrito
+
                             CarritoCrearView carritoCrearView = new CarritoCrearView(mIH);
                             CarritoEliminarView carritoEliminarView = new CarritoEliminarView(mIH);
                             CarritoListaView carritoListaView = new CarritoListaView(mIH);
@@ -105,12 +114,14 @@ public class Main {
 
 
                             //Instancias vistas del usuario
+
                             UsuarioCrearView usuarioCrearView = new UsuarioCrearView(mIH);
                             UsuarioEliminarView usuarioEliminarView = new UsuarioEliminarView(mIH);
                             UsuarioListarView usuarioListarView = new UsuarioListarView(mIH);
                             UsuarioModificarView usuarioModificarView = new UsuarioModificarView(mIH);
 
                             // Instanciar controladores
+
                             ProductoController productoController = new ProductoController(productoCrearView,
                                     productoListaView,productoDAO,productoEliminarView,
                                     productoModificarView, mIH);
@@ -120,7 +131,7 @@ public class Main {
                                     itemListaView, usuarioAutenticado,mIH);
 
                             UsuarioController usuarioController = new UsuarioController(usuarioDAO,usuarioCrearView,
-                                    usuarioEliminarView, usuarioListarView, usuarioModificarView, mIH);
+                                    usuarioEliminarView, usuarioListarView, usuarioModificarView, usuarioAutenticado,mIH);
 
                             menuPrincipalView.mostrarMensaje(mIH.get("app.bienvenida") + ": " + usuarioAutenticado.getUsername());
                             if (usuarioAutenticado.getRol().equals(Rol.USUARIO)) {
@@ -231,11 +242,6 @@ public class Main {
                                         usuarioEliminarView.setVisible(true);
                                         menuPrincipalView.getjDesktopPane().add(usuarioEliminarView);
                                     }
-                                    if(usuarioAutenticado.getRol() == Rol.USUARIO){
-                                        usuarioEliminarView.getBuscarButton().setEnabled(false);
-                                        usuarioEliminarView.getUsernameTextField().setText(usuarioAutenticado.getUsername());
-                                        usuarioEliminarView.getContrasenaTextField().setText(usuarioAutenticado.getPassword());
-                                    }
                                 }
                             });
 
@@ -255,11 +261,6 @@ public class Main {
                                     if(!usuarioModificarView.isVisible()){
                                         usuarioModificarView.setVisible(true);
                                         menuPrincipalView.getjDesktopPane().add(usuarioModificarView);
-                                    }
-                                    if(usuarioAutenticado.getRol() == Rol.USUARIO){
-                                        usuarioModificarView.getBuscarButton().setEnabled(false);
-                                        usuarioModificarView.getUsernameTextField().setText(usuarioAutenticado.getUsername());
-                                        usuarioModificarView.getContrasenaTextField().setText(usuarioAutenticado.getPassword());
                                     }
                                 }
                             });
@@ -299,6 +300,30 @@ public class Main {
                                     usuarioController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
                                 }
                             });
+
+                            menuPrincipalView.getMenuItemAleman().addActionListener(new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    mIH.setLenguaje("de", "DE");
+                                    menuPrincipalView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    productoController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    carritoController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    usuarioController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                }
+                            });
+
+                            menuPrincipalView.getMenuItemItaliano().addActionListener(new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    mIH.setLenguaje("it", "IT");
+                                    menuPrincipalView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    productoController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    carritoController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                    usuarioController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                }
+                            });
+
+
 
                             //SALIR
 
