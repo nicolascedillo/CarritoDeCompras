@@ -11,14 +11,13 @@ import ec.edu.ups.vista.login.RecuperarContraseniaView;
 import ec.edu.ups.vista.login.RegistraseView;
 
 import javax.swing.*;
+import javax.swing.text.Position;
+import java.awt.*;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.LinkedList;
+import java.util.*;
 import java.util.List;
 
-public class LogInController {
-    private Usuario usuario;
+public class PreguntaController {
     private final UsuarioDAO usuarioDAO;
     private final LogInView logInView;
     private final RegistraseView registraseView;
@@ -26,13 +25,12 @@ public class LogInController {
     private final RecuperarContraseniaView recuperarContraseniaView;
     private MensajeInternacionalizacionHandler mIH;
 
-    public LogInController(UsuarioDAO usuarioDAO,PreguntaDAO preguntaDAO, LogInView logInView,
-                           RegistraseView registraseView, MensajeInternacionalizacionHandler mIH, RecuperarContraseniaView recuperarContraseniaView) {
+    public PreguntaController(UsuarioDAO usuarioDAO, PreguntaDAO preguntaDAO, LogInView logInView,
+                              RegistraseView registraseView, MensajeInternacionalizacionHandler mIH, RecuperarContraseniaView recuperarContraseniaView) {
         this.usuarioDAO = usuarioDAO;
         this.mIH = mIH;
         this.logInView = logInView;
         this.registraseView = registraseView;
-        this.usuario = null;
         this.preguntaDAO = preguntaDAO;
         this.recuperarContraseniaView = recuperarContraseniaView;
 
@@ -40,13 +38,6 @@ public class LogInController {
     }
 
     private void configurarEventosEnVista(){
-        logInView.getIniciarSesionButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                autenticar();
-                limpiarCamposLogIn();
-            }
-        });
 
         logInView.getRegistrarseButton().addActionListener(new ActionListener() {
             @Override
@@ -74,17 +65,6 @@ public class LogInController {
         });
     }
 
-    private void autenticar(){
-        String username = logInView.getUsernameTextField().getText();
-        String password = logInView.getContrasenaPasswordField().getText();
-
-        usuario = usuarioDAO.autenticar(username, password);
-        if(usuario == null){
-            logInView.mostrarMensaje(mIH.get("mensaje.login.incorrecto"));
-        } else {
-            logInView.dispose();
-        }
-    }
 
     private void registrarse() {
         logInView.setVisible(false);
@@ -92,10 +72,6 @@ public class LogInController {
         registraseView.setVisible(true);
     }
 
-    private void limpiarCamposLogIn() {
-        logInView.getUsernameTextField().setText("");
-        logInView.getContrasenaPasswordField().setText("");
-    }
 
     private void configurarEventosEnRegistrarse() {
         registraseView.getUsuarioTextField().setText("");
@@ -270,6 +246,7 @@ public class LogInController {
                     recuperarContraseniaView.mostrarMensaje(mIH.get("recuperacion.nueva.contrasena"));
                     return;
                 }
+
                 String nuevaContrasenia = recuperarContraseniaView.getRespuestaTextField().getText();
                 usuarioRecuperacion.setPassword(nuevaContrasenia);
                 usuarioDAO.actualizar(usuarioRecuperacion);
@@ -292,7 +269,6 @@ public class LogInController {
 
     public void cambiarIdioma(String lenguaje, String pais) {
         mIH.setLenguaje(lenguaje, pais);
-        logInView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
         registraseView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
         recuperarContraseniaView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
     }
@@ -310,10 +286,6 @@ public class LogInController {
         for (ActionListener al : button.getActionListeners()) {
             button.removeActionListener(al);
         }
-    }
-
-    public Usuario getUsuarioAutenticado(){
-        return usuario;
     }
 
 }

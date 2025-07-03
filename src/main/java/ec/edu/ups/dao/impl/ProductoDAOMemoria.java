@@ -13,9 +13,9 @@ public class ProductoDAOMemoria implements ProductoDAO {
 
     public ProductoDAOMemoria() {
         productos = new ArrayList<Producto>();
-        crear(new Producto(1, "Producto 1", 10.0));
-        crear(new Producto(2, "Producto 2", 20.0));
-        crear(new Producto(3, "Producto 3", 30.0));
+        crear(new Producto(1, "Computadora", 500.0));
+        crear(new Producto(2, "TV", 300.0));
+        crear(new Producto(3, "Celular", 700.0));
         crear(new Producto(4, "Producto 4", 40.0));
         crear(new Producto(5, "Producto 5", 50.0));
     }

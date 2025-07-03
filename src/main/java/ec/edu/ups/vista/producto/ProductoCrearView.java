@@ -64,11 +64,6 @@ public class ProductoCrearView extends JInternalFrame {
         txtPrecio.setText("");
     }
 
-    public void mostrarProductos(List<Producto> productos) {
-        for (Producto producto : productos) {
-            System.out.println(producto);
-        }
-    }
 
     public void cambiarIdioma(String lenguaje, String pais) {
         mIH.setLenguaje(lenguaje, pais);

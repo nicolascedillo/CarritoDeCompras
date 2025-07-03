@@ -50,7 +50,7 @@ public class UsuarioListarView extends JInternalFrame {
         String fecha = "sin fecha";
         for (Usuario usuario : usuarios) {
             if(usuario.getFechaNacimiento() != null){
-                FormateadorUtils.formatearFecha(usuario.getFechaNacimiento().getTime()
+                fecha = FormateadorUtils.formatearFecha(usuario.getFechaNacimiento().getTime()
                         ,mIH.getLocale());
             }
             Object[] fila = {

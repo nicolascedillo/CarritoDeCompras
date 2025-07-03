@@ -155,7 +155,6 @@ public class ProductoController {
         productoDAO.crear(new Producto(codigo, nombre, precio));
         productoCrearView.mostrarMensaje(mIH.get("mensaje.producto.creado"));
         productoCrearView.limpiarCampos();
-        productoCrearView.mostrarProductos(productoDAO.listarTodos());
     }
 
     private void buscarProducto() {

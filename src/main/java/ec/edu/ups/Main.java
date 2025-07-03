@@ -1,8 +1,8 @@
 package ec.edu.ups;
 
 import ec.edu.ups.controlador.CarritoController;
+import ec.edu.ups.controlador.PreguntaController;
 import ec.edu.ups.controlador.ProductoController;
-import ec.edu.ups.controlador.LogInController;
 import ec.edu.ups.controlador.UsuarioController;
 import ec.edu.ups.dao.CarritoDAO;
 import ec.edu.ups.dao.PreguntaDAO;
@@ -51,7 +51,8 @@ public class Main {
                 LogInView logInView = new LogInView(mIH);
                 RegistraseView registraseView = new RegistraseView(mIH);
                 RecuperarContraseniaView recuperarContraseniaView = new RecuperarContraseniaView(mIH);
-                LogInController logInController = new LogInController(usuarioDAO,preguntaDAO, logInView, registraseView, mIH, recuperarContraseniaView);
+                UsuarioController usuarioController = new UsuarioController(usuarioDAO, logInView, mIH);
+                PreguntaController preguntaController = new PreguntaController(usuarioDAO, preguntaDAO, logInView,registraseView, mIH, recuperarContraseniaView);
 
                 logInView.getIdiomaComboBox().addActionListener(new ActionListener() {
                     @Override
@@ -77,7 +78,8 @@ public class Main {
                             default:
                                 mIH.setLenguaje("es", "EC");
                         }
-                        logInController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                        usuarioController.cambiarIdiomaLogIn(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                        preguntaController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
                     }
                 });
                 logInView.setVisible(true);
@@ -88,7 +90,7 @@ public class Main {
                     public void windowClosed(WindowEvent e) {
 
                         super.windowClosed(e);
-                        Usuario usuarioAutenticado = logInController.getUsuarioAutenticado();
+                        Usuario usuarioAutenticado = usuarioController.getUsuarioAutenticado();
 
                         if(usuarioAutenticado != null){
 
@@ -131,7 +133,7 @@ public class Main {
                                     itemListaView, usuarioAutenticado,mIH);
 
                             UsuarioController usuarioController = new UsuarioController(usuarioDAO,usuarioCrearView,
-                                    usuarioEliminarView, usuarioListarView, usuarioModificarView, usuarioAutenticado,mIH);
+                                    usuarioEliminarView, usuarioListarView, usuarioModificarView, usuarioAutenticado, mIH);
 
                             menuPrincipalView.mostrarMensaje(mIH.get("app.bienvenida") + ": " + usuarioAutenticado.getUsername());
                             if (usuarioAutenticado.getRol().equals(Rol.USUARIO)) {

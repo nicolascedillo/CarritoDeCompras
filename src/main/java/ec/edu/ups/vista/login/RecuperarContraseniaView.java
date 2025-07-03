@@ -10,7 +10,7 @@ public class RecuperarContraseniaView extends JFrame{
     private JLabel lblTituloPreguntas;
     private JLabel lblPreguntaCodigo;
     private JLabel lblEnunciado;
-    private JTextField respuestaTextField;
+    private JPasswordField respuestaTextField;
     private JButton siguienteButton;
     private JButton restablecerButton;
     private JPanel panelPrincipal;
@@ -45,53 +45,28 @@ public class RecuperarContraseniaView extends JFrame{
 
     //GETTERS Y SETTERS
 
-
     public JLabel getLblTituloPreguntas() {
         return lblTituloPreguntas;
-    }
-
-    public void setLblTituloPreguntas(JLabel lblTituloPreguntas) {
-        this.lblTituloPreguntas = lblTituloPreguntas;
     }
 
     public JLabel getLblPreguntaCodigo() {
         return lblPreguntaCodigo;
     }
 
-    public void setLblPreguntaCodigo(JLabel lblPreguntaCodigo) {
-        this.lblPreguntaCodigo = lblPreguntaCodigo;
-    }
-
     public JLabel getLblEnunciado() {
         return lblEnunciado;
     }
 
-    public void setLblEnunciado(JLabel lblEnunciado) {
-        this.lblEnunciado = lblEnunciado;
-    }
-
-    public JTextField getRespuestaTextField() {
+    public JPasswordField getRespuestaTextField() {
         return respuestaTextField;
-    }
-
-    public void setRespuestaTextField(JTextField respuestaTextField) {
-        this.respuestaTextField = respuestaTextField;
     }
 
     public JButton getSiguienteButton() {
         return siguienteButton;
     }
 
-    public void setSiguienteButton(JButton siguienteButton) {
-        this.siguienteButton = siguienteButton;
-    }
-
     public JButton getRestablecerButton() {
         return restablecerButton;
-    }
-
-    public void setRestablecerButton(JButton restablecerButton) {
-        this.restablecerButton = restablecerButton;
     }
 
     public JPanel getPanelPrincipal() {
@@ -101,6 +76,7 @@ public class RecuperarContraseniaView extends JFrame{
     public void setPanelPrincipal(JPanel panelPrincipal) {
         this.panelPrincipal = panelPrincipal;
     }
+
 
     public MensajeInternacionalizacionHandler getmIH() {
         return mIH;

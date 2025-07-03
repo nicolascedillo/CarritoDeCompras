@@ -1,9 +1,11 @@
 package ec.edu.ups.controlador;
 
+import ec.edu.ups.dao.PreguntaDAO;
 import ec.edu.ups.dao.UsuarioDAO;
 import ec.edu.ups.modelo.Rol;
 import ec.edu.ups.modelo.Usuario;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
+import ec.edu.ups.vista.login.LogInView;
 import ec.edu.ups.vista.usuario.UsuarioCrearView;
 import ec.edu.ups.vista.usuario.UsuarioEliminarView;
 import ec.edu.ups.vista.usuario.UsuarioListarView;
@@ -16,35 +18,44 @@ import java.util.GregorianCalendar;
 
 public class UsuarioController {
     private final UsuarioDAO usuarioDAO;
-    private final UsuarioCrearView usuarioCrearView;
-    private final UsuarioEliminarView usuarioEliminarView;
-    private final UsuarioListarView usuarioListarView;
-    private final UsuarioModificarView usuarioModificarView;
-    private MensajeInternacionalizacionHandler mIH;
+    private LogInView logInView;
+    private UsuarioCrearView usuarioCrearView;
+    private UsuarioEliminarView usuarioEliminarView;
+    private UsuarioListarView usuarioListarView;
+    private UsuarioModificarView usuarioModificarView;
+    private final MensajeInternacionalizacionHandler mIH;
     private Usuario usuario;
 
-    public UsuarioController(UsuarioDAO usuarioDAO,
-                             UsuarioCrearView usuarioCrearView,
-                             UsuarioEliminarView usuarioEliminarView,
-                             UsuarioListarView usuarioListarView,
-                             UsuarioModificarView usuarioModificarView,
-                             Usuario usuario,
+
+    public UsuarioController(UsuarioDAO usuarioDAO, LogInView logInView, MensajeInternacionalizacionHandler mIH) {
+        this.usuarioDAO = usuarioDAO;
+        this.logInView = logInView;
+        this.usuario = null;
+        this.mIH = mIH;
+
+        configurarEventosLogIn();
+    }
+
+    public UsuarioController(UsuarioDAO usuarioDAO,UsuarioCrearView usuarioCrearView, UsuarioEliminarView usuarioEliminarView,
+                             UsuarioListarView usuarioListarView, UsuarioModificarView usuarioModificarView, Usuario usuarioAutenticado,
                              MensajeInternacionalizacionHandler mIH) {
         this.usuarioDAO = usuarioDAO;
         this.usuarioCrearView = usuarioCrearView;
         this.usuarioEliminarView = usuarioEliminarView;
         this.usuarioListarView = usuarioListarView;
         this.usuarioModificarView = usuarioModificarView;
-        this.usuario = usuario;
+        this.usuario = usuarioAutenticado;
         this.mIH = mIH;
 
         configurarEventosUsuarioCrear();
         configurarEventosUsuarioEliminar();
         configurarEventosUsuarioListar();
         configurarEventosUsuarioModificar();
+
     }
 
-    public void configurarEventosUsuarioCrear() {
+
+    private void configurarEventosUsuarioCrear() {
 
         usuarioCrearView.getCrearButton().addActionListener(new ActionListener() {
             @Override
@@ -80,7 +91,7 @@ public class UsuarioController {
         });
     }
 
-    public void configurarEventosUsuarioEliminar() {
+    private void configurarEventosUsuarioEliminar( ) {
 
         if(usuario.getRol().equals(Rol.USUARIO)){
             usuarioEliminarView.getBuscarButton().setEnabled(false);
@@ -149,7 +160,7 @@ public class UsuarioController {
         });
     }
 
-    public void configurarEventosUsuarioListar() {
+    private void configurarEventosUsuarioListar(  ){
 
         usuarioListarView.getBuscarButton().addActionListener(new ActionListener() {
             @Override
@@ -184,7 +195,7 @@ public class UsuarioController {
         });
     }
 
-    public void configurarEventosUsuarioModificar() {
+    private void configurarEventosUsuarioModificar( ) {
 
         if(usuario.getRol().equals(Rol.USUARIO)){
             usuarioModificarView.getBuscarButton().setEnabled(false);
@@ -267,11 +278,48 @@ public class UsuarioController {
         });
     }
 
+    private void configurarEventosLogIn() {
+        logInView.getIniciarSesionButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String username = logInView.getUsernameTextField().getText();
+                String password = logInView.getContrasenaPasswordField().getText();
+
+                usuario = usuarioDAO.autenticar(username, password);
+                if(usuario == null){
+                    logInView.mostrarMensaje(mIH.get("mensaje.login.incorrecto"));
+                } else {
+                    logInView.dispose();
+                }
+
+                logInView.getUsernameTextField().setText("");
+                logInView.getContrasenaPasswordField().setText("");
+
+            }
+        });
+
+        logInView.getSalirButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+    }
+
     public void cambiarIdioma(String lenguaje, String pais) {
         mIH.setLenguaje(lenguaje, pais);
         usuarioCrearView.cambiarIdioma(lenguaje, pais);
         usuarioEliminarView.cambiarIdioma(lenguaje, pais);
         usuarioListarView.cambiarIdioma(lenguaje, pais);
         usuarioModificarView.cambiarIdioma(lenguaje, pais);
+    }
+
+    public void cambiarIdiomaLogIn(String lenguaje, String pais) {
+        mIH.setLenguaje(lenguaje, pais);
+        logInView.cambiarIdioma(lenguaje, pais);
+    }
+
+    public Usuario getUsuarioAutenticado() {
+        return usuario;
     }
 }

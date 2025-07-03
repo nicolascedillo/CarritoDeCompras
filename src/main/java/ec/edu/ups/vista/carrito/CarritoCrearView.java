@@ -35,7 +35,6 @@ public class CarritoCrearView extends JInternalFrame{
     private JLabel lblPago;
     private JLabel lblDatosProducto;
     private JLabel lblLista;
-    private JButton salirButton;
     private DefaultTableModel modelo;
     private MensajeInternacionalizacionHandler mIH;
 
@@ -111,7 +110,6 @@ public class CarritoCrearView extends JInternalFrame{
         anadirButton.setText(mIH.get("ventana.anadir"));
         guardarButton.setText(mIH.get("ventana.guardar"));
         cancelarButton.setText(mIH.get("ventana.cancelar"));
-        salirButton.setText(mIH.get("ventana.salir"));
         lblPago.setText(mIH.get("ventana.carrito.pago"));
         lblDatosProducto.setText(mIH.get("ventana.carrito.crear.producto"));
         lblLista.setText(mIH.get("ventana.carrito.lista"));
@@ -197,46 +195,6 @@ public class CarritoCrearView extends JInternalFrame{
 
     public void setLblNombre(JLabel lblNombre) {
         this.lblNombre = lblNombre;
-    }
-
-    public JLabel getLblPrecio() {
-        return lblPrecio;
-    }
-
-    public void setLblPrecio(JLabel lblPrecio) {
-        this.lblPrecio = lblPrecio;
-    }
-
-    public JLabel getLblCantidad() {
-        return lblCantidad;
-    }
-
-    public void setLblCantidad(JLabel lblCantidad) {
-        this.lblCantidad = lblCantidad;
-    }
-
-    public JLabel getLblSubtotal() {
-        return lblSubtotal;
-    }
-
-    public void setLblSubtotal(JLabel lblSubtotal) {
-        this.lblSubtotal = lblSubtotal;
-    }
-
-    public JLabel getLblIva() {
-        return lblIva;
-    }
-
-    public void setLblIva(JLabel lblIva) {
-        this.lblIva = lblIva;
-    }
-
-    public JLabel getLblTotal() {
-        return lblTotal;
-    }
-
-    public void setLblTotal(JLabel lblTotal) {
-        this.lblTotal = lblTotal;
     }
 
     public JLabel getLblTitulo() {
