@@ -16,8 +16,8 @@ public class ProductoDAOMemoria implements ProductoDAO {
         crear(new Producto(1, "Computadora", 500.0));
         crear(new Producto(2, "TV", 300.0));
         crear(new Producto(3, "Celular", 700.0));
-        crear(new Producto(4, "Producto 4", 40.0));
-        crear(new Producto(5, "Producto 5", 50.0));
+        crear(new Producto(4, "Microfono", 40.0));
+        crear(new Producto(5, "Teclado", 50.0));
     }
 
     @Override
