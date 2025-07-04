@@ -55,8 +55,6 @@ public class UsuarioListarView extends JInternalFrame {
             }
             Object[] fila = {
                 usuario.getUsername(),
-                usuario.getPassword(),
-                usuario.getRol(),
                 usuario.getNombreCompleto(),
                 usuario.getEmail(),
                 usuario.getTelefono(),
@@ -68,17 +66,25 @@ public class UsuarioListarView extends JInternalFrame {
 
     public void cargarDatosBusqueda(Usuario usuario){
         modelo.setRowCount(0);
+        String fecha = "sin fecha";
+        if(usuario.getFechaNacimiento() != null){
+            fecha = FormateadorUtils.formatearFecha(usuario.getFechaNacimiento().getTime()
+                    ,mIH.getLocale());
+        }
         Object[] fila = {
             usuario.getUsername(),
-            usuario.getPassword(),
-            usuario.getRol()
+                usuario.getNombreCompleto(),
+                usuario.getEmail(),
+                usuario.getTelefono(),
+                fecha
+
         };
         modelo.addRow(fila);
     }
 
     public void cambiarIdioma(String lenguaje, String pais){
         mIH.setLenguaje(lenguaje, pais);
-        Object[] columnas = {mIH.get("ventana.usuario.usuario"), mIH.get("ventana.usuario.contrasena"), mIH.get("ventana.usuario.rol"),
+        Object[] columnas = {mIH.get("ventana.usuario.usuario"),
         mIH.get("ventana.usuario.nombre"),mIH.get("ventana.usuario.email"),
                 mIH.get("ventana.usuario.telefono"), mIH.get("ventana.usuario.fecha")};
         modelo.setColumnIdentifiers(columnas);

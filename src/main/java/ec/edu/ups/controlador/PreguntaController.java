@@ -23,6 +23,7 @@ public class PreguntaController {
     private final RegistraseView registraseView;
     private final PreguntaDAO preguntaDAO;
     private final RecuperarContraseniaView recuperarContraseniaView;
+    private int contadorPreguntas;
     private MensajeInternacionalizacionHandler mIH;
 
     public PreguntaController(UsuarioDAO usuarioDAO, PreguntaDAO preguntaDAO, LogInView logInView,
@@ -33,6 +34,7 @@ public class PreguntaController {
         this.registraseView = registraseView;
         this.preguntaDAO = preguntaDAO;
         this.recuperarContraseniaView = recuperarContraseniaView;
+        this.contadorPreguntas = 1;
 
         configurarEventosEnVista();
     }
@@ -76,10 +78,9 @@ public class PreguntaController {
     private void configurarEventosEnRegistrarse() {
         registraseView.getUsuarioTextField().setText("");
         registraseView.getPasswordField1().setText("");
-        final int[] contadorPreguntas = {1};
         final int[] contadorPreguntasRespondidas = {0};
         List<PreguntaRespondida> preguntasRespondidas = new ArrayList<>();
-        cargarPregunta(contadorPreguntas[0]);
+        cargarPregunta(contadorPreguntas);
 
         quitarActionListeners(registraseView.getGuardarButton());
         quitarActionListeners(registraseView.getSiguienteButton());
@@ -114,45 +115,34 @@ public class PreguntaController {
                 GregorianCalendar fecha = new GregorianCalendar();
                 int dia =(Integer) registraseView.getDiaComboBox().getSelectedItem();
                 int mes = -1;
-                switch ((String) registraseView.getMesComboBox().getSelectedItem()) {
-                    case "Enero":
-                        mes = 0;
-                        break;
-                    case "Febrero":
-                        mes = 1;
-                        break;
-                    case "Marzo":
-                        mes = 2;
-                        break;
-                    case "Abril":
-                        mes = 3;
-                        break;
-                    case "Mayo":
-                        mes = 4;
-                        break;
-                    case "Junio":
-                        mes = 5;
-                        break;
-                    case "Julio":
-                        mes = 6;
-                        break;
-                    case "Agosto":
-                        mes = 7;
-                        break;
-                    case "Septiembre":
-                        mes = 8;
-                        break;
-                    case "Octubre":
-                        mes = 9;
-                        break;
-                    case "Noviembre":
-                        mes = 10;
-                        break;
-                    case "Diciembre":
-                        mes = 11;
-                        break;
-                    default:
-                        registraseView.mostrarMensaje("Seleccione un mes válido");
+                String mesSeleccionado = (String) registraseView.getMesComboBox().getSelectedItem();
+                if (mesSeleccionado.equals(mIH.get("mes.enero"))) {
+                    mes = 0;
+                } else if (mesSeleccionado.equals(mIH.get("mes.febrero"))) {
+                    mes = 1;
+                } else if (mesSeleccionado.equals(mIH.get("mes.marzo"))) {
+                    mes = 2;
+                } else if (mesSeleccionado.equals(mIH.get("mes.abril"))) {
+                    mes = 3;
+                } else if (mesSeleccionado.equals(mIH.get("mes.mayo"))) {
+                    mes = 4;
+                } else if (mesSeleccionado.equals(mIH.get("mes.junio"))) {
+                    mes = 5;
+                } else if (mesSeleccionado.equals(mIH.get("mes.julio"))) {
+                    mes = 6;
+                } else if (mesSeleccionado.equals(mIH.get("mes.agosto"))) {
+                    mes = 7;
+                } else if (mesSeleccionado.equals(mIH.get("mes.septiembre"))) {
+                    mes = 8;
+                } else if (mesSeleccionado.equals(mIH.get("mes.octubre"))) {
+                    mes = 9;
+                } else if (mesSeleccionado.equals(mIH.get("mes.noviembre"))) {
+                    mes = 10;
+                } else if (mesSeleccionado.equals(mIH.get("mes.diciembre"))) {
+                    mes = 11;
+                } else {
+                    registraseView.mostrarMensaje(mIH.get("mes.invalido"));
+                    return;
                 }
                 int anio = Integer.parseInt(registraseView.getAnioTextField().getText()) ;
                 fecha.set(anio, mes, dia);
@@ -166,7 +156,7 @@ public class PreguntaController {
                 registraseView.mostrarMensaje(mIH.get("mensaje.usuario.creado"));
                 logInView.setVisible(true);
                 registraseView.dispose();
-                contadorPreguntas[0] = 1;
+                contadorPreguntas = 1;
                 contadorPreguntasRespondidas[0] = 0;
             }
         });
@@ -174,16 +164,16 @@ public class PreguntaController {
         registraseView.getSiguienteButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                if(contadorPreguntas[0] > 12){
+                if(contadorPreguntas > 12){
                     return;
                 }
                 if(!registraseView.getRespuestaTextField().getText().isEmpty()){
                     contadorPreguntasRespondidas[0]++;
-                    PreguntaRespondida preguntaRespondida = new PreguntaRespondida(preguntaDAO.buscarPorCodigo(contadorPreguntas[0]), registraseView.getRespuestaTextField().getText());
+                    PreguntaRespondida preguntaRespondida = new PreguntaRespondida(preguntaDAO.buscarPorCodigo(contadorPreguntas), registraseView.getRespuestaTextField().getText());
                     preguntasRespondidas.add(preguntaRespondida);
                 }
-                contadorPreguntas[0]++;
-                cargarPregunta(contadorPreguntas[0]);
+                contadorPreguntas++;
+                cargarPregunta(contadorPreguntas);
                 registraseView.getRespuestaTextField().setText("");
 
             }
@@ -271,6 +261,7 @@ public class PreguntaController {
         mIH.setLenguaje(lenguaje, pais);
         registraseView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
         recuperarContraseniaView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+        cargarPregunta(contadorPreguntas);
     }
 
     private void randomizarListaPreguntaRespondida(List<PreguntaRespondida> lista) {

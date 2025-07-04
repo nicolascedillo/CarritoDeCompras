@@ -8,106 +8,99 @@ public class MiDesktopPane extends JDesktopPane {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g.create();
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        Graphics2D g2 = (Graphics2D) g.create();
 
-        int w = getWidth();
-        int h = getHeight();
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        // Fondo degradado
-        GradientPaint gp = new GradientPaint(0, 0, new Color(234, 182, 118), w, h, new Color(220, 240, 255));
-        g2d.setPaint(gp);
-        g2d.fillRect(0, 0, w, h);
+        // Fondo superior azul suave
+        g2.setColor(new Color(200, 230, 255));
+        g2.fillRect(0, 0, getWidth(), getHeight() / 2);
 
-        int piso = (int) (h * 0.75);
+        // Fondo inferior naranja
+        g2.setColor(new Color(255, 139, 106));
+        g2.fillRect(0, getHeight() / 2, getWidth(), getHeight() / 2);
 
-        int[] bagXs = { w / 16, w / 16 + w / 7, w / 16 + 2 * w / 7, w / 16 + 3 * w / 7 };
-        int[] bagWidths = { 120, 100, 130, 90 };
-        int[] bagHeights = { 300, 260, 320, 240 }; // Alturas aumentadas
-        Color[] bagColors = { new Color(255, 200, 80), new Color(120, 200, 120), new Color(255, 120, 120), new Color(120, 180, 255) };
+        // Texto "SHOPPING ONLINE"
+        g2.setColor(Color.WHITE);
+        g2.setFont(new Font("SansSerif", Font.BOLD, 30));
+        String texto = "JAVA SHOPPING";
+        int textWidth = g2.getFontMetrics().stringWidth(texto);
+        g2.drawString(texto, (getWidth() - textWidth) / 2, getHeight() - 30);
 
-        int bagY = piso - 320;
+        // Bolsas de compras grandes y superpuestas, más arriba y detalladas
+        int bagWidth = getWidth() / 4 + 30;
+        int bagHeight = getHeight() / 2 + 80;
+        int bagY = getHeight() / 2 - bagHeight / 2 - 40; // levantadas
 
-        for (int i = 0; i < bagXs.length; i++) {
-            dibujarFunda(g2d, bagXs[i], bagY + (320 - bagHeights[i]), bagWidths[i], bagHeights[i], bagColors[i]);
-        }
+//        // Sombra izquierda
+//        g2.setColor(new Color(60, 60, 60, 60));
+//        g2.fillRoundRect(getWidth() / 2 - bagWidth - bagWidth / 7 + 15, bagY + 110 + 30, bagWidth, bagHeight - 60, 40, 40);
+//        // Sombra derecha
+//        g2.fillRoundRect(getWidth() / 2 + bagWidth / 7 + 15, bagY + 110 + 30, bagWidth, bagHeight - 60, 40, 40);
+//        // Sombra central
+//        g2.fillRoundRect(getWidth() / 2 - bagWidth / 2 + 15, bagY + 70 + 30, bagWidth, bagHeight, 50, 50);
 
-        int[] cartXs = { w - w / 3, w - w / 6 };
-        int[] cartWidths = { 180, 160 };
-        int[] cartHeights = { 70, 60 };
-        int cartY = piso - 100;
+        // Bolsa izquierda (azul, con detalles)
+        int leftX = getWidth() / 2 - bagWidth - bagWidth / 7;
+        int leftY = bagY + 110;
+        g2.setColor(new Color(100, 200, 230));
+        g2.fillRoundRect(leftX, leftY, bagWidth, bagHeight - 60, 40, 40);
+        g2.setColor(new Color(60, 120, 160));
+        g2.setStroke(new BasicStroke(6));
+        g2.drawRoundRect(leftX, leftY, bagWidth, bagHeight - 60, 40, 40);
+        // Asas
+        g2.setStroke(new BasicStroke(8));
+        g2.setColor(new Color(80, 80, 80));
+        g2.drawArc(leftX + bagWidth / 8, leftY - 40, bagWidth / 3, 80, 0, 180);
+        g2.drawArc(leftX + bagWidth - bagWidth / 8 - bagWidth / 3, leftY - 40, bagWidth / 3, 80, 0, 180);
+        // Etiqueta
+        g2.setColor(new Color(255, 255, 255, 180));
+        g2.fillRoundRect(leftX + bagWidth / 2 - 30, leftY + 30, 60, 30, 15, 15);
+        g2.setColor(new Color(100, 200, 230).darker());
+        g2.setFont(new Font("SansSerif", Font.BOLD, 16));
+        g2.drawString("SALE", leftX + bagWidth / 2 - 18, leftY + 52);
 
-        for (int i = 0; i < cartXs.length; i++) {
-            dibujarCarritoConRegalo(g2d, cartXs[i], cartY, cartWidths[i], cartHeights[i]);
-        }
+        // Bolsa derecha (roja, con detalles)
+        int rightX = getWidth() / 2 + bagWidth / 7;
+        int rightY = bagY + 110;
+        g2.setColor(new Color(190, 80, 80));
+        g2.fillRoundRect(rightX, rightY, bagWidth, bagHeight - 60, 40, 40);
+        g2.setColor(new Color(120, 40, 40));
+        g2.setStroke(new BasicStroke(6));
+        g2.drawRoundRect(rightX, rightY, bagWidth, bagHeight - 60, 40, 40);
+        // Asas
+        g2.setStroke(new BasicStroke(8));
+        g2.setColor(new Color(80, 80, 80));
+        g2.drawArc(rightX + bagWidth / 8, rightY - 40, bagWidth / 3, 80, 0, 180);
+        g2.drawArc(rightX + bagWidth - bagWidth / 8 - bagWidth / 3, rightY - 40, bagWidth / 3, 80, 0, 180);
+        // Etiqueta
+        g2.setColor(new Color(255, 255, 255, 180));
+        g2.fillRoundRect(rightX + bagWidth / 2 - 30, rightY + 30, 60, 30, 15, 15);
+        g2.setColor(new Color(190, 80, 80).darker());
+        g2.setFont(new Font("SansSerif", Font.BOLD, 16));
+        g2.drawString("NEW", rightX + bagWidth / 2 - 18, rightY + 52);
 
-        int giftsPerRow = 8;
-        int giftSpacing = w / (giftsPerRow + 1);
-        int giftY = piso - 50;
-        for (int i = 1; i <= giftsPerRow; i++) {
-            int gx = i * giftSpacing - 25;
-            int size = 40 + (i % 3) * 10;
-            Color[] giftColors = {
-                new Color(240, 90, 90), new Color(90, 180, 240), new Color(255, 200, 80),
-                new Color(180, 120, 255), new Color(120, 220, 180), new Color(255, 120, 200),
-                new Color(120, 255, 180), new Color(120, 120, 255)
-            };
-            dibujarRegalo(g2d, gx, giftY, size, size, giftColors[i - 1]);
-        }
+        // Bolsa central (naranja, superpuesta y más detallada)
+        int centerX = getWidth() / 2 - bagWidth / 2;
+        int centerY = bagY + 70;
+        g2.setColor(new Color(255, 170, 60));
+        g2.fillRoundRect(centerX, centerY, bagWidth, bagHeight, 50, 50);
+        g2.setColor(new Color(200, 120, 30));
+        g2.setStroke(new BasicStroke(8));
+        g2.drawRoundRect(centerX, centerY, bagWidth, bagHeight, 50, 50);
+        // Asas
+        g2.setStroke(new BasicStroke(10));
+        g2.setColor(new Color(120, 80, 40));
+        g2.drawArc(centerX + bagWidth / 8, centerY - 50, bagWidth / 3, 100, 0, 180);
+        g2.drawArc(centerX + bagWidth - bagWidth / 8 - bagWidth / 3, centerY - 50, bagWidth / 3, 100, 0, 180);
+        // Etiqueta
+        g2.setColor(new Color(255, 255, 255, 200));
+        g2.fillRoundRect(centerX + bagWidth / 2 - 40, centerY + 40, 80, 36, 18, 18);
+        g2.setColor(new Color(255, 170, 60).darker());
+        g2.setFont(new Font("SansSerif", Font.BOLD, 18));
+        g2.drawString("HOT!", centerX + bagWidth / 2 - 22, centerY + 65);
 
-        String nombre = "Java Shopping";
-
-        g2d.setFont(new Font("Serif", Font.BOLD, 54));
-        FontMetrics fm = g2d.getFontMetrics();
-        int xTexto = (w - fm.stringWidth(nombre)) / 2;
-        g2d.setColor(new Color(40, 40, 60, 220));
-        g2d.drawString(nombre, xTexto, 90);
-
-        g2d.setFont(new Font("SansSerif", Font.PLAIN, 22));
-        g2d.setColor(new Color(60, 60, 80, 180));
-
-        g2d.dispose();
     }
 
-    private void dibujarFunda(Graphics2D g2d, int x, int y, int width, int height, Color color) {
-        g2d.setColor(color);
-        g2d.fillRoundRect(x, y, width, height, 24, 24);
-        g2d.setColor(color.darker());
-        g2d.drawRoundRect(x, y, width, height, 24, 24);
 
-        g2d.setStroke(new BasicStroke(5));
-        g2d.drawArc(x + 14, y - 30, width / 2, 50, 0, 180);
-        g2d.drawArc(x + width / 2 - 14, y - 30, width / 2, 50, 0, 180);
-    }
-
-    private void dibujarCarritoConRegalo(Graphics2D g2d, int x, int y, int width, int height) {
-        g2d.setColor(new Color(180, 180, 180));
-        g2d.fillRect(x, y, width, height); // base
-        g2d.setColor(new Color(120, 120, 120));
-        g2d.drawRect(x, y, width, height);
-        g2d.setStroke(new BasicStroke(5));
-        g2d.drawLine(x + 20, y, x + 20, y - height); // manija
-        g2d.drawLine(x + 20, y - height, x + width - 20, y - height);
-        g2d.drawLine(x + width - 20, y - height, x + width - 20, y);
-
-        g2d.setColor(new Color(80, 80, 80));
-        g2d.fillOval(x + 20, y + height - 10, 28, 28);
-        g2d.fillOval(x + width - 48, y + height - 10, 28, 28);
-
-        dibujarRegalo(g2d, x + width / 2 - 25, y - 40, 50, 50, new Color(255, 120, 120));
-    }
-
-    private void dibujarRegalo(Graphics2D g2d, int x, int y, int width, int height, Color boxColor) {
-        g2d.setColor(boxColor);
-        g2d.fillRect(x, y, width, height);
-        g2d.setColor(boxColor.darker());
-        g2d.drawRect(x, y, width, height);
-
-        g2d.setColor(Color.WHITE);
-        g2d.fillRect(x + width / 2 - 5, y, 10, height);
-        g2d.fillRect(x, y + height / 2 - 5, width, 10);
-
-        g2d.setColor(Color.YELLOW);
-        g2d.fillOval(x + width / 2 - 12, y - 14, 24, 24);
-    }
 }

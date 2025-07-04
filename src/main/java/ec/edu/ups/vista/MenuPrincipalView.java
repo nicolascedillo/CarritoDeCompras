@@ -200,7 +200,7 @@ public class MenuPrincipalView extends JFrame {
         return menuItemBuscarProducto;
     }
 
-    public JDesktopPane getjDesktopPane() {
+    public MiDesktopPane getjDesktopPane() {
         return jDesktopPane;
     }
 

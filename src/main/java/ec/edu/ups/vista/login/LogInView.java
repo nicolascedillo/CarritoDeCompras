@@ -15,13 +15,19 @@ public class LogInView extends JFrame {
     private JButton iniciarSesionButton;
     private JButton registrarseButton;
     private JButton salirButton;
-    private JComboBox idiomaComboBox;
     private JLabel tituloLbl;
     private JLabel usernameLbl;
     private JLabel passwordLbl;
-    private JLabel idiomaLbl;
     private JButton olvidadaButton;
     private MensajeInternacionalizacionHandler mIH;
+    private JMenu idiomaMenu;
+    private JMenuBar menuBar;
+    private JMenuItem inglesMenuItem;
+    private JMenuItem espanolMenuItem;
+    private JMenuItem francesMenuItem;
+    private JMenuItem alemanMenuItem;
+    private JMenuItem italianoMenuItem;
+
 
     public LogInView(MensajeInternacionalizacionHandler mIH) {
         this.mIH = mIH;
@@ -36,6 +42,30 @@ public class LogInView extends JFrame {
         registrarseButton.setIcon(Icono.icono(Url.CREAR));
         iniciarSesionButton.setIcon(Icono.icono(Url.INICIAR));
         salirButton.setIcon(Icono.icono(Url.SALIR));
+
+        menuBar = new JMenuBar();
+        idiomaMenu = new JMenu(mIH.get("menu.idiomas"));
+        idiomaMenu.setIcon(Icono.icono(Url.IDIOMA));
+        espanolMenuItem = new JMenuItem(mIH.get("menu.idioma.es"));
+        espanolMenuItem.setIcon(Icono.icono(Url.IDIOMA));
+        inglesMenuItem = new JMenuItem(mIH.get("menu.idioma.en"));
+        inglesMenuItem.setIcon(Icono.icono(Url.IDIOMA));
+        francesMenuItem = new JMenuItem(mIH.get("menu.idioma.fr"));
+        francesMenuItem.setIcon(Icono.icono(Url.IDIOMA));
+        alemanMenuItem = new JMenuItem(mIH.get("menu.idioma.de"));
+        alemanMenuItem.setIcon(Icono.icono(Url.IDIOMA));
+        italianoMenuItem = new JMenuItem(mIH.get("menu.idioma.it"));
+        italianoMenuItem.setIcon(Icono.icono(Url.IDIOMA));
+
+        menuBar.add(idiomaMenu);
+
+        idiomaMenu.add(espanolMenuItem);
+        idiomaMenu.add(inglesMenuItem);
+        idiomaMenu.add(francesMenuItem);
+        idiomaMenu.add(alemanMenuItem);
+        idiomaMenu.add(italianoMenuItem);
+
+        setJMenuBar(menuBar);
 
         salirButton.addActionListener(new ActionListener() {
             @Override
@@ -52,7 +82,6 @@ public class LogInView extends JFrame {
         tituloLbl.setText(mIH.get("login.titulo"));
         usernameLbl.setText(mIH.get("login.label.username"));
         passwordLbl.setText(mIH.get("login.label.password"));
-        idiomaLbl.setText(mIH.get("login.label.idioma"));
         iniciarSesionButton.setText(mIH.get("login.boton.iniciar"));
         registrarseButton.setText(mIH.get("login.boton.registrarse"));
         salirButton.setText(mIH.get("login.boton.salir"));
@@ -97,22 +126,6 @@ public class LogInView extends JFrame {
         return salirButton;
     }
 
-    public JComboBox getIdiomaComboBox() {
-        return idiomaComboBox;
-    }
-
-    public JLabel getTituloLbl() {
-        return tituloLbl;
-    }
-
-    public JLabel getUsernameLbl() {
-        return usernameLbl;
-    }
-
-    public JLabel getPasswordLbl() {
-        return passwordLbl;
-    }
-
     public MensajeInternacionalizacionHandler getMensajeInternacionalizacionHandler() {
         return mIH;
     }
@@ -121,4 +134,23 @@ public class LogInView extends JFrame {
         return olvidadaButton;
     }
 
+    public JMenuItem getInglesMenuItem() {
+        return inglesMenuItem;
+    }
+
+    public JMenuItem getEspanolMenuItem() {
+        return espanolMenuItem;
+    }
+
+    public JMenuItem getFrancesMenuItem() {
+        return francesMenuItem;
+    }
+
+    public JMenuItem getAlemanMenuItem() {
+        return alemanMenuItem;
+    }
+
+    public JMenuItem getItalianoMenuItem() {
+        return italianoMenuItem;
+    }
 }

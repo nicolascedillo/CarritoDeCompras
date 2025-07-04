@@ -30,6 +30,7 @@ import ec.edu.ups.vista.usuario.UsuarioEliminarView;
 import ec.edu.ups.vista.usuario.UsuarioListarView;
 import ec.edu.ups.vista.usuario.UsuarioModificarView;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -54,34 +55,129 @@ public class Main {
                 UsuarioController usuarioController = new UsuarioController(usuarioDAO, logInView, mIH);
                 PreguntaController preguntaController = new PreguntaController(usuarioDAO, preguntaDAO, logInView,registraseView, mIH, recuperarContraseniaView);
 
-                logInView.getIdiomaComboBox().addActionListener(new ActionListener() {
+                logInView.getEspanolMenuItem().addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-
-                        String selectedLanguage = (String) logInView.getIdiomaComboBox().getSelectedItem();
-                        switch (selectedLanguage) {
-                            case "Español":
-                                mIH.setLenguaje("es", "EC");
-                                break;
-                            case "English":
-                                mIH.setLenguaje("en", "US");
-                                break;
-                            case "Français":
-                                mIH.setLenguaje("fr", "FR");
-                                break;
-                            case "Deutsch":
-                                mIH.setLenguaje("de", "DE");
-                                break;
-                            case "Italiano":
-                                mIH.setLenguaje("it", "IT");
-                                break;
-                            default:
-                                mIH.setLenguaje("es", "EC");
-                        }
+                        mIH.setLenguaje("es", "EC");
                         usuarioController.cambiarIdiomaLogIn(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
                         preguntaController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
                     }
                 });
+                logInView.getInglesMenuItem().addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        mIH.setLenguaje("en", "US");
+                        usuarioController.cambiarIdiomaLogIn(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                        preguntaController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                    }
+                });
+                logInView.getFrancesMenuItem().addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        mIH.setLenguaje("fr", "FR");
+                        usuarioController.cambiarIdiomaLogIn(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                        preguntaController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                    }
+                });
+                logInView.getAlemanMenuItem().addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        mIH.setLenguaje("de", "DE");
+                        usuarioController.cambiarIdiomaLogIn(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                        preguntaController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                    }
+                });
+                logInView.getItalianoMenuItem().addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        mIH.setLenguaje("it", "IT");
+                        usuarioController.cambiarIdiomaLogIn(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                        preguntaController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                    }
+                });
+
+                registraseView.getEspanolMenuItem().addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        mIH.setLenguaje("es", "EC");
+                        usuarioController.cambiarIdiomaLogIn(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                        preguntaController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                    }
+                });
+                registraseView.getInglesMenuItem().addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        mIH.setLenguaje("en", "US");
+                        usuarioController.cambiarIdiomaLogIn(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                        preguntaController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                    }
+                });
+                registraseView.getFrancesMenuItem().addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        mIH.setLenguaje("fr", "FR");
+                        usuarioController.cambiarIdiomaLogIn(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                        preguntaController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                    }
+                });
+                registraseView.getAlemanMenuItem().addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        mIH.setLenguaje("de", "DE");
+                        usuarioController.cambiarIdiomaLogIn(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                        preguntaController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                    }
+                });
+                registraseView.getItalianoMenuItem().addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        mIH.setLenguaje("it", "IT");
+                        usuarioController.cambiarIdiomaLogIn(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                        preguntaController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                    }
+                });
+
+                recuperarContraseniaView.getEspanolMenuItem().addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        mIH.setLenguaje("es", "EC");
+                        usuarioController.cambiarIdiomaLogIn(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                        preguntaController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                    }
+                });
+                recuperarContraseniaView.getInglesMenuItem().addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        mIH.setLenguaje("en", "US");
+                        usuarioController.cambiarIdiomaLogIn(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                        preguntaController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                    }
+                });
+                recuperarContraseniaView.getFrancesMenuItem().addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        mIH.setLenguaje("fr", "FR");
+                        usuarioController.cambiarIdiomaLogIn(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                        preguntaController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                    }
+                });
+                recuperarContraseniaView.getAlemanMenuItem().addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        mIH.setLenguaje("de", "DE");
+                        usuarioController.cambiarIdiomaLogIn(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                        preguntaController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                    }
+                });
+                recuperarContraseniaView.getItalianoMenuItem().addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        mIH.setLenguaje("it", "IT");
+                        usuarioController.cambiarIdiomaLogIn(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                        preguntaController.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                    }
+                });
+
                 logInView.setVisible(true);
 
                 logInView.addWindowListener(new WindowAdapter() {
@@ -160,7 +256,8 @@ public class Main {
                                     if(!productoListaView.isVisible()){
                                         productoListaView.setVisible(true);
                                         menuPrincipalView.getjDesktopPane().add(productoListaView);
-                                    }                                }
+                                    }
+                                }
                             });
 
                             menuPrincipalView.getMenuItemModificarProdcuto().addActionListener(new ActionListener() {

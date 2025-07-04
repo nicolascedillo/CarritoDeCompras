@@ -15,6 +15,13 @@ public class RecuperarContraseniaView extends JFrame{
     private JButton restablecerButton;
     private JPanel panelPrincipal;
     private MensajeInternacionalizacionHandler mIH;
+    private JMenu idiomaMenu;
+    private JMenuBar menuBar;
+    private JMenuItem inglesMenuItem;
+    private JMenuItem espanolMenuItem;
+    private JMenuItem francesMenuItem;
+    private JMenuItem alemanMenuItem;
+    private JMenuItem italianoMenuItem;
 
     public RecuperarContraseniaView(MensajeInternacionalizacionHandler mIH) {
         setTitle(mIH.get("recuperacion.titulo"));
@@ -22,8 +29,32 @@ public class RecuperarContraseniaView extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
-        setSize(400, 200);
+        setSize(400, 250);
         this.mIH = mIH;
+
+        menuBar = new JMenuBar();
+        idiomaMenu = new JMenu(mIH.get("menu.idiomas"));
+        idiomaMenu.setIcon(Icono.icono(Url.IDIOMA));
+        espanolMenuItem = new JMenuItem(mIH.get("menu.idioma.es"));
+        espanolMenuItem.setIcon(Icono.icono(Url.IDIOMA));
+        inglesMenuItem = new JMenuItem(mIH.get("menu.idioma.en"));
+        inglesMenuItem.setIcon(Icono.icono(Url.IDIOMA));
+        francesMenuItem = new JMenuItem(mIH.get("menu.idioma.fr"));
+        francesMenuItem.setIcon(Icono.icono(Url.IDIOMA));
+        alemanMenuItem = new JMenuItem(mIH.get("menu.idioma.de"));
+        alemanMenuItem.setIcon(Icono.icono(Url.IDIOMA));
+        italianoMenuItem = new JMenuItem(mIH.get("menu.idioma.it"));
+        italianoMenuItem.setIcon(Icono.icono(Url.IDIOMA));
+
+        menuBar.add(idiomaMenu);
+
+        idiomaMenu.add(espanolMenuItem);
+        idiomaMenu.add(inglesMenuItem);
+        idiomaMenu.add(francesMenuItem);
+        idiomaMenu.add(alemanMenuItem);
+        idiomaMenu.add(italianoMenuItem);
+
+        setJMenuBar(menuBar);
 
         siguienteButton.setIcon(Icono.icono(Url.SIGUIENTE));
         restablecerButton.setIcon(Icono.icono(Url.CREAR));
@@ -77,12 +108,31 @@ public class RecuperarContraseniaView extends JFrame{
         this.panelPrincipal = panelPrincipal;
     }
 
-
     public MensajeInternacionalizacionHandler getmIH() {
         return mIH;
     }
 
     public void setmIH(MensajeInternacionalizacionHandler mIH) {
         this.mIH = mIH;
+    }
+
+    public JMenuItem getEspanolMenuItem() {
+        return espanolMenuItem;
+    }
+
+    public JMenuItem getFrancesMenuItem() {
+        return francesMenuItem;
+    }
+
+    public JMenuItem getAlemanMenuItem() {
+        return alemanMenuItem;
+    }
+
+    public JMenuItem getItalianoMenuItem() {
+        return italianoMenuItem;
+    }
+
+    public JMenuItem getInglesMenuItem() {
+        return inglesMenuItem;
     }
 }

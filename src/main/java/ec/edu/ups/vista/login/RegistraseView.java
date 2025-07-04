@@ -33,15 +33,46 @@ public class RegistraseView extends JFrame{
     private JComboBox diaComboBox;
     private JComboBox mesComboBox;
     private MensajeInternacionalizacionHandler mIH;
+    private JMenu idiomaMenu;
+    private JMenuBar menuBar;
+    private JMenuItem inglesMenuItem;
+    private JMenuItem espanolMenuItem;
+    private JMenuItem francesMenuItem;
+    private JMenuItem alemanMenuItem;
+    private JMenuItem italianoMenuItem;
 
     public RegistraseView(MensajeInternacionalizacionHandler mIH) {
         setTitle(mIH.get("registro.titulo"));
         this.mIH = mIH;
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400, 450);
+        setSize(400, 500);
         setLocationRelativeTo(null);
         setResizable(false);
+
+        menuBar = new JMenuBar();
+        idiomaMenu = new JMenu(mIH.get("menu.idiomas"));
+        idiomaMenu.setIcon(Icono.icono(Url.IDIOMA));
+        espanolMenuItem = new JMenuItem(mIH.get("menu.idioma.es"));
+        espanolMenuItem.setIcon(Icono.icono(Url.IDIOMA));
+        inglesMenuItem = new JMenuItem(mIH.get("menu.idioma.en"));
+        inglesMenuItem.setIcon(Icono.icono(Url.IDIOMA));
+        francesMenuItem = new JMenuItem(mIH.get("menu.idioma.fr"));
+        francesMenuItem.setIcon(Icono.icono(Url.IDIOMA));
+        alemanMenuItem = new JMenuItem(mIH.get("menu.idioma.de"));
+        alemanMenuItem.setIcon(Icono.icono(Url.IDIOMA));
+        italianoMenuItem = new JMenuItem(mIH.get("menu.idioma.it"));
+        italianoMenuItem.setIcon(Icono.icono(Url.IDIOMA));
+
+        menuBar.add(idiomaMenu);
+
+        idiomaMenu.add(espanolMenuItem);
+        idiomaMenu.add(inglesMenuItem);
+        idiomaMenu.add(francesMenuItem);
+        idiomaMenu.add(alemanMenuItem);
+        idiomaMenu.add(italianoMenuItem);
+
+        setJMenuBar(menuBar);
 
         siguienteButton.setIcon(Icono.icono(Url.SIGUIENTE));
         guardarButton.setIcon(Icono.icono(Url.GUARDAR));
@@ -138,72 +169,24 @@ public class RegistraseView extends JFrame{
         return usuarioTextField;
     }
 
-    public void setUsuarioTextField(JTextField usuarioTextField) {
-        this.usuarioTextField = usuarioTextField;
-    }
-
-    public JLabel getLblContrasena() {
-        return lblContrasena;
-    }
-
-    public void setLblContrasena(JLabel lblContrasena) {
-        this.lblContrasena = lblContrasena;
-    }
-
     public JPasswordField getPasswordField1() {
         return passwordField1;
-    }
-
-    public void setPasswordField1(JPasswordField passwordField1) {
-        this.passwordField1 = passwordField1;
-    }
-
-    public JLabel getLblPreguntaCodigo() {
-        return lblPreguntaCodigo;
-    }
-
-    public void setLblPreguntaCodigo(JLabel lblPreguntaCodigo) {
-        this.lblPreguntaCodigo = lblPreguntaCodigo;
-    }
-
-    public JLabel getLblTituloPreguntas() {
-        return lblTituloPreguntas;
-    }
-
-    public void setLblTituloPreguntas(JLabel lblTituloPreguntas) {
-        this.lblTituloPreguntas = lblTituloPreguntas;
     }
 
     public JLabel getLblEnunciado() {
         return lblEnunciado;
     }
 
-    public void setLblEnunciado(JLabel lblEnunciado) {
-        this.lblEnunciado = lblEnunciado;
-    }
-
     public JTextField getRespuestaTextField() {
         return respuestaTextField;
-    }
-
-    public void setRespuestaTextField(JTextField respuestaTextField) {
-        this.respuestaTextField = respuestaTextField;
     }
 
     public JButton getSiguienteButton() {
         return siguienteButton;
     }
 
-    public void setSiguienteButton(JButton siguienteButton) {
-        this.siguienteButton = siguienteButton;
-    }
-
     public JButton getGuardarButton() {
         return guardarButton;
-    }
-
-    public void setGuardarButton(JButton guardarButton) {
-        this.guardarButton = guardarButton;
     }
 
     public JPanel getPanelPrincipal() {
@@ -226,103 +209,47 @@ public class RegistraseView extends JFrame{
         return anioTextField;
     }
 
-    public void setAnioTextField(JTextField anioTextField) {
-        this.anioTextField = anioTextField;
-    }
-
     public JComboBox getDiaComboBox() {
         return diaComboBox;
-    }
-
-    public void setDiaComboBox(JComboBox diaComboBox) {
-        this.diaComboBox = diaComboBox;
     }
 
     public JComboBox getMesComboBox() {
         return mesComboBox;
     }
 
-    public void setMesComboBox(JComboBox mesComboBox) {
-        this.mesComboBox = mesComboBox;
-    }
-
-    public JLabel getLblAnio() {
-        return lblAnio;
-    }
-
-    public void setLblAnio(JLabel lblAnio) {
-        this.lblAnio = lblAnio;
-    }
-
-    public JLabel getLblMes() {
-        return lblMes;
-    }
-
-    public void setLblMes(JLabel lblMes) {
-        this.lblMes = lblMes;
-    }
-
-    public JLabel getLblDia() {
-        return lblDia;
-    }
-
-    public void setLblDia(JLabel lblDia) {
-        this.lblDia = lblDia;
-    }
-
-    public JLabel getLblNacimiento() {
-        return lblNacimiento;
-    }
-
-    public void setLblNacimiento(JLabel lblNacimiento) {
-        this.lblNacimiento = lblNacimiento;
-    }
-
-    public JLabel getLblCorreo() {
-        return lblCorreo;
-    }
-
-    public void setLblCorreo(JLabel lblCorreo) {
-        this.lblCorreo = lblCorreo;
-    }
-
-    public JLabel getLblTelefono() {
-        return lblTelefono;
-    }
-
-    public void setLblTelefono(JLabel lblTelefono) {
-        this.lblTelefono = lblTelefono;
-    }
-
-    public JLabel getLblNombre() {
-        return lblNombre;
-    }
-
-    public void setLblNombre(JLabel lblNombre) {
-        this.lblNombre = lblNombre;
-    }
-
     public JTextField getCorreoTextField() {
         return correoTextField;
-    }
-
-    public void setCorreoTextField(JTextField correoTextField) {
-        this.correoTextField = correoTextField;
     }
 
     public JTextField getTelefonoTextField() {
         return telefonoTextField;
     }
 
-    public void setTelefonoTextField(JTextField telefonoTextField) {
-        this.telefonoTextField = telefonoTextField;
-    }
-
     public JTextField getNombreTextField() {
         return nombreTextField;
     }
 
-    public void setNombreTextField(JTextField nombreTextField) {
-        this.nombreTextField = nombreTextField;
+    public JMenuItem getInglesMenuItem() {
+        return inglesMenuItem;
+    }
+
+    public JMenuItem getEspanolMenuItem() {
+        return espanolMenuItem;
+    }
+
+    public JMenuItem getFrancesMenuItem() {
+        return francesMenuItem;
+    }
+
+    public JMenuItem getAlemanMenuItem() {
+        return alemanMenuItem;
+    }
+
+    public JMenuItem getItalianoMenuItem() {
+        return italianoMenuItem;
+    }
+
+    public JLabel getLblPreguntaCodigo() {
+        return lblPreguntaCodigo;
     }
 }
