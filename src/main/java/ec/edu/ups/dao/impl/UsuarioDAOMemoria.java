@@ -5,6 +5,7 @@ import ec.edu.ups.modelo.Rol;
 import ec.edu.ups.modelo.Usuario;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -14,8 +15,8 @@ public class UsuarioDAOMemoria implements UsuarioDAO {
 
     public UsuarioDAOMemoria() {
         this.usuarios = new ArrayList<>();
-        crear(new Usuario("admin", "12345", Rol.ADMINISTRADOR));
-        crear(new Usuario("user", "12345", Rol.USUARIO,"User name", "user@gmail.com", "0987654321", new java.util.GregorianCalendar(1990, 1, 1)));
+        crear(new Usuario("admin", "12345", Rol.ADMINISTRADOR,"Admin", "admin@gmail.com", "0934134431", new GregorianCalendar(1990, 1, 1)));
+        crear(new Usuario("user", "12345", Rol.USUARIO,"User name", "user@gmail.com", "0987654321", new GregorianCalendar(1999, 2, 6)));
     }
 
     @Override

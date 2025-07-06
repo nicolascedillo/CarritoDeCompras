@@ -289,7 +289,9 @@ public class PreguntaController {
         registraseView.getCorreoTextField().setText(usuarioSinPregguntas.getEmail());
         registraseView.getAnioTextField().setText(String.valueOf(usuarioSinPregguntas.getFechaNacimiento().get(Calendar.YEAR)));
         registraseView.getDiaComboBox().setSelectedItem(usuarioSinPregguntas.getFechaNacimiento().get(Calendar.DAY_OF_MONTH));
-        registraseView.getMesComboBox().setSelectedItem(mIH.get("mes." + usuarioSinPregguntas.getFechaNacimiento().getDisplayName(Calendar.MONTH, Calendar.LONG, mIH.getLocale())));
+        int mesNumero = usuarioSinPregguntas.getFechaNacimiento().get(Calendar.MONTH);
+        String[] mesesEspanol = {"enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"};
+        registraseView.getMesComboBox().setSelectedItem(mIH.get("mes." + mesesEspanol[mesNumero]));
         registraseView.setTitle(mIH.get("registro.titulo.preguntas"));
         registraseView.getLblTitulo().setText(mIH.get("ventana.usuario.usuario"));
         registraseView.getUsuarioTextField().setEditable(false);
