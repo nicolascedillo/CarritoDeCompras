@@ -253,3 +253,4 @@ public class RegistraseView extends JFrame{
         return lblPreguntaCodigo;
     }
 }
+

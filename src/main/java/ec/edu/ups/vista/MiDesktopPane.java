@@ -12,35 +12,25 @@ public class MiDesktopPane extends JDesktopPane {
 
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        // Fondo superior azul suave
+        // Fondo
         g2.setColor(new Color(200, 230, 255));
         g2.fillRect(0, 0, getWidth(), getHeight() / 2);
-
-        // Fondo inferior naranja
         g2.setColor(new Color(255, 139, 106));
         g2.fillRect(0, getHeight() / 2, getWidth(), getHeight() / 2);
 
-        // Texto "SHOPPING ONLINE"
+        // Texto
         g2.setColor(Color.WHITE);
         g2.setFont(new Font("SansSerif", Font.BOLD, 30));
         String texto = "JAVA SHOPPING";
         int textWidth = g2.getFontMetrics().stringWidth(texto);
         g2.drawString(texto, (getWidth() - textWidth) / 2, getHeight() - 30);
 
-        // Bolsas de compras grandes y superpuestas, más arriba y detalladas
+        // Bolsita de compras grandes y superpuestas, más arriba y detalladas
         int bagWidth = getWidth() / 4 + 30;
         int bagHeight = getHeight() / 2 + 80;
         int bagY = getHeight() / 2 - bagHeight / 2 - 40; // levantadas
 
-//        // Sombra izquierda
-//        g2.setColor(new Color(60, 60, 60, 60));
-//        g2.fillRoundRect(getWidth() / 2 - bagWidth - bagWidth / 7 + 15, bagY + 110 + 30, bagWidth, bagHeight - 60, 40, 40);
-//        // Sombra derecha
-//        g2.fillRoundRect(getWidth() / 2 + bagWidth / 7 + 15, bagY + 110 + 30, bagWidth, bagHeight - 60, 40, 40);
-//        // Sombra central
-//        g2.fillRoundRect(getWidth() / 2 - bagWidth / 2 + 15, bagY + 70 + 30, bagWidth, bagHeight, 50, 50);
-
-        // Bolsa izquierda (azul, con detalles)
+        // Bolsita azul
         int leftX = getWidth() / 2 - bagWidth - bagWidth / 7;
         int leftY = bagY + 110;
         g2.setColor(new Color(100, 200, 230));
@@ -48,7 +38,6 @@ public class MiDesktopPane extends JDesktopPane {
         g2.setColor(new Color(60, 120, 160));
         g2.setStroke(new BasicStroke(6));
         g2.drawRoundRect(leftX, leftY, bagWidth, bagHeight - 60, 40, 40);
-        // Asas
         g2.setStroke(new BasicStroke(8));
         g2.setColor(new Color(80, 80, 80));
         g2.drawArc(leftX + bagWidth / 8, leftY - 40, bagWidth / 3, 80, 0, 180);

@@ -6,6 +6,7 @@ import ec.edu.ups.modelo.PreguntaRespondida;
 import ec.edu.ups.modelo.Rol;
 import ec.edu.ups.modelo.Usuario;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
+import ec.edu.ups.vista.MenuPrincipalView;
 import ec.edu.ups.vista.login.LogInView;
 import ec.edu.ups.vista.login.RecuperarContraseniaView;
 import ec.edu.ups.vista.login.RegistraseView;
@@ -13,6 +14,7 @@ import ec.edu.ups.vista.login.RegistraseView;
 import javax.swing.*;
 import javax.swing.text.Position;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
 import java.util.List;
@@ -43,14 +45,14 @@ public class PreguntaController {
 
         logInView.getRegistrarseButton().addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 registrarse();
             }
         });
 
         logInView.getOlvidadaButton().addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 if(logInView.getUsernameTextField().getText().isEmpty()){
                     recuperarContraseniaView.mostrarMensaje(mIH.get("recuperacion.usuario.vacio"));
                     return;
@@ -206,7 +208,7 @@ public class PreguntaController {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
 
-                if(correctas[0] >= 2){
+                if(recuperarContraseniaView.getRespuestaTextField().getText().toLowerCase().equals(respuestas.get(iteradorCodigo[0]).toLowerCase())){
                     recuperarContraseniaView.getSiguienteButton().setEnabled(false);
                     recuperarContraseniaView.getRestablecerButton().setEnabled(true);
                     recuperarContraseniaView.getLblEnunciado().setText("");
@@ -224,7 +226,7 @@ public class PreguntaController {
                 iteradorCodigo[0]++;
                 correctas[0]++;
                 recuperarContraseniaView.getRespuestaTextField().setText("");
-                cargarPreguntaOlvidada(codigos.get(iteradorCodigo[0]));
+//                cargarPreguntaOlvidada(codigos.get(iteradorCodigo[0]));
 
             }
         });
@@ -279,4 +281,52 @@ public class PreguntaController {
         }
     }
 
+    public void configurarEventosResponderCOntrasenia(Usuario usuarioSinPregguntas, MenuPrincipalView menuPrincipalView) {
+        registraseView.getUsuarioTextField().setText(usuarioSinPregguntas.getUsername());
+        registraseView.getPasswordField1().setText(usuarioSinPregguntas.getPassword());
+        final int[] contadorPreguntasRespondidas = {0};
+        List<PreguntaRespondida> preguntasRespondidas = new ArrayList<>();
+        cargarPregunta(contadorPreguntas);
+        registraseView.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+
+        quitarActionListeners(registraseView.getGuardarButton());
+        quitarActionListeners(registraseView.getSiguienteButton());
+
+        registraseView.getGuardarButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(preguntasRespondidas.size() < 3){
+                    registraseView.mostrarMensaje(mIH.get("registro.preguntas.requeridas"));
+                    return;
+                }
+
+                usuarioSinPregguntas.setPreguntasVerificacion(preguntasRespondidas);
+                usuarioDAO.actualizar(usuarioSinPregguntas);
+                registraseView.mostrarMensaje(mIH.get("preguntas.asignadas"));
+                registraseView.dispose();
+                contadorPreguntas = 1;
+                contadorPreguntasRespondidas[0] = 0;
+                menuPrincipalView.setVisible(true);
+                menuPrincipalView.mostrarMensaje(mIH.get("app.bienvenida") + ": " + usuarioSinPregguntas.getUsername());
+            }
+        });
+
+        registraseView.getSiguienteButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(contadorPreguntas > 12){
+                    return;
+                }
+                if(!registraseView.getRespuestaTextField().getText().isEmpty()){
+                    contadorPreguntasRespondidas[0]++;
+                    PreguntaRespondida preguntaRespondida = new PreguntaRespondida(preguntaDAO.buscarPorCodigo(contadorPreguntas), registraseView.getRespuestaTextField().getText());
+                    preguntasRespondidas.add(preguntaRespondida);
+                }
+                contadorPreguntas++;
+                cargarPregunta(contadorPreguntas);
+                registraseView.getRespuestaTextField().setText("");
+
+            }
+        });
+    }
 }

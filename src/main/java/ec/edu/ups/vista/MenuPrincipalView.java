@@ -135,7 +135,6 @@ public class MenuPrincipalView extends JFrame {
         setTitle(mIH.get("app.titulo"));
         setLocationRelativeTo(null);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setVisible(true);
         //mdi sistema de multiples documentos
 
     }

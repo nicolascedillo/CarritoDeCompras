@@ -190,7 +190,6 @@ public class Main {
 
                         if(usuarioAutenticado != null){
 
-
                             MenuPrincipalView menuPrincipalView = new MenuPrincipalView(mIH);
                             menuPrincipalView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
 
@@ -209,7 +208,6 @@ public class Main {
                             ItemListaView itemListaView = new ItemListaView(mIH);
                             CarritoModificarView carritoModificarView = new CarritoModificarView(mIH);
                             menuPrincipalView.getjDesktopPane().add(itemListaView);
-
 
                             //Instancias vistas del usuario
 
@@ -231,7 +229,15 @@ public class Main {
                             UsuarioController usuarioController = new UsuarioController(usuarioDAO,usuarioCrearView,
                                     usuarioEliminarView, usuarioListarView, usuarioModificarView, usuarioAutenticado, mIH);
 
-                            menuPrincipalView.mostrarMensaje(mIH.get("app.bienvenida") + ": " + usuarioAutenticado.getUsername());
+                            if(usuarioAutenticado.getPreguntasVerificacion().isEmpty()){
+                                registraseView.setVisible(true);
+                                registraseView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
+                                preguntaController.configurarEventosResponderCOntrasenia(usuarioAutenticado, menuPrincipalView);
+                                menuPrincipalView.mostrarMensaje(mIH.get("sin.preguntas"));
+                            }else{
+                                menuPrincipalView.mostrarMensaje(mIH.get("app.bienvenida") + ": " + usuarioAutenticado.getUsername());
+                            }
+
                             if (usuarioAutenticado.getRol().equals(Rol.USUARIO)) {
                                 menuPrincipalView.deshabilitarMenusAdministrador();
                             }
@@ -442,6 +448,12 @@ public class Main {
                                     System.exit(0);
                                 }
                             });
+
+
+
+
+
+
 
                         }
 
