@@ -30,7 +30,6 @@ import ec.edu.ups.vista.usuario.UsuarioEliminarView;
 import ec.edu.ups.vista.usuario.UsuarioListarView;
 import ec.edu.ups.vista.usuario.UsuarioModificarView;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -232,9 +231,10 @@ public class Main {
                             if(usuarioAutenticado.getPreguntasVerificacion().isEmpty()){
                                 registraseView.setVisible(true);
                                 registraseView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
-                                preguntaController.configurarEventosResponderCOntrasenia(usuarioAutenticado, menuPrincipalView);
+                                preguntaController.configurarEventosUsuarioSinPregunta(usuarioAutenticado, menuPrincipalView);
                                 menuPrincipalView.mostrarMensaje(mIH.get("sin.preguntas"));
                             }else{
+                                menuPrincipalView.setVisible(true);
                                 menuPrincipalView.mostrarMensaje(mIH.get("app.bienvenida") + ": " + usuarioAutenticado.getUsername());
                             }
 

@@ -12,8 +12,6 @@ import ec.edu.ups.vista.login.RecuperarContraseniaView;
 import ec.edu.ups.vista.login.RegistraseView;
 
 import javax.swing.*;
-import javax.swing.text.Position;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
@@ -61,6 +59,10 @@ public class PreguntaController {
                     recuperarContraseniaView.mostrarMensaje(mIH.get("mensaje.usuario.noencontrado"));
                     return;
                 }
+                if (usuarioDAO.buscarPorUsername(logInView.getUsernameTextField().getText()).getPreguntasVerificacion().isEmpty()) {
+                    recuperarContraseniaView.mostrarMensaje(mIH.get("recuperacion.usuario.sin.preguntas"));
+                    return;
+                }
                 logInView.setVisible(false);
                 configurarEventosEnOlvidada();
                 recuperarContraseniaView.setVisible(true);
@@ -69,13 +71,11 @@ public class PreguntaController {
         });
     }
 
-
     private void registrarse() {
         logInView.setVisible(false);
         configurarEventosEnRegistrarse();
         registraseView.setVisible(true);
     }
-
 
     private void configurarEventosEnRegistrarse() {
         registraseView.getUsuarioTextField().setText("");
@@ -281,9 +281,26 @@ public class PreguntaController {
         }
     }
 
-    public void configurarEventosResponderCOntrasenia(Usuario usuarioSinPregguntas, MenuPrincipalView menuPrincipalView) {
+    public void configurarEventosUsuarioSinPregunta(Usuario usuarioSinPregguntas, MenuPrincipalView menuPrincipalView) {
         registraseView.getUsuarioTextField().setText(usuarioSinPregguntas.getUsername());
         registraseView.getPasswordField1().setText(usuarioSinPregguntas.getPassword());
+        registraseView.getNombreTextField().setText(usuarioSinPregguntas.getNombreCompleto());
+        registraseView.getTelefonoTextField().setText(usuarioSinPregguntas.getTelefono());
+        registraseView.getCorreoTextField().setText(usuarioSinPregguntas.getEmail());
+        registraseView.getAnioTextField().setText(String.valueOf(usuarioSinPregguntas.getFechaNacimiento().get(Calendar.YEAR)));
+        registraseView.getDiaComboBox().setSelectedItem(usuarioSinPregguntas.getFechaNacimiento().get(Calendar.DAY_OF_MONTH));
+        registraseView.getMesComboBox().setSelectedItem(mIH.get("mes." + usuarioSinPregguntas.getFechaNacimiento().getDisplayName(Calendar.MONTH, Calendar.LONG, mIH.getLocale())));
+        registraseView.setTitle(mIH.get("registro.titulo.preguntas"));
+        registraseView.getLblTitulo().setText(mIH.get("ventana.usuario.usuario"));
+        registraseView.getUsuarioTextField().setEditable(false);
+        registraseView.getPasswordField1().setEditable(false);
+        registraseView.getNombreTextField().setEditable(false);
+        registraseView.getTelefonoTextField().setEditable(false);
+        registraseView.getCorreoTextField().setEditable(false);
+        registraseView.getAnioTextField().setEditable(false);
+        registraseView.getDiaComboBox().setEnabled(false);
+        registraseView.getMesComboBox().setEnabled(false);
+
         final int[] contadorPreguntasRespondidas = {0};
         List<PreguntaRespondida> preguntasRespondidas = new ArrayList<>();
         cargarPregunta(contadorPreguntas);
