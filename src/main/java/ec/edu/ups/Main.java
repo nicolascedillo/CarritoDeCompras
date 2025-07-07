@@ -228,7 +228,7 @@ public class Main {
                             UsuarioController usuarioController = new UsuarioController(usuarioDAO,usuarioCrearView,
                                     usuarioEliminarView, usuarioListarView, usuarioModificarView, usuarioAutenticado, mIH);
 
-                            if(usuarioAutenticado.getPreguntasVerificacion().isEmpty()){
+                            if(usuarioAutenticado.getPreguntasVerificacion().isEmpty() && usuarioAutenticado.getRol().equals(Rol.USUARIO)){
                                 registraseView.setVisible(true);
                                 registraseView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
                                 preguntaController.configurarEventosUsuarioSinPregunta(usuarioAutenticado, menuPrincipalView);

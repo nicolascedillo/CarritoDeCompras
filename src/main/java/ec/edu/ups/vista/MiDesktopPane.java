@@ -42,14 +42,13 @@ public class MiDesktopPane extends JDesktopPane {
         g2.setColor(new Color(80, 80, 80));
         g2.drawArc(leftX + bagWidth / 8, leftY - 40, bagWidth / 3, 80, 0, 180);
         g2.drawArc(leftX + bagWidth - bagWidth / 8 - bagWidth / 3, leftY - 40, bagWidth / 3, 80, 0, 180);
-        // Etiqueta
         g2.setColor(new Color(255, 255, 255, 180));
         g2.fillRoundRect(leftX + bagWidth / 2 - 30, leftY + 30, 60, 30, 15, 15);
         g2.setColor(new Color(100, 200, 230).darker());
         g2.setFont(new Font("SansSerif", Font.BOLD, 16));
         g2.drawString("SALE", leftX + bagWidth / 2 - 18, leftY + 52);
 
-        // Bolsa derecha (roja, con detalles)
+        // Bolsita derecha
         int rightX = getWidth() / 2 + bagWidth / 7;
         int rightY = bagY + 110;
         g2.setColor(new Color(190, 80, 80));
@@ -57,19 +56,17 @@ public class MiDesktopPane extends JDesktopPane {
         g2.setColor(new Color(120, 40, 40));
         g2.setStroke(new BasicStroke(6));
         g2.drawRoundRect(rightX, rightY, bagWidth, bagHeight - 60, 40, 40);
-        // Asas
         g2.setStroke(new BasicStroke(8));
         g2.setColor(new Color(80, 80, 80));
         g2.drawArc(rightX + bagWidth / 8, rightY - 40, bagWidth / 3, 80, 0, 180);
         g2.drawArc(rightX + bagWidth - bagWidth / 8 - bagWidth / 3, rightY - 40, bagWidth / 3, 80, 0, 180);
-        // Etiqueta
         g2.setColor(new Color(255, 255, 255, 180));
         g2.fillRoundRect(rightX + bagWidth / 2 - 30, rightY + 30, 60, 30, 15, 15);
         g2.setColor(new Color(190, 80, 80).darker());
         g2.setFont(new Font("SansSerif", Font.BOLD, 16));
         g2.drawString("NEW", rightX + bagWidth / 2 - 18, rightY + 52);
 
-        // Bolsa central (naranja, superpuesta y más detallada)
+        // Bolsita central
         int centerX = getWidth() / 2 - bagWidth / 2;
         int centerY = bagY + 70;
         g2.setColor(new Color(255, 170, 60));
@@ -77,12 +74,10 @@ public class MiDesktopPane extends JDesktopPane {
         g2.setColor(new Color(200, 120, 30));
         g2.setStroke(new BasicStroke(8));
         g2.drawRoundRect(centerX, centerY, bagWidth, bagHeight, 50, 50);
-        // Asas
         g2.setStroke(new BasicStroke(10));
         g2.setColor(new Color(120, 80, 40));
         g2.drawArc(centerX + bagWidth / 8, centerY - 50, bagWidth / 3, 100, 0, 180);
         g2.drawArc(centerX + bagWidth - bagWidth / 8 - bagWidth / 3, centerY - 50, bagWidth / 3, 100, 0, 180);
-        // Etiqueta
         g2.setColor(new Color(255, 255, 255, 200));
         g2.fillRoundRect(centerX + bagWidth / 2 - 40, centerY + 40, 80, 36, 18, 18);
         g2.setColor(new Color(255, 170, 60).darker());
@@ -90,6 +85,5 @@ public class MiDesktopPane extends JDesktopPane {
         g2.drawString("HOT!", centerX + bagWidth / 2 - 22, centerY + 65);
 
     }
-
 
 }

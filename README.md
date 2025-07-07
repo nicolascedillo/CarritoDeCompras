@@ -42,8 +42,15 @@ Implementar un sistema educativo que simula un **carrito de compras**, utilizand
 
 ## 📐 Diagrama UML de Clases
 
-<!-- Espacio reservado para el diagrama UML -->
+![Diagrama UML](src/main/resources/imagenes/diagrama_carrito.png)
 
+
+---
+## Principios SOLID aplicados
+- 1-	Principio de Responsabilidad Única (Single Responsibility Principle - SRP): La clase UsuarioController se encarga únicamente de la lógica relacionada con la gestión de usuarios, como el registro, autenticación y modificación de datos de usuario. No se encarga de la persistencia ni de la interfaz gráfica, lo que permite que cada clase tenga una única razón para cambiar. Esto facilita el mantenimiento y la extensión del código, ya que los cambios en la lógica de usuario no afectan a otras partes del sistema. 
+- 2-	Principio de Abierto/Cerrado (Open/Closed Principle - OCP): Las interfaces DAO y sus implementaciones permiten que el sistema esté abierto a nuevas implementaciones sin modificar el código existente que depende de las interfaces. Esto permite agregar nuevas formas de persistencia de datos sin alterar el funcionamiento de los controladores o vistas. 
+- 3-	Principio de Inversión de Dependencias (Dependency Inversion Principle - DIP): Los controladores reciben las dependencias (DAO y vistas) a través de sus constructores, en vez de crearlas internamente. Lo cual hace que no se cree una instancia de la clase dentro del constructor, sino se le pasa simplemente una, permitiendo cambiar las dependencias fácilmente.
+---
 ---
 
 ## 📦 Estructura de Paquetes y Funciones Principales
