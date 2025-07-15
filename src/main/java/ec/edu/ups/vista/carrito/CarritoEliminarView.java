@@ -77,6 +77,7 @@ public class CarritoEliminarView extends JInternalFrame{
         subtotalTextField.setText("0.0");
         ivaTextField.setText("0.0");
         totalTextField.setText("0.0");
+        usuarioTextField.setText("");
         modelo.setRowCount(0);
     }
 

@@ -59,15 +59,19 @@ public class ProductoController {
                 if(productoEliminarView.getTxtCodigo().getText().isEmpty()) {
                     return;
                 }
-                int codigo = Integer.parseInt(productoEliminarView.getTxtCodigo().getText());
-                Producto productoEncontrado = productoDAO.buscarPorCodigo(codigo);
-                if (productoEncontrado != null) {
+                try{
+                    int codigo = Integer.parseInt(productoEliminarView.getTxtCodigo().getText());
+                    Producto productoEncontrado = productoDAO.buscarPorCodigo(codigo);
                     productoEliminarView.getTxtNombre().setText(productoEncontrado.getNombre());
                     productoEliminarView.getTxtPrecio().setText(FormateadorUtils.formatearMoneda(productoEncontrado.getPrecio(), mIH.getLocale()));
                     productoEliminarView.getTxtNombre().setEnabled(false);
                     productoEliminarView.getTxtPrecio().setEnabled(false);
-                }else{
+
+                }catch(NumberFormatException ex){
+                    productoEliminarView.mostrarMensaje(mIH.get("numberFormatException"));
+                }catch (NullPointerException ex){
                     productoEliminarView.mostrarMensaje(mIH.get("mensaje.producto.noencontrado"));
+
                 }
 
             }
@@ -84,13 +88,17 @@ public class ProductoController {
                         JOptionPane.WARNING_MESSAGE
                 );
 
-                if (respuesta == JOptionPane.YES_OPTION) {
-                    eliminarProducto(Integer.parseInt(productoEliminarView.getTxtCodigo().getText()));
-                    productoEliminarView.mostrarMensaje(mIH.get("mensaje.producto.eliminado"));
-                    productoEliminarView.limpiarCampos();
+                try{
+                    if (respuesta == JOptionPane.YES_OPTION) {
+                        eliminarProducto(Integer.parseInt(productoEliminarView.getTxtCodigo().getText()));
+                        productoEliminarView.mostrarMensaje(mIH.get("mensaje.producto.eliminado"));
+                        productoEliminarView.limpiarCampos();
 
-                } else {
-                    productoEliminarView.mostrarMensaje(mIH.get("mensaje.cancelar"));
+                    } else {
+                        productoEliminarView.mostrarMensaje(mIH.get("mensaje.cancelar"));
+                    }
+                }catch (NumberFormatException ex) {
+                    productoEliminarView.mostrarMensaje(mIH.get("numberFormatException"));
                 }
 
             }
@@ -102,17 +110,19 @@ public class ProductoController {
         productoModificarView.getBuscarButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int codigo = Integer.parseInt(productoModificarView.getTxtCodigo().getText());
-                Producto productoEncontrado = productoDAO.buscarPorCodigo(codigo);
-                productoModificarView.getTxtCodigo().setEnabled(true);
-                productoModificarView.getTxtNombre().setEnabled(true);
-                productoModificarView.getTxtPrecio().setEnabled(true);
+                try{
+                    int codigo = Integer.parseInt(productoModificarView.getTxtCodigo().getText());
+                    Producto productoEncontrado = productoDAO.buscarPorCodigo(codigo);
+                    productoModificarView.getTxtCodigo().setEnabled(true);
+                    productoModificarView.getTxtNombre().setEnabled(true);
+                    productoModificarView.getTxtPrecio().setEnabled(true);
 
-                if (productoEncontrado != null) {
                     productoModificarView.getTxtNombre().setText(productoEncontrado.getNombre());
                     productoModificarView.getTxtPrecio().setText(String.valueOf(productoEncontrado.getPrecio()));
 
-                }else{
+                }catch (NumberFormatException ex){
+                    productoModificarView.mostrarMensaje(mIH.get("numberFormatException"));
+                }catch (NullPointerException ex){
                     productoModificarView.mostrarMensaje(mIH.get("mensaje.producto.noencontrado"));
                 }
             }
@@ -121,9 +131,13 @@ public class ProductoController {
         productoModificarView.getBtnGuardar().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                actualizarProducto(Integer.parseInt(productoModificarView.getTxtCodigo().getText()));
-                productoModificarView.limpiarCampos();
-                productoModificarView.mostrarMensaje(mIH.get("mensaje.producto.modificado"));
+                try{
+                    actualizarProducto(Integer.parseInt(productoModificarView.getTxtCodigo().getText()));
+                    productoModificarView.limpiarCampos();
+                    productoModificarView.mostrarMensaje(mIH.get("mensaje.producto.modificado"));
+                } catch (NumberFormatException ex) {
+                    productoModificarView.mostrarMensaje(mIH.get("numberFormatException"));
+                }
 
             }
         });
@@ -146,25 +160,32 @@ public class ProductoController {
         });
     }
 
-
     private void guardarProducto() {
-        int codigo = Integer.parseInt(productoCrearView.getTxtCodigo().getText());
-        String nombre = productoCrearView.getTxtNombre().getText();
-        double precio = Double.parseDouble(productoCrearView.getTxtPrecio().getText());
+        try{
+            int codigo = Integer.parseInt(productoCrearView.getTxtCodigo().getText());
+            String nombre = productoCrearView.getTxtNombre().getText();
+            double precio = Double.parseDouble(productoCrearView.getTxtPrecio().getText());
 
-        productoDAO.crear(new Producto(codigo, nombre, precio));
-        productoCrearView.mostrarMensaje(mIH.get("mensaje.producto.creado"));
-        productoCrearView.limpiarCampos();
+            productoDAO.crear(new Producto(codigo, nombre, precio));
+            productoCrearView.mostrarMensaje(mIH.get("mensaje.producto.creado"));
+            productoCrearView.limpiarCampos();
+        } catch (NumberFormatException e) {
+            productoCrearView.mostrarMensaje(mIH.get("numberFormatException"));
+        }
     }
 
     private void buscarProducto() {
-        String nombre = productoListaView.getTxtBuscar().getText();
+        try{
+            String nombre = productoListaView.getTxtBuscar().getText();
 
-        List<Producto> productosEncontrados = productoDAO.buscarPorNombre(nombre);
-        if( productosEncontrados.isEmpty() ) {
-            productoListaView.mostrarMensaje(mIH.get("mensaje.producto.noencontrado"));
-        } else {
-            productoListaView.cargarDatos(productosEncontrados);
+            List<Producto> productosEncontrados = productoDAO.buscarPorNombre(nombre);
+            if( productosEncontrados.isEmpty() ) {
+                productoListaView.mostrarMensaje(mIH.get("mensaje.producto.noencontrado"));
+            } else {
+                productoListaView.cargarDatos(productosEncontrados);
+            }
+        }catch (NumberFormatException e) {
+            productoListaView.mostrarMensaje(mIH.get("numberFormatException"));
         }
     }
 

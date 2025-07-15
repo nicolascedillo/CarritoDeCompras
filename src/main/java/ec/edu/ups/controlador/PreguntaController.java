@@ -226,7 +226,6 @@ public class PreguntaController {
             respuestas.add(preguntaRespondida.getRespuesta());
         }
         final int[] iteradorCodigo = {0};
-        final int[] correctas = {0};
         cargarPreguntaOlvidada(codigos.get(iteradorCodigo[0]));
 
         quitarActionListeners(recuperarContraseniaView.getRestablecerButton());
@@ -252,9 +251,7 @@ public class PreguntaController {
                     return;
                 }
                 iteradorCodigo[0]++;
-                correctas[0]++;
                 recuperarContraseniaView.getRespuestaTextField().setText("");
-//                cargarPreguntaOlvidada(codigos.get(iteradorCodigo[0]));
 
             }
         });
@@ -267,17 +264,20 @@ public class PreguntaController {
                     return;
                 }
 
-                String nuevaContrasenia = recuperarContraseniaView.getRespuestaTextField().getText();
-                usuarioRecuperacion.setPassword(nuevaContrasenia);
-                usuarioDAO.actualizar(usuarioRecuperacion);
-                recuperarContraseniaView.mostrarMensaje(mIH.get("recuperacion.contrasena.actualizada"));
-                recuperarContraseniaView.getRespuestaTextField().setText("");
-                recuperarContraseniaView.getSiguienteButton().setEnabled(true);
-                recuperarContraseniaView.getRestablecerButton().setEnabled(false);
-                iteradorCodigo[0] = 0;
-                correctas[0] = 0;
-                logInView.setVisible(true);
-                recuperarContraseniaView.dispose();
+                try{
+                    String nuevaContrasenia = recuperarContraseniaView.getRespuestaTextField().getText();
+                    usuarioRecuperacion.setPassword(nuevaContrasenia);
+                    usuarioDAO.actualizar(usuarioRecuperacion);
+                    recuperarContraseniaView.mostrarMensaje(mIH.get("recuperacion.contrasena.actualizada"));
+                    recuperarContraseniaView.getRespuestaTextField().setText("");
+                    recuperarContraseniaView.getSiguienteButton().setEnabled(true);
+                    recuperarContraseniaView.getRestablecerButton().setEnabled(false);
+                    iteradorCodigo[0] = 0;
+                    logInView.setVisible(true);
+                    recuperarContraseniaView.dispose();
+                }catch (PasswordException ex){
+                    recuperarContraseniaView.mostrarMensaje(mIH.get("passwordException"));
+                }
             }
         });
     }

@@ -164,17 +164,25 @@ public class UsuarioController {
             usuarioEliminarView.getDiaComboBox().setEnabled(false);
             usuarioEliminarView.getMesComboBox().setEnabled(false);
             usuarioEliminarView.getBuscarButton().setVisible(false);
+            usuarioEliminarView.getEliminarButton().setEnabled(true);
         }
 
         usuarioEliminarView.getBuscarButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
 
-                String username = usuarioEliminarView.getUsernameTextField().getText();
-                Usuario usuario = usuarioDAO.buscarPorUsername(username);
-                if (usuario != null) {
+                try{
+                    String username = usuarioEliminarView.getUsernameTextField().getText();
+                    Usuario usuario = usuarioDAO.buscarPorUsername(username);
                     usuarioEliminarView.getContrasenaTextField().setText(usuario.getPassword());
-                } else {
+                    usuarioEliminarView.getNombreTextField().setText(usuario.getNombreCompleto());
+                    usuarioEliminarView.getTelefonoTextField().setText(usuario.getTelefono());
+                    usuarioEliminarView.getCorreoTextField().setText(usuario.getEmail());
+                    usuarioEliminarView.getAnioTextField().setText(usuario.getAnioNacimientoString());
+                    usuarioEliminarView.getDiaComboBox().setSelectedItem(Integer.parseInt(usuario.getDiaNacimientoString()));
+                    usuarioEliminarView.getMesComboBox().setSelectedIndex(Integer.parseInt(usuario.getMesNacimientoString()));
+                    usuarioEliminarView.getEliminarButton().setEnabled(true);
+                }catch(NullPointerException ex){
                     usuarioEliminarView.mostrarMensaje(mIH.get("mensaje.usuario.noencontrado"));
                 }
 
@@ -184,7 +192,12 @@ public class UsuarioController {
         usuarioEliminarView.getEliminarButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                String username = usuarioEliminarView.getUsernameTextField().getText();
+                Usuario usuarioAEliminar = usuarioDAO.buscarPorUsername(username);
+                if (usuarioAEliminar == null) {
+                    usuarioEliminarView.mostrarMensaje(mIH.get("mensaje.usuario.noencontrado"));
+                    return;
+                }
                 int respuesta = JOptionPane.showConfirmDialog(
                         usuarioEliminarView,
                         mIH.get("mensaje.usuario.confirmacion"),
@@ -192,19 +205,16 @@ public class UsuarioController {
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.WARNING_MESSAGE
                 );
-                String username = usuarioEliminarView.getUsernameTextField().getText();
-                Usuario usuario = usuarioDAO.buscarPorUsername(username);
                 if (respuesta == JOptionPane.YES_OPTION) {
-                    usuarioDAO.eliminar(usuario.getUsername());
+                    usuarioDAO.eliminar(usuarioAEliminar.getUsername());
                     usuarioEliminarView.mostrarMensaje(mIH.get("mensaje.usuario.eliminado"));
-                    if(usuario.getRol().equals(Rol.USUARIO)){
+                    if (usuarioAEliminar.getRol().equals(Rol.USUARIO)) {
                         usuarioEliminarView.dispose();
                     } else {
                         usuarioEliminarView.limpiarCampos();
                     }
-                } else {
-                    usuarioEliminarView.mostrarMensaje(mIH.get("mensaje.usuario.noencontrado"));
                 }
+
 
             }
         });
@@ -226,12 +236,13 @@ public class UsuarioController {
                 if( usuarioListarView.getNombreTextField().getText().isEmpty() ) {
                     return;
                 }
-                String username = usuarioListarView.getNombreTextField().getText();
-                Usuario usuario = usuarioDAO.buscarPorUsername(username);
-                if (usuario != null) {
+                try{
+                    String username = usuarioListarView.getNombreTextField().getText();
+                    Usuario usuario = usuarioDAO.buscarPorUsername(username);
                     usuarioListarView.cargarDatosBusqueda(usuario);
-                } else {
+                }catch (NullPointerException ex){
                     usuarioListarView.mostrarMensaje(mIH.get("mensaje.usuario.noencontrado"));
+
                 }
 
             }
@@ -275,11 +286,19 @@ public class UsuarioController {
                 if( usuarioModificarView.getUsernameTextField().getText().isEmpty() ) {
                     return;
                 }
-                String username = usuarioModificarView.getUsernameTextField().getText();
-                Usuario usuario = usuarioDAO.buscarPorUsername(username);
-                if (usuario != null) {
+                try{
+                    String username = usuarioModificarView.getUsernameTextField().getText();
+                    Usuario usuario = usuarioDAO.buscarPorUsername(username);
                     usuarioModificarView.getContrasenaTextField().setText(usuario.getPassword());
-                } else {
+                    usuarioModificarView.getNombreTextField().setText(usuario.getNombreCompleto());
+                    usuarioModificarView.getTelefonoTextField().setText(usuario.getTelefono());
+                    usuarioModificarView.getCorreoTextField().setText(usuario.getEmail());
+                    usuarioModificarView.getAnioTextField().setText(usuario.getAnioNacimientoString());
+                    usuarioModificarView.getDiaComboBox().setSelectedItem(Integer.parseInt(usuario.getDiaNacimientoString()));
+                    usuarioModificarView.getMesComboBox().setSelectedIndex(Integer.parseInt(usuario.getMesNacimientoString()));
+
+
+                }catch (NullPointerException ex){
                     usuarioModificarView.mostrarMensaje(mIH.get("mensaje.usuario.noencontrado"));
                 }
 
@@ -290,38 +309,42 @@ public class UsuarioController {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                String username = usuarioModificarView.getUsernameTextField().getText();
-                String password = usuarioModificarView.getContrasenaTextField().getText();
-                String nombre = usuarioModificarView.getNombreTextField().getText();
-                String telefono = usuarioModificarView.getTelefonoTextField().getText();
-                String email = usuarioModificarView.getCorreoTextField().getText();
-                int anio = Integer.parseInt(usuarioModificarView.getAnioTextField().getText());
-                int dia = Integer.parseInt(usuarioModificarView.getDiaComboBox().getSelectedItem().toString());
-                int mes = usuarioModificarView.getMesComboBox().getSelectedIndex();
-                usuario.setFechaNacimiento(new GregorianCalendar(anio, mes, dia));
+                try{
+                    String username = usuarioModificarView.getUsernameTextField().getText();
+                    String password = usuarioModificarView.getContrasenaTextField().getText();
+                    String nombre = usuarioModificarView.getNombreTextField().getText();
+                    String telefono = usuarioModificarView.getTelefonoTextField().getText();
+                    String email = usuarioModificarView.getCorreoTextField().getText();
+                    int anio = Integer.parseInt(usuarioModificarView.getAnioTextField().getText());
+                    int dia = Integer.parseInt(usuarioModificarView.getDiaComboBox().getSelectedItem().toString());
+                    int mes = usuarioModificarView.getMesComboBox().getSelectedIndex();
 
-                if (username.isEmpty() || password.isEmpty() || nombre.isEmpty() ||
-                        telefono.isEmpty() || email.isEmpty() || anio <= 1900) {
-                    usuarioModificarView.mostrarMensaje(mIH.get("mensaje.completar.campos"));
-                    return;
-                }
+                    if (username.isEmpty() || password.isEmpty() || nombre.isEmpty() ||
+                            telefono.isEmpty() || email.isEmpty() || anio <= 1900) {
+                        usuarioModificarView.mostrarMensaje(mIH.get("mensaje.completar.campos"));
+                        return;
+                    }
 
-                Usuario usuarioencontrado = usuarioDAO.buscarPorUsername(username);
+                    Usuario usuarioencontrado = usuarioDAO.buscarPorUsername(username);
 
-                if (usuarioencontrado != null) {
                     usuarioencontrado.setPassword(password);
                     usuarioencontrado.setNombreCompleto(nombre);
                     usuarioencontrado.setTelefono(telefono);
                     usuarioencontrado.setEmail(email);
                     usuarioencontrado.setFechaNacimiento(new GregorianCalendar(anio, mes, dia));
                     usuarioDAO.actualizar(usuarioencontrado);
-                    usuario = usuarioencontrado;
                     usuarioModificarView.mostrarMensaje(mIH.get("mensaje.usuario.modificado"));
                     if(!usuario.getRol().equals(Rol.USUARIO)){
+                        usuario = usuarioencontrado;
                         usuarioModificarView.limpiarCampos();
                     }
-                } else {
+
+                }catch (NullPointerException ex){
                     usuarioModificarView.mostrarMensaje(mIH.get("mensaje.usuario.noencontrado"));
+                }catch (NumberFormatException ex){
+                    usuarioModificarView.mostrarMensaje(mIH.get("numberFormatException"));
+                } catch (PasswordException ex) {
+                    usuarioModificarView.mostrarMensaje(mIH.get("passwordException"));
                 }
 
             }

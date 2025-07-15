@@ -23,6 +23,7 @@
         </constraints>
         <properties>
           <background color="-10249183"/>
+          <enabled value="false"/>
           <font name="DialogInput"/>
           <text value="Eliminar"/>
         </properties>
