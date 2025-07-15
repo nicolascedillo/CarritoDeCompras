@@ -125,4 +125,28 @@ public class UsuarioCrearView extends JInternalFrame{
     public JButton getSalirButton() {
         return salirButton;
     }
+
+    public JTextField getNombreTextField() {
+        return nombreTextField;
+    }
+
+    public JTextField getTelefonoTextField() {
+        return telefonoTextField;
+    }
+
+    public JTextField getCorreoTextField() {
+        return correoTextField;
+    }
+
+    public JTextField getAnioTextField() {
+        return anioTextField;
+    }
+
+    public JComboBox getDiaComboBox() {
+        return diaComboBox;
+    }
+
+    public JComboBox getMesComboBox() {
+        return mesComboBox;
+    }
 }

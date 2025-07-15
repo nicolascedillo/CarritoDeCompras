@@ -4,7 +4,9 @@ import ec.edu.ups.dao.PreguntaDAO;
 import ec.edu.ups.dao.UsuarioDAO;
 import ec.edu.ups.modelo.Rol;
 import ec.edu.ups.modelo.Usuario;
+import ec.edu.ups.util.CedulaValidationException;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
+import ec.edu.ups.util.PasswordException;
 import ec.edu.ups.vista.login.LogInView;
 import ec.edu.ups.vista.usuario.UsuarioCrearView;
 import ec.edu.ups.vista.usuario.UsuarioEliminarView;
@@ -61,25 +63,80 @@ public class UsuarioController {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                String username = usuarioCrearView.getUsernameTextField().getText();
-                String password = usuarioCrearView.getPasswordField().getText();
-                Rol rol = Rol.USUARIO;
-
-                if (username.isEmpty() || password.isEmpty()) {
+                if (usuarioCrearView.getUsernameTextField().getText().isEmpty() ||
+                        usuarioCrearView.getPasswordField().getText().isEmpty() ||
+                        usuarioCrearView.getNombreTextField().getText().isEmpty() ||
+                        usuarioCrearView.getTelefonoTextField().getText().isEmpty() ||
+                        usuarioCrearView.getCorreoTextField().getText().isEmpty() ||
+                        usuarioCrearView.getAnioTextField().getText().isEmpty() ||
+                        usuarioCrearView.getDiaComboBox().getSelectedItem() == null ||
+                        usuarioCrearView.getMesComboBox().getSelectedItem() == null ) {
                     usuarioCrearView.mostrarMensaje(mIH.get("mensaje.completar.campos"));
                     return;
                 }
 
-                if (usuarioDAO.buscarPorUsername(username) != null) {
-                    usuarioCrearView.mostrarMensaje(mIH.get("mensaje.usuario.existe"));
-                    return;
+                try{
+
+                    String username = usuarioCrearView.getUsernameTextField().getText();
+                    String password = usuarioCrearView.getPasswordField().getText();
+                    String nombre = usuarioCrearView.getNombreTextField().getText();
+                    String telefono = usuarioCrearView.getTelefonoTextField().getText();
+                    String correo = usuarioCrearView.getCorreoTextField().getText();
+                    GregorianCalendar fecha = new GregorianCalendar();
+                    int dia = (Integer) usuarioCrearView.getDiaComboBox().getSelectedItem();
+                    int mes = -1;
+                    String mesSeleccionado = (String) usuarioCrearView.getMesComboBox().getSelectedItem();
+                    if (mesSeleccionado.equals(mIH.get("mes.enero"))) {
+                        mes = 0;
+                    } else if (mesSeleccionado.equals(mIH.get("mes.febrero"))) {
+                        mes = 1;
+                    } else if (mesSeleccionado.equals(mIH.get("mes.marzo"))) {
+                        mes = 2;
+                    } else if (mesSeleccionado.equals(mIH.get("mes.abril"))) {
+                        mes = 3;
+                    } else if (mesSeleccionado.equals(mIH.get("mes.mayo"))) {
+                        mes = 4;
+                    } else if (mesSeleccionado.equals(mIH.get("mes.junio"))) {
+                        mes = 5;
+                    } else if (mesSeleccionado.equals(mIH.get("mes.julio"))) {
+                        mes = 6;
+                    } else if (mesSeleccionado.equals(mIH.get("mes.agosto"))) {
+                        mes = 7;
+                    } else if (mesSeleccionado.equals(mIH.get("mes.septiembre"))) {
+                        mes = 8;
+                    } else if (mesSeleccionado.equals(mIH.get("mes.octubre"))) {
+                        mes = 9;
+                    } else if (mesSeleccionado.equals(mIH.get("mes.noviembre"))) {
+                        mes = 10;
+                    } else if (mesSeleccionado.equals(mIH.get("mes.diciembre"))) {
+                        mes = 11;
+                    } else {
+                        usuarioCrearView.mostrarMensaje(mIH.get("mes.invalido"));
+                        return;
+                    }
+                    int anio = Integer.parseInt(usuarioCrearView.getAnioTextField().getText());
+                    fecha.set(anio, mes, dia);
+
+                    if (usuarioDAO.buscarPorUsername(username) != null) {
+                        usuarioCrearView.mostrarMensaje(mIH.get("mensaje.usuario.existe"));
+                        return;
+                    }
+
+                    Usuario usuario1 = new Usuario(Rol.USUARIO,
+                            nombre, telefono, correo, fecha);
+                    usuario1.setPassword(password);
+                    usuario1.setUsername(username);
+                    usuarioDAO.crear(usuario1);
+                    usuarioCrearView.mostrarMensaje(mIH.get("mensaje.usuario.creado"));
+                    usuarioCrearView.limpiarCampos();
+
+                } catch (NumberFormatException ex) {
+                    usuarioCrearView.mostrarMensaje(mIH.get("numberFormatException"));
+                } catch (PasswordException ex) {
+                    usuarioCrearView.mostrarMensaje(mIH.get("passwordException"));
+                } catch (CedulaValidationException ex){
+                    usuarioCrearView.mostrarMensaje(mIH.get("cedulaException"));
                 }
-
-                Usuario nuevoUsuario = new Usuario(username, password, rol);
-                usuarioDAO.crear(nuevoUsuario);
-                usuarioCrearView.mostrarMensaje(mIH.get("mensaje.usuario.creado"));
-                usuarioCrearView.limpiarCampos();
-
             }
         });
 
