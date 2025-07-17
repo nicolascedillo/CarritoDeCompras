@@ -27,6 +27,22 @@ public class CarritoController {
     private Usuario usuario;
     private MensajeInternacionalizacionHandler mIH;
 
+    /**
+     * Constructor de CarritoController.
+     * Inicializa los DAOs, vistas, usuario, carrito y el handler de internacionalización.
+     * Configura los eventos de las vistas y establece el código del carrito.
+     *
+     * @param productoDAO DAO para operaciones de productos.
+     * @param carritoDao DAO para operaciones de carritos.
+     * @param usuarioDAO DAO para operaciones de usuarios.
+     * @param carritoCrearView Vista para crear carritos.
+     * @param carritoEliminarView Vista para eliminar carritos.
+     * @param carritoModificarView Vista para modificar carritos.
+     * @param carritoListaView Vista para listar carritos.
+     * @param itemListaView Vista para ver los items de un carrito.
+     * @param usuario Usuario autenticado.
+     * @param mIH Handler de internacionalización.
+     */
     public CarritoController(ProductoDAO productoDAO,
                              CarritoDAO carritoDao,
                              UsuarioDAO usuarioDAO,
@@ -56,6 +72,10 @@ public class CarritoController {
     }
 
 
+    /**
+     * Configura los eventos para añadir productos al carrito.
+     * Maneja la lógica de guardar, buscar, añadir y cancelar productos en el carrito.
+     */
     private void configurarEventosAnadir(){
 
         carritoCrearView.getGuardarButton().addActionListener(new ActionListener() {
@@ -110,6 +130,10 @@ public class CarritoController {
 
     }
 
+    /**
+     * Configura los eventos para eliminar carritos.
+     * Permite buscar y eliminar carritos, mostrando mensajes de confirmación y resultados.
+     */
     private void configurarEventosEliminar() {
 
         carritoEliminarView.getEliminarButton().addActionListener(new ActionListener() {
@@ -174,6 +198,10 @@ public class CarritoController {
         });
     }
 
+    /**
+     * Configura los eventos para modificar carritos.
+     * Permite buscar, editar, eliminar y añadir productos en un carrito existente.
+     */
     private void configurarEventosModificar() {
 
         carritoModificarView.getBuscarButton().addActionListener(new ActionListener() {
@@ -308,6 +336,10 @@ public class CarritoController {
 
     }
 
+    /**
+     * Configura los eventos para listar y buscar carritos.
+     * Permite listar todos los carritos y buscar uno específico por código.
+     */
     private void configurarEventosListar() {
 
         carritoListaView.getListarButton().addActionListener(new ActionListener() {
@@ -377,6 +409,11 @@ public class CarritoController {
         });
     }
 
+    /**
+     * Busca un producto en el carrito por su código y muestra sus datos en la vista de creación.
+     *
+     * @param codigo Código del producto a buscar.
+     */
     private void buscarProductoEnCarrito(int codigo){
         Producto productoEncontrado =  productoDao.buscarPorCodigo(codigo);
 
@@ -389,6 +426,12 @@ public class CarritoController {
         }
     }
 
+    /**
+     * Añade un producto al carrito por su código.
+     * Si el producto ya existe en el carrito, incrementa la cantidad.
+     *
+     * @param codigo Código del producto a añadir.
+     */
     private void anadirProductoEnCarrito(int codigo){
         Producto productoEncontrado =  productoDao.buscarPorCodigo(codigo);
         if(!verificarProductoEnCarrito(productoEncontrado)){
@@ -410,6 +453,12 @@ public class CarritoController {
 
     }
 
+    /**
+     * Verifica si un producto ya está en el carrito.
+     *
+     * @param producto Producto a verificar.
+     * @return true si el producto está en el carrito, false en caso contrario.
+     */
     private boolean verificarProductoEnCarrito(Producto producto) {
         for (ItemCarrito item : carrito.obtenerItems()) {
             if (item.getProducto().getCodigo() == producto.getCodigo()) {
@@ -419,6 +468,12 @@ public class CarritoController {
         return false;
     }
 
+    /**
+     * Refresca la tabla de la vista de lista de carritos,
+     * actualizando los formatos de fecha y moneda según el locale.
+     *
+     * @param locale Locale para formatear los datos.
+     */
     private void refrescarTablaListar(Locale locale){
         int rowCount = carritoListaView.getModelo().getRowCount();
 
@@ -438,6 +493,12 @@ public class CarritoController {
         }
     }
 
+    /**
+     * Refresca los datos de la vista de eliminar carrito,
+     * actualizando los formatos de precios y totales según el locale.
+     *
+     * @param locale Locale para formatear los datos.
+     */
     private void refrescarEliminar(Locale locale) {
         if(carritoEliminarView.getCodigoTextField().getText().isEmpty()) {
             return;
@@ -473,6 +534,12 @@ public class CarritoController {
         }
     }
 
+    /**
+     * Refresca los datos de la vista de modificar carrito,
+     * actualizando los formatos de precios y totales según el locale.
+     *
+     * @param locale Locale para formatear los datos.
+     */
     private void refrescarModificar(Locale locale) {
         if(carritoModificarView.getCodigoTextField().getText().isEmpty()) {
             return;
@@ -508,6 +575,12 @@ public class CarritoController {
         }
     }
 
+    /**
+     * Refresca los datos de la vista de crear carrito,
+     * actualizando los formatos de precios y totales según el locale.
+     *
+     * @param locale Locale para formatear los datos.
+     */
     private void refrescarCrear(Locale locale){
 
 
@@ -532,6 +605,12 @@ public class CarritoController {
         carritoCrearView.getTotalTextField().setText(FormateadorUtils.formatearMoneda(carrito.calcularTotal(), mIH.getLocale()));
     }
 
+    /**
+     * Refresca los datos de la vista de items de un carrito,
+     * actualizando los formatos de precios según el locale.
+     *
+     * @param locale Locale para formatear los datos.
+     */
     private void refrescarItemLista(Locale locale) {
         int rowCount = itemListaView.getModelo().getRowCount();
 
@@ -546,12 +625,23 @@ public class CarritoController {
         }
     }
 
+    /**
+     * Establece el código del carrito automáticamente,
+     * incrementando respecto al último carrito registrado.
+     */
     private void setCodigoCarrito(){
         if(!carritoDao.listarTodos().isEmpty()){
             carrito.setCodigo(carritoDao.listarTodos().getLast().getCodigo()+1);
         }
     }
 
+    /**
+     * Cambia el idioma de todas las vistas relacionadas con carritos,
+     * usando el handler de internacionalización y refrescando los datos según el nuevo locale.
+     *
+     * @param lenguaje Código de idioma (ejemplo: "es", "en").
+     * @param pais Código de país (ejemplo: "EC", "US").
+     */
     public void cambiarIdioma(String lenguaje,String pais) {
         mIH.setLenguaje(lenguaje, pais);
         carritoCrearView.cambiarIdioma(lenguaje, pais);

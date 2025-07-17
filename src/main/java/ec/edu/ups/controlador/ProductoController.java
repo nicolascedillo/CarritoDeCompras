@@ -24,6 +24,18 @@ public class ProductoController {
     private Producto producto;
     private MensajeInternacionalizacionHandler mIH;
 
+    /**
+     * Constructor de ProductoController.
+     * Inicializa las vistas, el DAO de productos y el handler de internacionalización.
+     * Configura los eventos de las vistas y establece el código del producto.
+     *
+     * @param productoCrearView Vista para crear productos.
+     * @param productoListaView Vista para listar productos.
+     * @param productoDAO DAO para operaciones de productos.
+     * @param productoEliminarView Vista para eliminar productos.
+     * @param productoModificarView Vista para modificar productos.
+     * @param mIH Handler de internacionalización.
+     */
     public ProductoController(ProductoCrearView productoCrearView,
                               ProductoListaView productoListaView,
                               ProductoDAO productoDAO,
@@ -45,6 +57,10 @@ public class ProductoController {
 
     }
 
+    /**
+     * Configura el evento para añadir un producto.
+     * Asocia el botón de aceptar con la acción de guardar el producto.
+     */
     private void configurarEventosAnadir() {
         productoCrearView.getBtnAceptar().addActionListener(new ActionListener() {
             @Override
@@ -54,6 +70,10 @@ public class ProductoController {
         });
     }
 
+    /**
+     * Configura los eventos para eliminar productos.
+     * Permite buscar un producto por código y eliminarlo si existe.
+     */
     private void configurarEventosEliminar() {
 
         productoEliminarView.getBuscarButton().addActionListener(new ActionListener() {
@@ -109,6 +129,10 @@ public class ProductoController {
         });
     }
 
+    /**
+     * Configura los eventos para modificar productos.
+     * Permite buscar un producto por código y actualizar sus datos.
+     */
     private void configurarEventosModificar() {
 
         productoModificarView.getBuscarButton().addActionListener(new ActionListener() {
@@ -147,6 +171,10 @@ public class ProductoController {
         });
     }
 
+    /**
+     * Configura los eventos para listar y buscar productos.
+     * Permite buscar productos por nombre y listar todos los productos.
+     */
     private void configurarEventosListar() {
         productoListaView.getBtnBuscar().addActionListener(new ActionListener() {
             @Override
@@ -164,6 +192,10 @@ public class ProductoController {
         });
     }
 
+    /**
+     * Guarda un nuevo producto en el sistema.
+     * Obtiene los datos de la vista y los envía al DAO.
+     */
     private void guardarProducto() {
         try{
             String nombre = productoCrearView.getTxtNombre().getText();
@@ -177,6 +209,9 @@ public class ProductoController {
         }
     }
 
+    /**
+     * Busca productos por nombre y los muestra en la vista de lista.
+     */
     private void buscarProducto() {
         try{
             String nombre = productoListaView.getTxtBuscar().getText();
@@ -190,6 +225,9 @@ public class ProductoController {
         }
     }
 
+    /**
+     * Lista todos los productos y los muestra en la vista de lista.
+     */
     private void listarProductos() {
         try{
             List<Producto> productos = productoDAO.listarTodos();
@@ -201,10 +239,20 @@ public class ProductoController {
         }
     }
 
+    /**
+     * Elimina un producto dado su código.
+     *
+     * @param codigo Código del producto a eliminar.
+     */
     private void eliminarProducto(int codigo) {
         productoDAO.eliminar(codigo);
     }
 
+    /**
+     * Actualiza los datos de un producto existente.
+     *
+     * @param codigo Código del producto a actualizar.
+     */
     private void actualizarProducto(int codigo){
         Producto producto = productoDAO.buscarPorCodigo(codigo);
         producto.setNombre(productoModificarView.getTxtNombre().getText());
@@ -212,6 +260,12 @@ public class ProductoController {
         productoDAO.actualizar(producto);
     }
 
+    /**
+     * Refresca la tabla de productos en la vista de lista,
+     * actualizando el formato de los precios según el locale.
+     *
+     * @param locale Locale para formatear los precios.
+     */
     private void refrescarTabla(Locale locale) {
         int rowCount = productoListaView.getModelo().getRowCount();
 
@@ -226,6 +280,12 @@ public class ProductoController {
         }
     }
 
+    /**
+     * Refresca el precio mostrado en la vista de eliminar producto,
+     * usando el locale actual para el formato.
+     *
+     * @param locale Locale para formatear el precio.
+     */
     private void refrescarPrecioEliminar(Locale locale) {
         if(productoEliminarView.getTxtCodigo().getText().isEmpty()) {
             return;
@@ -238,6 +298,13 @@ public class ProductoController {
         }
     }
 
+    /**
+     * Cambia el idioma de todas las vistas relacionadas con productos,
+     * usando el handler de internacionalización.
+     *
+     * @param lenguaje Código de idioma (ejemplo: "es", "en").
+     * @param pais Código de país (ejemplo: "EC", "US").
+     */
     public void cambiarIdioma(String lenguaje, String pais) {
         mIH.setLenguaje(lenguaje, pais);
         productoCrearView.cambiarIdioma(lenguaje, pais);
@@ -248,6 +315,10 @@ public class ProductoController {
         refrescarPrecioEliminar(mIH.getLocale());
     }
 
+    /**
+     * Establece el código del producto automáticamente,
+     * incrementando respecto al último producto registrado.
+     */
     private void setProductoCodigo(){
         if(!productoDAO.listarTodos().isEmpty()){
             producto.setCodigo(productoDAO.listarTodos().getLast().getCodigo()+1);

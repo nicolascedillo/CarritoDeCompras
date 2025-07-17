@@ -14,6 +14,12 @@ public class UsuarioDAOArchivoTexto implements UsuarioDAO {
     private FileWriter fileWriter;
     private BufferedWriter bufferedWriter;
 
+    /**
+     * Constructor de UsuarioDAOArchivoTexto.
+     * Inicializa la ruta del archivo de texto para usuarios y crea un usuario de ejemplo si el archivo no existe.
+     *
+     * @param rutaArchivo Ruta base para almacenar el archivo de usuarios.
+     */
     public UsuarioDAOArchivoTexto(String rutaArchivo) {
         File directorio = new File(rutaArchivo + "\\CarritoCompras");
         if (!directorio.exists()){
@@ -31,6 +37,14 @@ public class UsuarioDAOArchivoTexto implements UsuarioDAO {
     }
 
 
+    /**
+     * Autentica un usuario verificando su username y password en el archivo de texto.
+     * Retorna el usuario si existe y las credenciales coinciden.
+     *
+     * @param username Nombre de usuario.
+     * @param password Contraseña del usuario.
+     * @return El usuario autenticado o null si no existe.
+     */
     @Override
     public Usuario autenticar(String username, String password) {
         Usuario usuario = null;
@@ -52,6 +66,12 @@ public class UsuarioDAOArchivoTexto implements UsuarioDAO {
         return null;
     }
 
+    /**
+     * Crea un nuevo usuario y lo agrega al archivo de texto.
+     * Escribe el usuario al final del archivo.
+     *
+     * @param usuario Usuario a agregar.
+     */
     @Override
     public void crear(Usuario usuario) {
         try {
@@ -65,6 +85,13 @@ public class UsuarioDAOArchivoTexto implements UsuarioDAO {
         }
     }
 
+    /**
+     * Busca un usuario por su username en el archivo de texto.
+     * Retorna el usuario si existe, o null si no se encuentra.
+     *
+     * @param username Nombre de usuario a buscar.
+     * @return El usuario encontrado o null si no existe.
+     */
     @Override
     public Usuario buscarPorUsername(String username) {
         Usuario usuario = null;
@@ -85,6 +112,12 @@ public class UsuarioDAOArchivoTexto implements UsuarioDAO {
         return usuario;
     }
 
+    /**
+     * Lista todos los usuarios almacenados en el archivo de texto.
+     * Retorna la lista completa de usuarios registrados.
+     *
+     * @return Lista de todos los usuarios.
+     */
     @Override
     public List<Usuario> listarTodos() {
         List<Usuario> usuarios = new ArrayList<>();
@@ -102,11 +135,24 @@ public class UsuarioDAOArchivoTexto implements UsuarioDAO {
         return usuarios;
     }
 
+    /**
+     * Lista todos los usuarios que tienen un rol específico.
+     * Actualmente no implementado.
+     *
+     * @param rol Rol de los usuarios a listar.
+     * @return Lista de usuarios con el rol especificado.
+     */
     @Override
     public List<Usuario> listarPorRol(Rol rol) {
         return null;
     }
 
+    /**
+     * Actualiza los datos de un usuario existente en el archivo de texto.
+     * Sobrescribe los datos del usuario en la posición correspondiente.
+     *
+     * @param usuario Usuario con los datos actualizados.
+     */
     @Override
     public void actualizar(Usuario usuario) {
         List<Usuario> usuarios = listarTodos();
@@ -126,6 +172,12 @@ public class UsuarioDAOArchivoTexto implements UsuarioDAO {
         }
     }
 
+    /**
+     * Elimina un usuario del archivo de texto por su username.
+     * Elimina la línea correspondiente al usuario.
+     *
+     * @param username Nombre de usuario a eliminar.
+     */
     @Override
     public void eliminar(String username) {
         List<Usuario> usuarios = listarTodos();
@@ -144,6 +196,12 @@ public class UsuarioDAOArchivoTexto implements UsuarioDAO {
         }
     }
 
+    /**
+     * Abre el archivo de texto para escritura.
+     * Inicializa el objeto BufferedWriter en modo append o sobrescritura.
+     *
+     * @param append Si es true, agrega al final; si es false, sobrescribe el archivo.
+     */
     private void abrirWriter(boolean append) {
         try{
             fileWriter = new FileWriter(rutaArchivo, append);
@@ -155,6 +213,9 @@ public class UsuarioDAOArchivoTexto implements UsuarioDAO {
         }
     }
 
+    /**
+     * Cierra el archivo de texto de escritura si está abierto.
+     */
     private void cerrarWriter() {
         try{
             if (bufferedWriter != null){
@@ -168,6 +229,10 @@ public class UsuarioDAOArchivoTexto implements UsuarioDAO {
         }
     }
 
+    /**
+     * Abre el archivo de texto para lectura.
+     * Inicializa el objeto BufferedReader.
+     */
     private void abrirReader(){
         try{
             fileReader = new FileReader(rutaArchivo);
@@ -179,6 +244,9 @@ public class UsuarioDAOArchivoTexto implements UsuarioDAO {
         }
     }
 
+    /**
+     * Cierra el archivo de texto de lectura si está abierto.
+     */
     private void cerrarReader() {
         try{
             if (bufferedReader != null){
@@ -192,6 +260,13 @@ public class UsuarioDAOArchivoTexto implements UsuarioDAO {
         }
     }
 
+    /**
+     * Convierte un arreglo de partes en un objeto Usuario.
+     * Parsea los datos del usuario, sus carritos y preguntas respondidas desde las cadenas.
+     *
+     * @param partes Arreglo de cadenas que representa los datos del usuario.
+     * @return El objeto Usuario construido a partir de las partes.
+     */
     private Usuario aUsuarioDeString(String[] partes) {
         String[] atributos = partes[0].split(",");
         String username = atributos[0];
@@ -248,6 +323,14 @@ public class UsuarioDAOArchivoTexto implements UsuarioDAO {
         return usuario;
     }
 
+    /**
+     * Convierte una cadena de texto en un objeto Carrito.
+     * Parsea los datos del carrito y sus productos desde la cadena.
+     *
+     * @param s Cadena de texto que representa el carrito.
+     * @param usuario Usuario asociado al carrito (puede ser null).
+     * @return El objeto Carrito construido a partir de la cadena.
+     */
     private Carrito aCarritoDeString(String s, Usuario usuario) {
         String[] partes = s.split("_");
         if (partes.length < 4) {
@@ -296,6 +379,12 @@ public class UsuarioDAOArchivoTexto implements UsuarioDAO {
         return carrito;
     }
 
+    /**
+     * Separa una línea de texto en partes correspondientes a los campos de usuario, carritos y preguntas.
+     *
+     * @param linea Línea de texto que representa un usuario.
+     * @return Arreglo de cadenas con los campos separados.
+     */
     private String[] separarUsuarioLinea(String linea) {
 
         String[] campos = new String[7];

@@ -19,6 +19,12 @@ public class PreguntaDAOArchivoBinario implements PreguntaDAO {
     private int longitudPregunta = 11;
     private int bytesPorPregunta = 4 + (longitudPregunta * 2); // 26
 
+    /**
+     * Constructor de PreguntaDAOArchivoBinario.
+     * Inicializa la ruta del archivo binario y crea preguntas de ejemplo si el archivo no existe.
+     *
+     * @param rutaArchivo Ruta base para almacenar el archivo binario de preguntas.
+     */
     public PreguntaDAOArchivoBinario(String rutaArchivo) {
         File directorio = new File(rutaArchivo + "\\CarritoCompras");
         if (!directorio.exists()){
@@ -46,6 +52,13 @@ public class PreguntaDAOArchivoBinario implements PreguntaDAO {
         }
     }
 
+    /**
+     * Crea una nueva pregunta y la agrega al archivo binario.
+     * Escribe la pregunta al final del archivo.
+     *
+     * @param codigo Código de la pregunta.
+     * @param pregunta Texto de la pregunta.
+     */
     @Override
     public void crear(int codigo, String pregunta) {
         try {
@@ -66,6 +79,13 @@ public class PreguntaDAOArchivoBinario implements PreguntaDAO {
         }
     }
 
+    /**
+     * Busca una pregunta por su código en el archivo binario.
+     * Retorna la pregunta si existe, o null si no se encuentra.
+     *
+     * @param codigo Código de la pregunta a buscar.
+     * @return La pregunta encontrada o null si no existe.
+     */
     @Override
     public Pregunta buscarPorCodigo(int codigo) {
         Pregunta pregunta = null;
@@ -92,6 +112,12 @@ public class PreguntaDAOArchivoBinario implements PreguntaDAO {
         return pregunta;
     }
 
+    /**
+     * Lista todas las preguntas almacenadas en el archivo binario.
+     * Retorna la lista completa de preguntas no eliminadas.
+     *
+     * @return Lista de todas las preguntas.
+     */
     @Override
     public List<Pregunta> listar() {
         List<Pregunta> preguntas = new ArrayList<>();
@@ -119,6 +145,10 @@ public class PreguntaDAOArchivoBinario implements PreguntaDAO {
         return preguntas;
     }
 
+    /**
+     * Abre el archivo binario para lectura.
+     * Inicializa el objeto RandomAccessFile en modo lectura.
+     */
     private void abrirLectura() {
         try {
             lectura = new RandomAccessFile(rutaArchivo, "r");
@@ -127,6 +157,10 @@ public class PreguntaDAOArchivoBinario implements PreguntaDAO {
         }
     }
 
+    /**
+     * Abre el archivo binario para escritura.
+     * Inicializa el objeto RandomAccessFile en modo lectura/escritura.
+     */
     private void abrirEscritura() {
         try {
             escritura = new RandomAccessFile(rutaArchivo, "rw");
@@ -135,6 +169,9 @@ public class PreguntaDAOArchivoBinario implements PreguntaDAO {
         }
     }
 
+    /**
+     * Cierra el archivo binario de lectura si está abierto.
+     */
     private void cerrarLectura() {
         try {
             if (lectura != null) {
@@ -145,6 +182,9 @@ public class PreguntaDAOArchivoBinario implements PreguntaDAO {
         }
     }
 
+    /**
+     * Cierra el archivo binario de escritura si está abierto.
+     */
     private void cerrarEscritura() {
         try {
             if (escritura != null) {

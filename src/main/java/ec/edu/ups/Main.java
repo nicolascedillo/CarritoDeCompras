@@ -38,6 +38,12 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class Main {
+    /**
+     * Método principal que inicia la aplicación.
+     * Configura el handler de internacionalización y la ventana de selección de tipo de almacenamiento.
+     * Asocia los eventos de los botones y menús para elegir almacenamiento y cambiar idioma.
+     * @param args Argumentos de línea de comandos (no utilizados).
+     */
     public static void main(String[] args) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -112,6 +118,16 @@ public class Main {
 
     }
 
+    /**
+     * Inicia la aplicación principal con los DAOs y handler de internacionalización proporcionados.
+     * Configura las vistas y controladores, así como los eventos de internacionalización y navegación.
+     *
+     * @param usuarioDAO DAO para operaciones de usuario.
+     * @param productoDAO DAO para operaciones de producto.
+     * @param carritoDAO DAO para operaciones de carrito.
+     * @param preguntaDAO DAO para operaciones de preguntas.
+     * @param mIH Handler de internacionalización.
+     */
     private static void iniciarAplicacion(UsuarioDAO usuarioDAO, ProductoDAO productoDAO,
                                           CarritoDAO carritoDAO, PreguntaDAO preguntaDAO, MensajeInternacionalizacionHandler mIH) {
         LogInView logInView = new LogInView(mIH);

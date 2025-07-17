@@ -35,6 +35,11 @@ public class CarritoEliminarView extends JInternalFrame{
     private DefaultTableModel modelo;
     private MensajeInternacionalizacionHandler mIH;
 
+    /**
+     * Constructor de la ventana para eliminar un carrito.
+     * Inicializa componentes, configura iconos y carga el idioma usando el handler de internacionalización.
+     * @param mIH Handler de internacionalización.
+     */
     public CarritoEliminarView(MensajeInternacionalizacionHandler mIH) {
         super(mIH.get("menu.carrito.eliminar"),true,true,true,true);
         this.mIH = mIH;
@@ -53,10 +58,18 @@ public class CarritoEliminarView extends JInternalFrame{
 
     }
 
+    /**
+     * Muestra un mensaje en un cuadro de diálogo.
+     * @param mensaje Texto del mensaje a mostrar.
+     */
     public void mostrarMensaje(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje);
     }
 
+    /**
+     * Carga los datos de los items del carrito en la tabla.
+     * @param carrito Carrito cuyos items se mostrarán.
+     */
     public void cargarDatos(Carrito carrito) {
         modelo.setRowCount(0);
         for(ItemCarrito itemCarrito: carrito.obtenerItems()){
@@ -71,6 +84,9 @@ public class CarritoEliminarView extends JInternalFrame{
         }
     }
 
+    /**
+     * Limpia todos los campos de la ventana y la tabla.
+     */
     public void limpiarCampos() {
         codigoTextField.setText("");
         fechaTextField.setText("");
@@ -81,10 +97,18 @@ public class CarritoEliminarView extends JInternalFrame{
         modelo.setRowCount(0);
     }
 
+    /**
+     * Limpia únicamente la tabla de productos.
+     */
     public void limpiarTabla() {
         modelo.setRowCount(0);
     }
 
+    /**
+     * Cambia el idioma de la ventana y sus componentes usando el handler de internacionalización.
+     * @param lenguaje Código de idioma (ejemplo: "es", "en").
+     * @param pais Código de país (ejemplo: "EC", "US").
+     */
     public void cambiarIdioma(String lenguaje, String pais) {
         mIH.setLenguaje(lenguaje, pais);
         setTitle(mIH.get("menu.carrito.eliminar"));
@@ -106,46 +130,90 @@ public class CarritoEliminarView extends JInternalFrame{
 
     //GETTERS Y SETTERS
 
+    /**
+     * Obtiene el campo de texto para el código del carrito.
+     * @return JTextField del código.
+     */
     public JTextField getCodigoTextField() {
         return codigoTextField;
     }
 
+    /**
+     * Obtiene el campo de texto para la fecha del carrito.
+     * @return JTextField de la fecha.
+     */
     public JTextField getFechaTextField() {
         return fechaTextField;
     }
 
+    /**
+     * Obtiene el botón de buscar carrito.
+     * @return JButton de buscar.
+     */
     public JButton getBuscarButton() {
         return buscarButton;
     }
 
+    /**
+     * Obtiene el campo de texto para el subtotal.
+     * @return JTextField del subtotal.
+     */
     public JTextField getSubtotalTextField() {
         return subtotalTextField;
     }
 
+    /**
+     * Obtiene el campo de texto para el IVA.
+     * @return JTextField del IVA.
+     */
     public JTextField getIvaTextField() {
         return ivaTextField;
     }
 
+    /**
+     * Obtiene el campo de texto para el total.
+     * @return JTextField del total.
+     */
     public JTextField getTotalTextField() {
         return totalTextField;
     }
 
+    /**
+     * Obtiene el botón para eliminar el carrito.
+     * @return JButton de eliminar.
+     */
     public JButton getEliminarButton() {
         return eliminarButton;
     }
 
+    /**
+     * Obtiene el panel principal de la ventana.
+     * @return JPanel principal.
+     */
     public JPanel getPanelPrincipal() {
         return panelPrincipal;
     }
 
+    /**
+     * Obtiene el modelo de la tabla.
+     * @return DefaultTableModel de la tabla.
+     */
     public DefaultTableModel getModelo() {
         return modelo;
     }
 
+    /**
+     * Obtiene el campo de texto para el usuario.
+     * @return JTextField del usuario.
+     */
     public JTextField getUsuarioTextField() {
         return usuarioTextField;
     }
 
+    /**
+     * Establece el modelo de la tabla.
+     * @param modelo Modelo a asignar.
+     */
     public void setModelo(DefaultTableModel modelo) {
         this.modelo = modelo;
     }

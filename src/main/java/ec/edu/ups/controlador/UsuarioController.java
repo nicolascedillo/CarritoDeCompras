@@ -30,7 +30,7 @@ public class UsuarioController {
 
     /**
      * Constructor para el controlador de usuario en la vista de inicio de sesión.
-     * Inicializa los DAOs, la vista y el manejador de internacionalización.
+     * Inicializa los DAOs, la vista y el handler de internacionalización.
      * Configura los eventos de la vista de LogIn.
      *
      * @param usuarioDAO DAO para operaciones de usuario.
@@ -48,7 +48,7 @@ public class UsuarioController {
 
     /**
      * Constructor para el controlador de usuario en las vistas de gestión de usuario.
-     * Inicializa los DAOs, las vistas, el usuario autenticado y el manejador de internacionalización.
+     * Inicializa los DAOs, las vistas, el usuario autenticado y el handler de internacionalización.
      * Configura los eventos de las vistas de crear, eliminar, listar y modificar usuario.
      *
      * @param usuarioDAO DAO para operaciones de usuario.

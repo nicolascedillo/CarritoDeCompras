@@ -17,6 +17,12 @@ public class ProductoDAOArchivoBinario implements ProductoDAO {
     private int bytesPorProducto = 4 + ( longitudNombre *2) + 8; // 52
 
 
+    /**
+     * Constructor de ProductoDAOArchivoBinario.
+     * Inicializa la ruta del archivo binario y crea productos de ejemplo si el archivo no existe.
+     *
+     * @param rutaArchivo Ruta base para almacenar el archivo binario de productos.
+     */
     public ProductoDAOArchivoBinario(String rutaArchivo) {
         File directorio = new File(rutaArchivo + "\\CarritoCompras");
         if (!directorio.exists()){
@@ -42,6 +48,12 @@ public class ProductoDAOArchivoBinario implements ProductoDAO {
         }
     }
 
+    /**
+     * Crea un nuevo producto y lo agrega al archivo binario.
+     * Escribe el producto al final del archivo.
+     *
+     * @param producto Producto a agregar.
+     */
     @Override
     public void crear(Producto producto){
         try{
@@ -65,6 +77,13 @@ public class ProductoDAOArchivoBinario implements ProductoDAO {
         }
     }
 
+    /**
+     * Busca un producto por su código en el archivo binario.
+     * Retorna el producto si existe, o null si no se encuentra.
+     *
+     * @param codigo Código del producto a buscar.
+     * @return El producto encontrado o null si no existe.
+     */
     @Override
     public Producto buscarPorCodigo(int codigo){
         Producto producto = null;
@@ -90,6 +109,13 @@ public class ProductoDAOArchivoBinario implements ProductoDAO {
         return producto;
     }
 
+    /**
+     * Busca productos por su nombre en el archivo binario.
+     * Retorna una lista de productos cuyo nombre coincide con el parámetro proporcionado.
+     *
+     * @param nombre Nombre del producto a buscar.
+     * @return Lista de productos encontrados.
+     */
     @Override
     public List<Producto> buscarPorNombre(String nombre){
         List<Producto> productos = new ArrayList<>();
@@ -117,6 +143,12 @@ public class ProductoDAOArchivoBinario implements ProductoDAO {
         return productos;
     }
 
+    /**
+     * Actualiza un producto existente en el archivo binario.
+     * Sobrescribe los datos del producto en la posición correspondiente.
+     *
+     * @param producto Producto con los datos actualizados.
+     */
     @Override
     public void actualizar(Producto producto) {
         try {
@@ -142,6 +174,12 @@ public class ProductoDAOArchivoBinario implements ProductoDAO {
         }
     }
 
+    /**
+     * Elimina un producto del archivo binario por su código.
+     * Marca el producto como eliminado escribiendo código 0 y valores vacíos.
+     *
+     * @param codigo Código del producto a eliminar.
+     */
     @Override
     public void eliminar(int codigo) {
         try {
@@ -164,6 +202,12 @@ public class ProductoDAOArchivoBinario implements ProductoDAO {
         }
     }
 
+    /**
+     * Lista todos los productos almacenados en el archivo binario.
+     * Retorna la lista completa de productos no eliminados.
+     *
+     * @return Lista de todos los productos.
+     */
     @Override
     public List<Producto> listarTodos(){
         List<Producto> productos = new ArrayList<>();
@@ -191,6 +235,10 @@ public class ProductoDAOArchivoBinario implements ProductoDAO {
         return productos;
     }
 
+    /**
+     * Abre el archivo binario para lectura.
+     * Inicializa el objeto RandomAccessFile en modo lectura.
+     */
     private void abrirLectura() {
         try {
             lectura = new RandomAccessFile(rutaArchivo, "r");
@@ -199,6 +247,10 @@ public class ProductoDAOArchivoBinario implements ProductoDAO {
         }
     }
 
+    /**
+     * Abre el archivo binario para escritura.
+     * Inicializa el objeto RandomAccessFile en modo lectura/escritura.
+     */
     private void abrirEscritura() {
         try {
             escritura = new RandomAccessFile(rutaArchivo, "rw");
@@ -207,6 +259,9 @@ public class ProductoDAOArchivoBinario implements ProductoDAO {
         }
     }
 
+    /**
+     * Cierra el archivo binario de lectura si está abierto.
+     */
     private void cerrarLectura() {
         try {
             if (lectura != null) {
@@ -217,6 +272,9 @@ public class ProductoDAOArchivoBinario implements ProductoDAO {
         }
     }
 
+    /**
+     * Cierra el archivo binario de escritura si está abierto.
+     */
     private void cerrarEscritura() {
         try {
             if (escritura != null) {

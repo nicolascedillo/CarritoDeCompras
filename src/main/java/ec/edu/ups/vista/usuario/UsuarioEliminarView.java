@@ -6,6 +6,10 @@ import ec.edu.ups.util.Url;
 
 import javax.swing.*;
 
+/**
+ * Clase que representa la ventana para eliminar usuarios en el sistema.
+ * Permite buscar, mostrar y eliminar la información de un usuario.
+ */
 public class UsuarioEliminarView extends JInternalFrame {
 
     private JPanel panelPrincipal;
@@ -13,7 +17,6 @@ public class UsuarioEliminarView extends JInternalFrame {
     private JButton buscarButton;
     private JTextField contrasenaTextField;
     private JButton eliminarButton;
-    private JButton salirButton;
     private JLabel lblTitulo;
     private JLabel lblUsuario;
     private JLabel lblNombre;
@@ -32,6 +35,11 @@ public class UsuarioEliminarView extends JInternalFrame {
     private JLabel lblContrasena;
     private MensajeInternacionalizacionHandler mIH;
 
+    /**
+     * Constructor de la ventana para eliminar usuarios.
+     * Inicializa componentes, configura iconos y carga el idioma usando el handler de internacionalización.
+     * @param mIH Handler de internacionalización.
+     */
     public UsuarioEliminarView(MensajeInternacionalizacionHandler mIH) {
         super(mIH.get("menu.usuario.eliminar"), true, true, true, true);
         this.mIH = mIH;
@@ -42,16 +50,22 @@ public class UsuarioEliminarView extends JInternalFrame {
 
         buscarButton.setIcon(Icono.icono(Url.BUSCAR));
         eliminarButton.setIcon(Icono.icono(Url.ELIMINAR));
-        salirButton.setIcon(Icono.icono(Url.CERRAR));
 
 
         cambiarIdioma(mIH.getLocale().getLanguage(),mIH.getLocale().getCountry());
     }
 
+    /**
+     * Muestra un mensaje en un cuadro de diálogo.
+     * @param mensaje Texto del mensaje a mostrar.
+     */
     public void mostrarMensaje(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje);
     }
 
+    /**
+     * Limpia todos los campos del formulario de eliminación de usuario.
+     */
     public void limpiarCampos() {
         usernameTextField.setText("");
         contrasenaTextField.setText("");
@@ -63,6 +77,10 @@ public class UsuarioEliminarView extends JInternalFrame {
         mesComboBox.setSelectedIndex(0);
     }
 
+    /**
+     * Carga los días en el combo box correspondiente.
+     * @param diaComboBox JComboBox donde se cargarán los días.
+     */
     private void cargarDiasComboBox(JComboBox diaComboBox) {
         diaComboBox.removeAllItems();
         for (int i = 1; i <= 31; i++) {
@@ -70,6 +88,10 @@ public class UsuarioEliminarView extends JInternalFrame {
         }
     }
 
+    /**
+     * Carga los meses en el combo box correspondiente usando el handler de internacionalización.
+     * @param mesComboBox JComboBox donde se cargarán los meses.
+     */
     private void cargarMesesComboBox(JComboBox mesComboBox) {
         mesComboBox.removeAllItems();
         mesComboBox.addItem(mIH.get("mes.enero"));
@@ -86,6 +108,11 @@ public class UsuarioEliminarView extends JInternalFrame {
         mesComboBox.addItem(mIH.get("mes.diciembre"));
     }
 
+    /**
+     * Cambia el idioma de la ventana y sus componentes usando el handler de internacionalización.
+     * @param lenguaje Código de idioma (ejemplo: "es", "en").
+     * @param pais Código de país (ejemplo: "EC", "US").
+     */
     public void cambiarIdioma(String lenguaje, String pais) {
         mIH.setLenguaje(lenguaje, pais);
         setTitle(mIH.get("menu.usuario.eliminar"));
@@ -94,7 +121,6 @@ public class UsuarioEliminarView extends JInternalFrame {
         lblContrasena.setText(mIH.get("ventana.usuario.contrasena"));
         buscarButton.setText(mIH.get("ventana.buscar"));
         eliminarButton.setText(mIH.get("ventana.eliminar"));
-        salirButton.setText(mIH.get("ventana.salir"));
         lblNombre.setText(mIH.get("ventana.usuario.nombre"));
         lblTelefono.setText(mIH.get("ventana.usuario.telefono"));
         lblCorreo.setText(mIH.get("ventana.usuario.email"));
@@ -115,46 +141,82 @@ public class UsuarioEliminarView extends JInternalFrame {
 
     //GETTERS Y SETTERS
 
+    /**
+     * Obtiene el campo de texto para el nombre de usuario.
+     * @return JTextField del nombre de usuario.
+     */
     public JTextField getUsernameTextField() {
         return usernameTextField;
     }
 
+    /**
+     * Obtiene el botón para buscar usuario.
+     * @return JButton de buscar.
+     */
     public JButton getBuscarButton() {
         return buscarButton;
     }
 
+    /**
+     * Obtiene el campo de texto para la contraseña.
+     * @return JTextField de la contraseña.
+     */
     public JTextField getContrasenaTextField() {
         return contrasenaTextField;
     }
 
+    /**
+     * Obtiene el botón para eliminar usuario.
+     * @return JButton de eliminar.
+     */
     public JButton getEliminarButton() {
         return eliminarButton;
     }
 
-    public JButton getSalirButton() {
-        return salirButton;
-    }
-
+    /**
+     * Obtiene el campo de texto para el nombre.
+     * @return JTextField del nombre.
+     */
     public JTextField getNombreTextField() {
         return nombreTextField;
     }
 
+    /**
+     * Obtiene el campo de texto para el teléfono.
+     * @return JTextField del teléfono.
+     */
     public JTextField getTelefonoTextField() {
         return telefonoTextField;
     }
 
+    /**
+     * Obtiene el campo de texto para el correo electrónico.
+     * @return JTextField del correo.
+     */
     public JTextField getCorreoTextField() {
         return correoTextField;
     }
 
+    /**
+     * Obtiene el campo de texto para el año de nacimiento.
+     * @return JTextField del año.
+     */
     public JTextField getAnioTextField() {
         return anioTextField;
     }
 
+    /**
+     * Obtiene el combo box de días.
+     * @return JComboBox de días.
+     */
     public JComboBox getDiaComboBox() {
         return diaComboBox;
     }
 
+    /**
+     * Obtiene el combo box de meses.
+     * @return JComboBox de meses.
+     */
     public JComboBox getMesComboBox() {
         return mesComboBox;
     }

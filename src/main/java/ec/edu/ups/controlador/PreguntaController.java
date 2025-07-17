@@ -28,6 +28,18 @@ public class PreguntaController {
     private int contadorPreguntas;
     private MensajeInternacionalizacionHandler mIH;
 
+    /**
+     * Constructor de PreguntaController.
+     * Inicializa los DAOs, vistas y el handler de internacionalización.
+     * Configura los eventos en la vista de inicio de sesión.
+     *
+     * @param usuarioDAO DAO para operaciones de usuario.
+     * @param preguntaDAO DAO para operaciones de preguntas.
+     * @param logInView Vista de inicio de sesión.
+     * @param registraseView Vista de registro de usuario.
+     * @param mIH Handler de internacionalización.
+     * @param recuperarContraseniaView Vista para recuperar contraseña.
+     */
     public PreguntaController(UsuarioDAO usuarioDAO, PreguntaDAO preguntaDAO, LogInView logInView,
                               RegistraseView registraseView, MensajeInternacionalizacionHandler mIH, RecuperarContraseniaView recuperarContraseniaView) {
         this.usuarioDAO = usuarioDAO;
@@ -41,6 +53,10 @@ public class PreguntaController {
         configurarEventosEnVista();
     }
 
+    /**
+     * Configura los eventos en la vista de inicio de sesión.
+     * Asocia los botones de registro y recuperación de contraseña con sus acciones correspondientes.
+     */
     private void configurarEventosEnVista(){
 
         logInView.getRegistrarseButton().addActionListener(new ActionListener() {
@@ -73,12 +89,19 @@ public class PreguntaController {
         });
     }
 
+    /**
+     * Muestra la vista de registro y configura sus eventos.
+     */
     private void registrarse() {
         logInView.setVisible(false);
         configurarEventosEnRegistrarse();
         registraseView.setVisible(true);
     }
 
+    /**
+     * Configura los eventos en la vista de registro.
+     * Maneja la lógica de validación y registro de usuario, así como la gestión de preguntas de verificación.
+     */
     private void configurarEventosEnRegistrarse() {
         registraseView.getUsuarioTextField().setText("");
         registraseView.getPasswordField1().setText("");
@@ -222,11 +245,20 @@ public class PreguntaController {
         });
     }
 
+    /**
+     * Carga la pregunta de verificación correspondiente al código dado en la vista de registro.
+     *
+     * @param codigo Código de la pregunta a mostrar.
+     */
     private void cargarPregunta(int codigo){
         registraseView.getLblPreguntaCodigo().setText(mIH.get("registro.numero.pregunta") + " " + codigo);
         registraseView.getLblEnunciado().setText(mIH.get(preguntaDAO.buscarPorCodigo(codigo).getEnunciado()));
     }
 
+    /**
+     * Configura los eventos en la vista de recuperación de contraseña.
+     * Permite validar respuestas de preguntas de verificación y restablecer la contraseña del usuario.
+     */
     private void configurarEventosEnOlvidada() {
         Usuario usuarioRecuperacion = usuarioDAO.buscarPorUsername(logInView.getUsernameTextField().getText());
         List<PreguntaRespondida> preguntas = usuarioRecuperacion.getPreguntasVerificacion();
@@ -294,11 +326,22 @@ public class PreguntaController {
         });
     }
 
+    /**
+     * Carga la pregunta de verificación correspondiente al código dado en la vista de recuperación de contraseña.
+     *
+     * @param codigo Código de la pregunta a mostrar.
+     */
     private void cargarPreguntaOlvidada(int codigo){
         recuperarContraseniaView.getLblPreguntaCodigo().setText(mIH.get("registro.numero.pregunta") + " " + codigo);
         recuperarContraseniaView.getLblEnunciado().setText(mIH.get(preguntaDAO.buscarPorCodigo(codigo).getEnunciado()));
     }
 
+    /**
+     * Cambia el idioma de las vistas de registro y recuperación de contraseña usando el handler de internacionalización.
+     *
+     * @param lenguaje Código de idioma (ejemplo: "es", "en").
+     * @param pais Código de país (ejemplo: "EC", "US").
+     */
     public void cambiarIdioma(String lenguaje, String pais) {
         mIH.setLenguaje(lenguaje, pais);
         registraseView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
@@ -306,6 +349,11 @@ public class PreguntaController {
         cargarPregunta(contadorPreguntas);
     }
 
+    /**
+     * Randomiza el orden de la lista de preguntas respondidas.
+     *
+     * @param lista Lista de preguntas respondidas a randomizar.
+     */
     private void randomizarListaPreguntaRespondida(List<PreguntaRespondida> lista) {
         List<PreguntaRespondida> listaRandomizada = new LinkedList<>();
         while (!lista.isEmpty()) {
@@ -315,12 +363,24 @@ public class PreguntaController {
         lista.addAll(listaRandomizada);
     }
 
+    /**
+     * Quita todos los ActionListeners de un botón dado.
+     *
+     * @param button Botón al que se le quitarán los ActionListeners.
+     */
     private void quitarActionListeners(JButton button) {
         for (ActionListener al : button.getActionListeners()) {
             button.removeActionListener(al);
         }
     }
 
+    /**
+     * Configura los eventos para usuarios que no tienen preguntas de verificación asignadas.
+     * Permite asignar preguntas de verificación y actualizar el usuario.
+     *
+     * @param usuarioSinPregguntas Usuario sin preguntas de verificación.
+     * @param menuPrincipalView Vista del menú principal.
+     */
     public void configurarEventosUsuarioSinPregunta(Usuario usuarioSinPregguntas, MenuPrincipalView menuPrincipalView) {
         registraseView.getUsuarioTextField().setText(usuarioSinPregguntas.getUsername());
         registraseView.getPasswordField1().setText(usuarioSinPregguntas.getPassword());

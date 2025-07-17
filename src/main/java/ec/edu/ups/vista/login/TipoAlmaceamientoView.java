@@ -24,6 +24,11 @@ public class TipoAlmaceamientoView extends JFrame{
     private JMenuItem alemanMenuItem;
     private JMenuItem italianoMenuItem;
 
+    /**
+     * Constructor de la ventana para seleccionar el tipo de almacenamiento.
+     * Inicializa componentes, configura iconos y carga el idioma usando el handler de internacionalización.
+     * @param mIH Handler de internacionalización.
+     */
     public TipoAlmaceamientoView(MensajeInternacionalizacionHandler mIH) {
         this.mIH = mIH;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -63,6 +68,11 @@ public class TipoAlmaceamientoView extends JFrame{
 
     }
 
+    /**
+     * Cambia el idioma de la ventana y sus componentes usando el handler de internacionalización.
+     * @param idioma Código de idioma (ejemplo: "es", "en").
+     * @param pais Código de país (ejemplo: "EC", "US").
+     */
     public void cambiarIdioma(String idioma, String pais) {
         mIH.setLenguaje(idioma, pais);
         setTitle(mIH.get("tipoalmacenamiento.titulo"));
@@ -76,18 +86,34 @@ public class TipoAlmaceamientoView extends JFrame{
 
     }
 
+    /**
+     * Obtiene el botón para seleccionar almacenamiento en memoria.
+     * @return JButton de memoria.
+     */
     public JButton getMemoriaButton() {
         return memoriaButton;
     }
 
+    /**
+     * Obtiene el botón para seleccionar almacenamiento en archivo.
+     * @return JButton de archivo.
+     */
     public JButton getArchivoButton() {
         return archivoButton;
     }
 
+    /**
+     * Obtiene la etiqueta del título.
+     * @return JLabel del título.
+     */
     public JLabel getTituloLabel() {
         return tituloLabel;
     }
 
+    /**
+     * Abre el selector de archivos y retorna la ruta seleccionada.
+     * @return Ruta absoluta seleccionada o null si se cancela.
+     */
     public String obetenerRutaArchivo() {
         int seleccion = fileChooser.showOpenDialog(this);
         if (seleccion == JFileChooser.APPROVE_OPTION) {
@@ -96,22 +122,42 @@ public class TipoAlmaceamientoView extends JFrame{
         return null;
     }
 
+    /**
+     * Obtiene el menú item para idioma inglés.
+     * @return JMenuItem de inglés.
+     */
     public JMenuItem getInglesMenuItem() {
         return inglesMenuItem;
     }
 
+    /**
+     * Obtiene el menú item para idioma español.
+     * @return JMenuItem de español.
+     */
     public JMenuItem getEspanolMenuItem() {
         return espanolMenuItem;
     }
 
+    /**
+     * Obtiene el menú item para idioma francés.
+     * @return JMenuItem de francés.
+     */
     public JMenuItem getFrancesMenuItem() {
         return francesMenuItem;
     }
 
+    /**
+     * Obtiene el menú item para idioma alemán.
+     * @return JMenuItem de alemán.
+     */
     public JMenuItem getAlemanMenuItem() {
         return alemanMenuItem;
     }
 
+    /**
+     * Obtiene el menú item para idioma italiano.
+     * @return JMenuItem de italiano.
+     */
     public JMenuItem getItalianoMenuItem() {
         return italianoMenuItem;
     }
