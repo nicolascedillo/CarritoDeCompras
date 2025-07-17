@@ -111,9 +111,21 @@ public class PreguntaController {
                     String password = registraseView.getPasswordField1().getText();
                     String nombre = registraseView.getNombreTextField().getText();
                     String telefono = registraseView.getTelefonoTextField().getText();
+                    if (!telefono.matches("\\d{10}")) {
+                        registraseView.mostrarMensaje(mIH.get("telefono.invalido"));
+                        return;
+                    }
                     String correo = registraseView.getCorreoTextField().getText();
+                    if (!correo.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+                        registraseView.mostrarMensaje(mIH.get("correo.invalido"));
+                        return;
+                    }
                     GregorianCalendar fecha = new GregorianCalendar();
                     int anio = Integer.parseInt(registraseView.getAnioTextField().getText());
+                    if (anio < 1900 || anio > 2024) {
+                        registraseView.mostrarMensaje(mIH.get("anio.invalido"));
+                        return;
+                    }
                     int mes = -1;
                     int dia;
                     String mesSeleccionado ;

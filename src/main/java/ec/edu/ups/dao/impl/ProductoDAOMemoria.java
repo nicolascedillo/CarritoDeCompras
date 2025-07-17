@@ -13,16 +13,16 @@ public class ProductoDAOMemoria implements ProductoDAO {
 
     public ProductoDAOMemoria() {
         productos = new ArrayList<Producto>();
-        crear(new Producto(1, "Computadora", 500.0));
-        crear(new Producto(2, "TV", 300.0));
-        crear(new Producto(3, "Celular", 700.0));
-        crear(new Producto(4, "Microfono", 40.0));
-        crear(new Producto(5, "Teclado", 50.0));
-        crear(new Producto(6, "Mouse", 20.0));
-        crear(new Producto(7, "Monitor", 150.0));
-        crear(new Producto(8, "Impresora", 120.0));
-        crear(new Producto(9, "Tablet", 250.0));
-        crear(new Producto(10, "Auriculares", 80.0));
+        crear(new Producto( "Computadora", 500.0));
+        crear(new Producto( "TV", 300.0));
+        crear(new Producto( "Celular", 700.0));
+        crear(new Producto( "Microfono", 40.0));
+        crear(new Producto( "Teclado", 50.0));
+        crear(new Producto( "Mouse", 20.0));
+        crear(new Producto( "Monitor", 150.0));
+        crear(new Producto( "Impresora", 120.0));
+        crear(new Producto( "Tablet", 250.0));
+        crear(new Producto( "Auriculares", 80.0));
     }
 
     @Override

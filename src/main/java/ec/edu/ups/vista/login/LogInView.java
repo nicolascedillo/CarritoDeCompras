@@ -95,6 +95,12 @@ public class LogInView extends JFrame {
             setSize(520, 275);
         } else if (idioma.getLocale().getLanguage().equals("fr")) {
             setSize(570, 275);
+        } else if (idioma.getLocale().getLanguage().equals("de")) {
+            setSize(570, 275);
+        } else if (idioma.getLocale().getLanguage().equals("it")) {
+            setSize(570, 275);
+        } else {
+            setSize(470, 275);
         }
     }
 

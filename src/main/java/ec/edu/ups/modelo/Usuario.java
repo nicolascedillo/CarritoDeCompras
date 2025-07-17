@@ -29,6 +29,10 @@ public class Usuario {
         this.preguntasVerificacion = new ArrayList<>();
     }
 
+    public Usuario(String username) {
+        this.username = username;
+    }
+
     public Usuario(String username, String password, Rol rol, String nombreCompleto, String email, String telefono, GregorianCalendar fechaNacimiento) {
         this.username = username;
         this.password = password;
@@ -45,7 +49,7 @@ public class Usuario {
         return username;
     }
 
-    public void setUsername(String username) throws CedulaValidationException{
+    public void setUsername(String username) throws CedulaValidationException {
         if (!esCedulaValida(username)) {
             throw new CedulaValidationException("La cédula ingresada no es válida.");
         }
@@ -80,7 +84,9 @@ public class Usuario {
         int total = sumaPar + sumaImpar;
         int decenaSuperior = ((total + 9) / 10) * 10;
         int digitoVerificador = decenaSuperior - total;
-        if (digitoVerificador == 10) digitoVerificador = 0;
+        if (digitoVerificador == 10) {
+            digitoVerificador = 0;
+        }
         return digitoVerificador == Integer.parseInt(cedula.substring(9));
     }
 
@@ -211,15 +217,37 @@ public class Usuario {
 
     @Override
     public String toString() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        return  username + ',' +
-                password + ',' +
-                rol + ',' +
-                nombreCompleto + ',' +
-                email + ',' +
-                telefono + ',' +
-                dateFormat.format(fechaNacimiento.getTime()) + ',' +
-                carritos + ',' +
-                preguntasVerificacion + ',';
+        StringBuilder sb = new StringBuilder();
+        sb.append(username).append(",")
+                .append(password).append(",")
+                .append(rol.name()).append(",")
+                .append(nombreCompleto).append(",")
+                .append(email).append(",")
+                .append(telefono).append(",")
+                .append(fechaNacimiento.getTimeInMillis()).append(",");
+        // carritos:
+        if (carritos.isEmpty()) {
+            sb.append("[]");
+        } else {
+            sb.append("[");
+            for (int i = 0; i < carritos.size(); i++) {
+                sb.append(carritos.get(i).toString());
+                if (i < carritos.size() - 1) sb.append(",");
+            }
+            sb.append("]");
+        }
+        sb.append(",");
+        // preguntas:
+        if (preguntasVerificacion.isEmpty()) {
+            sb.append("[]");
+        } else {
+            sb.append("[");
+            for (int i = 0; i < preguntasVerificacion.size(); i++) {
+                sb.append(preguntasVerificacion.get(i).toString());
+                if (i < preguntasVerificacion.size() - 1) sb.append(",");
+            }
+            sb.append("]");
+        }
+        return sb.toString();
     }
 }

@@ -21,6 +21,7 @@ public class ProductoController {
     private final ProductoDAO productoDAO;
     private final ProductoEliminarView productoEliminarView;
     private final ProductoModificarView productoModificarView;
+    private Producto producto;
     private MensajeInternacionalizacionHandler mIH;
 
     public ProductoController(ProductoCrearView productoCrearView,
@@ -35,10 +36,12 @@ public class ProductoController {
         this.productoDAO = productoDAO;
         this.productoEliminarView = productoEliminarView;
         this.productoModificarView = productoModificarView;
+        this.producto = new Producto();
         configurarEventosListar();
         configurarEventosEliminar();
         configurarEventosModificar();
         configurarEventosAnadir();
+        setProductoCodigo();
 
     }
 
@@ -66,6 +69,7 @@ public class ProductoController {
                     productoEliminarView.getTxtPrecio().setText(FormateadorUtils.formatearMoneda(productoEncontrado.getPrecio(), mIH.getLocale()));
                     productoEliminarView.getTxtNombre().setEnabled(false);
                     productoEliminarView.getTxtPrecio().setEnabled(false);
+                    productoEliminarView.getBtnEliminar().setEnabled(true);
 
                 }catch(NumberFormatException ex){
                     productoEliminarView.mostrarMensaje(mIH.get("numberFormatException"));
@@ -162,11 +166,10 @@ public class ProductoController {
 
     private void guardarProducto() {
         try{
-            int codigo = Integer.parseInt(productoCrearView.getTxtCodigo().getText());
             String nombre = productoCrearView.getTxtNombre().getText();
             double precio = Double.parseDouble(productoCrearView.getTxtPrecio().getText());
 
-            productoDAO.crear(new Producto(codigo, nombre, precio));
+            productoDAO.crear(new Producto(nombre, precio));
             productoCrearView.mostrarMensaje(mIH.get("mensaje.producto.creado"));
             productoCrearView.limpiarCampos();
         } catch (NumberFormatException e) {
@@ -179,22 +182,22 @@ public class ProductoController {
             String nombre = productoListaView.getTxtBuscar().getText();
 
             List<Producto> productosEncontrados = productoDAO.buscarPorNombre(nombre);
-            if( productosEncontrados.isEmpty() ) {
-                productoListaView.mostrarMensaje(mIH.get("mensaje.producto.noencontrado"));
-            } else {
-                productoListaView.cargarDatos(productosEncontrados);
-            }
+            productoListaView.cargarDatos(productosEncontrados);
         }catch (NumberFormatException e) {
             productoListaView.mostrarMensaje(mIH.get("numberFormatException"));
+        }catch (NullPointerException e) {
+            productoListaView.mostrarMensaje(mIH.get("mensaje.producto.noencontrado"));
         }
     }
 
     private void listarProductos() {
-        List<Producto> productos = productoDAO.listarTodos();
-        if( productos.isEmpty() ) {
-            productoListaView.mostrarMensaje(mIH.get("mensaje.producto.noencontrado"));
-        } else {
+        try{
+            List<Producto> productos = productoDAO.listarTodos();
             productoListaView.cargarDatos(productos);
+        }catch (NullPointerException e) {
+            productoListaView.mostrarMensaje(mIH.get("mensaje.producto.noencontrado"));
+        } catch (NumberFormatException e) {
+            productoListaView.mostrarMensaje(mIH.get("numberFormatException"));
         }
     }
 
@@ -245,5 +248,9 @@ public class ProductoController {
         refrescarPrecioEliminar(mIH.getLocale());
     }
 
-
+    private void setProductoCodigo(){
+        if(!productoDAO.listarTodos().isEmpty()){
+            producto.setCodigo(productoDAO.listarTodos().getLast().getCodigo()+1);
+        }
+    }
 }

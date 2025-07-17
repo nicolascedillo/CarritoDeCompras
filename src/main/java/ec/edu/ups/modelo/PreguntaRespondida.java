@@ -27,9 +27,6 @@ public class PreguntaRespondida {
 
     @Override
     public String toString() {
-        return "PreguntaRespondida{" +
-                "pregunta=" + pregunta +
-                ", respuesta='" + respuesta + '\'' +
-                '}';
+        return pregunta.getCodigo() + ":" + pregunta.getEnunciado() + ":" + respuesta;
     }
 }

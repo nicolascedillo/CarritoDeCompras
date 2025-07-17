@@ -2,6 +2,7 @@ package ec.edu.ups.controlador;
 
 import ec.edu.ups.dao.CarritoDAO;
 import ec.edu.ups.dao.ProductoDAO;
+import ec.edu.ups.dao.UsuarioDAO;
 import ec.edu.ups.modelo.*;
 import ec.edu.ups.util.FormateadorUtils;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
@@ -17,6 +18,7 @@ public class CarritoController {
     private final CarritoCrearView carritoCrearView;
     private final CarritoDAO carritoDao;
     private final ProductoDAO productoDao;
+    private final UsuarioDAO usuarioDAO;
     private final CarritoEliminarView carritoEliminarView;
     private final CarritoModificarView carritoModificarView;
     private final CarritoListaView carritoListaView;
@@ -27,6 +29,7 @@ public class CarritoController {
 
     public CarritoController(ProductoDAO productoDAO,
                              CarritoDAO carritoDao,
+                             UsuarioDAO usuarioDAO,
                              CarritoCrearView carritoCrearView,
                              CarritoEliminarView carritoEliminarView,
                              CarritoModificarView carritoModificarView,
@@ -36,6 +39,7 @@ public class CarritoController {
                              MensajeInternacionalizacionHandler mIH) {
         this.carritoDao = carritoDao;
         this.carritoCrearView = carritoCrearView;
+        this.usuarioDAO = usuarioDAO;
         this.productoDao = productoDAO;
         this.carritoEliminarView = carritoEliminarView;
         this.carritoModificarView = carritoModificarView;
@@ -48,6 +52,7 @@ public class CarritoController {
         configurarEventosEliminar();
         configurarEventosModificar();
         configurarEventosListar();
+        setCodigoCarrito();
     }
 
 
@@ -58,6 +63,8 @@ public class CarritoController {
             public void actionPerformed(ActionEvent e) {
 
                 carritoDao.crear(carrito);
+                usuario.addCarrito(carrito);
+                usuarioDAO.actualizar(usuario);
                 carritoCrearView.mostrarMensaje(mIH.get("mensaje.carrito.creado"));
                 carritoCrearView.limpiarCampos();
                 carrito = new Carrito(usuario);
@@ -308,13 +315,15 @@ public class CarritoController {
             public void actionPerformed(ActionEvent e) {
 
                 carritoListaView.limpiarCampos();
-                if(!carritoDao.listarTodos().isEmpty()){
+                try{
+
                     if(usuario.getRol().equals(Rol.USUARIO)){
                         carritoListaView.cargarDatosLista(carritoDao.listarPorUsuario(usuario));
                     }else{
                         carritoListaView.cargarDatosLista(carritoDao.listarTodos());
                     }
-                } else {
+
+                }catch(NullPointerException ex){
                     carritoListaView.mostrarMensaje(mIH.get("mensaje.carrito.inexistentes"));
                 }
             }
@@ -534,6 +543,12 @@ public class CarritoController {
             String nuevoPrecioFormateado = FormateadorUtils.formatearMoneda(producto.getPrecio(), locale);
 
             itemListaView.getModelo().setValueAt(nuevoPrecioFormateado, i, 2);
+        }
+    }
+
+    private void setCodigoCarrito(){
+        if(!carritoDao.listarTodos().isEmpty()){
+            carrito.setCodigo(carritoDao.listarTodos().getLast().getCodigo()+1);
         }
     }
 

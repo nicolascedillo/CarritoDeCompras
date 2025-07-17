@@ -28,7 +28,15 @@ public class UsuarioController {
     private final MensajeInternacionalizacionHandler mIH;
     private Usuario usuario;
 
-
+    /**
+     * Constructor para el controlador de usuario en la vista de inicio de sesión.
+     * Inicializa los DAOs, la vista y el manejador de internacionalización.
+     * Configura los eventos de la vista de LogIn.
+     *
+     * @param usuarioDAO DAO para operaciones de usuario.
+     * @param logInView Vista de inicio de sesión.
+     * @param mIH Manejador de internacionalización.
+     */
     public UsuarioController(UsuarioDAO usuarioDAO, LogInView logInView, MensajeInternacionalizacionHandler mIH) {
         this.usuarioDAO = usuarioDAO;
         this.logInView = logInView;
@@ -38,6 +46,19 @@ public class UsuarioController {
         configurarEventosLogIn();
     }
 
+    /**
+     * Constructor para el controlador de usuario en las vistas de gestión de usuario.
+     * Inicializa los DAOs, las vistas, el usuario autenticado y el manejador de internacionalización.
+     * Configura los eventos de las vistas de crear, eliminar, listar y modificar usuario.
+     *
+     * @param usuarioDAO DAO para operaciones de usuario.
+     * @param usuarioCrearView Vista para crear usuario.
+     * @param usuarioEliminarView Vista para eliminar usuario.
+     * @param usuarioListarView Vista para listar usuarios.
+     * @param usuarioModificarView Vista para modificar usuario.
+     * @param usuarioAutenticado Usuario autenticado actual.
+     * @param mIH Manejador de internacionalización.
+     */
     public UsuarioController(UsuarioDAO usuarioDAO,UsuarioCrearView usuarioCrearView, UsuarioEliminarView usuarioEliminarView,
                              UsuarioListarView usuarioListarView, UsuarioModificarView usuarioModificarView, Usuario usuarioAutenticado,
                              MensajeInternacionalizacionHandler mIH) {
@@ -57,6 +78,10 @@ public class UsuarioController {
     }
 
 
+    /**
+     * Configura los eventos para la vista de creación de usuario.
+     * Maneja la lógica de validación y creación de usuario, así como el cierre de la vista.
+     */
     private void configurarEventosUsuarioCrear() {
 
         usuarioCrearView.getCrearButton().addActionListener(new ActionListener() {
@@ -81,7 +106,15 @@ public class UsuarioController {
                     String password = usuarioCrearView.getPasswordField().getText();
                     String nombre = usuarioCrearView.getNombreTextField().getText();
                     String telefono = usuarioCrearView.getTelefonoTextField().getText();
+                    if (!telefono.matches("\\d{10}")) {
+                        usuarioCrearView.mostrarMensaje(mIH.get("telefono.invalido"));
+                        return;
+                    }
                     String correo = usuarioCrearView.getCorreoTextField().getText();
+                    if (!correo.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+                        usuarioCrearView.mostrarMensaje(mIH.get("correo.invalido"));
+                        return;
+                    }
                     GregorianCalendar fecha = new GregorianCalendar();
                     int dia = (Integer) usuarioCrearView.getDiaComboBox().getSelectedItem();
                     int mes = -1;
@@ -115,6 +148,10 @@ public class UsuarioController {
                         return;
                     }
                     int anio = Integer.parseInt(usuarioCrearView.getAnioTextField().getText());
+                    if (anio < 1900 || anio > 2024) {
+                        usuarioCrearView.mostrarMensaje(mIH.get("anio.invalido"));
+                        return;
+                    }
                     fecha.set(anio, mes, dia);
 
                     if (usuarioDAO.buscarPorUsername(username) != null) {
@@ -140,14 +177,12 @@ public class UsuarioController {
             }
         });
 
-        usuarioCrearView.getSalirButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                usuarioCrearView.setVisible(false);
-            }
-        });
     }
 
+    /**
+     * Configura los eventos para la vista de eliminación de usuario.
+     * Permite buscar y eliminar usuarios.
+     */
     private void configurarEventosUsuarioEliminar( ) {
 
         if(usuario.getRol().equals(Rol.USUARIO)){
@@ -219,14 +254,12 @@ public class UsuarioController {
             }
         });
 
-        usuarioEliminarView.getSalirButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                usuarioEliminarView.setVisible(false);
-            }
-        });
     }
 
+    /**
+     * Configura los eventos para la vista de listado de usuarios.
+     * Permite buscar usuarios por nombre y listar todos.
+     */
     private void configurarEventosUsuarioListar(  ){
 
         usuarioListarView.getBuscarButton().addActionListener(new ActionListener() {
@@ -255,14 +288,12 @@ public class UsuarioController {
             }
         });
 
-        usuarioListarView.getSalirButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                usuarioListarView.setVisible(false);
-            }
-        });
     }
 
+    /**
+     * Configura los eventos para la vista de modificación de usuario.
+     * Permite buscar y modificar usuarios.
+     */
     private void configurarEventosUsuarioModificar( ) {
 
         if(usuario.getRol().equals(Rol.USUARIO)){
@@ -314,8 +345,20 @@ public class UsuarioController {
                     String password = usuarioModificarView.getContrasenaTextField().getText();
                     String nombre = usuarioModificarView.getNombreTextField().getText();
                     String telefono = usuarioModificarView.getTelefonoTextField().getText();
+                    if (!telefono.matches("\\d{10}")) {
+                        usuarioModificarView.mostrarMensaje(mIH.get("telefono.invalido"));
+                        return;
+                    }
                     String email = usuarioModificarView.getCorreoTextField().getText();
+                    if (!email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+                        usuarioModificarView.mostrarMensaje(mIH.get("correo.invalido"));
+                        return;
+                    }
                     int anio = Integer.parseInt(usuarioModificarView.getAnioTextField().getText());
+                    if (anio < 1900 || anio > 2024) {
+                        usuarioModificarView.mostrarMensaje(mIH.get("anio.invalido"));
+                        return;
+                    }
                     int dia = Integer.parseInt(usuarioModificarView.getDiaComboBox().getSelectedItem().toString());
                     int mes = usuarioModificarView.getMesComboBox().getSelectedIndex();
 
@@ -350,30 +393,30 @@ public class UsuarioController {
             }
         });
 
-        usuarioModificarView.getSalirButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                usuarioModificarView.dispose();
-            }
-        });
     }
 
+    /**
+     * Configura los eventos para la vista de inicio de sesión (LogIn).
+     * Permite autenticar usuarios y cerrar la aplicación.
+     */
     private void configurarEventosLogIn() {
         logInView.getIniciarSesionButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String username = logInView.getUsernameTextField().getText();
-                String password = logInView.getContrasenaPasswordField().getText();
 
-                usuario = usuarioDAO.autenticar(username, password);
-                if(usuario == null){
-                    logInView.mostrarMensaje(mIH.get("mensaje.login.incorrecto"));
-                } else {
-                    logInView.dispose();
-                }
+                    String username = logInView.getUsernameTextField().getText();
+                    String password = logInView.getContrasenaPasswordField().getText();
 
-                logInView.getUsernameTextField().setText("");
-                logInView.getContrasenaPasswordField().setText("");
+                    usuario = usuarioDAO.autenticar(username, password);
+                    if(usuario == null){
+                        logInView.mostrarMensaje(mIH.get("mensaje.login.incorrecto"));
+                    } else {
+                        logInView.dispose();
+                    }
+
+                    logInView.getUsernameTextField().setText("");
+                    logInView.getContrasenaPasswordField().setText("");
+
 
             }
         });
@@ -386,6 +429,12 @@ public class UsuarioController {
         });
     }
 
+    /**
+     * Cambia el idioma de todas las vistas de gestión de usuario.
+     *
+     * @param lenguaje Código de lenguaje (ej. "es", "en").
+     * @param pais Código de país (ej. "EC", "US").
+     */
     public void cambiarIdioma(String lenguaje, String pais) {
         mIH.setLenguaje(lenguaje, pais);
         usuarioCrearView.cambiarIdioma(lenguaje, pais);
@@ -394,11 +443,22 @@ public class UsuarioController {
         usuarioModificarView.cambiarIdioma(lenguaje, pais);
     }
 
+    /**
+     * Cambia el idioma de la vista de inicio de sesión.
+     *
+     * @param lenguaje Código de lenguaje (ej. "es", "en").
+     * @param pais Código de país (ej. "EC", "US").
+     */
     public void cambiarIdiomaLogIn(String lenguaje, String pais) {
         mIH.setLenguaje(lenguaje, pais);
         logInView.cambiarIdioma(lenguaje, pais);
     }
 
+    /**
+     * Obtiene el usuario autenticado actualmente.
+     *
+     * @return El usuario autenticado.
+     */
     public Usuario getUsuarioAutenticado() {
         return usuario;
     }

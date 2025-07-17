@@ -11,6 +11,11 @@ public class Carrito {
     private List<ItemCarrito> items;
     private Usuario usuario;
 
+    public Carrito() {
+        items = new ArrayList<>();
+        fechaCreacion = new GregorianCalendar();
+    }
+
     public Carrito(Usuario usuario) {
         codigo = contador++;
         items = new ArrayList<>();
@@ -100,12 +105,8 @@ public class Carrito {
 
     @Override
     public String toString() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        return "Carrito{" +
-                "codigo=" + codigo +
-                ", fechaCreacion=" + dateFormat.format(fechaCreacion.getTime()) +
-                ", items=" + items +
-                '}';
+        return  codigo + "_" + usuario.getUsername() + "_" +
+                fechaCreacion.getTimeInMillis() + "_" + items ;
     }
 }
 
