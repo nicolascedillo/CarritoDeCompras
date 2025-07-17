@@ -222,8 +222,8 @@ public class Usuario {
                 .append(password).append(",")
                 .append(rol.name()).append(",")
                 .append(nombreCompleto).append(",")
-                .append(email).append(",")
                 .append(telefono).append(",")
+                .append(email).append(",")
                 .append(fechaNacimiento.getTimeInMillis()).append(",");
         // carritos:
         if (carritos.isEmpty()) {

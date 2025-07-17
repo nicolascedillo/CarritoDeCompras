@@ -198,11 +198,11 @@ public class UsuarioDAOArchivoTexto implements UsuarioDAO {
         String password = atributos[1];
         Rol rol = Rol.valueOf(atributos[2]);
         String nombre = atributos[3];
-        String correo = atributos[4];
-        String telefono = atributos[5];
+        String telefono = atributos[4];
+        String correo = atributos[5];
         GregorianCalendar fechaNacimiento = new GregorianCalendar();
         fechaNacimiento.setTimeInMillis(Long.parseLong(atributos[6]));
-        Usuario usuario = new Usuario(username, password, rol, nombre, correo, telefono, fechaNacimiento);
+        Usuario usuario = new Usuario(username, password, rol, nombre, telefono, correo, fechaNacimiento);
         // Carritos
         String carritosRaw = partes[1];
         if (carritosRaw != null && !carritosRaw.equals("[]")) {
