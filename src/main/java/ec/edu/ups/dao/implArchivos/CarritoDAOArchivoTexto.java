@@ -29,6 +29,14 @@ public class CarritoDAOArchivoTexto implements CarritoDAO {
             directorio.mkdirs();
         }
         this.rutaArchivo = directorio.getAbsolutePath() + "\\carritos.txt";
+        File archivo = new File(this.rutaArchivo);
+        if (!archivo.exists()) {
+            try{
+                archivo.createNewFile();
+            }catch(IOException e){
+                System.out.println("Error al crear el archivo: " + e.getMessage());
+            }
+        }
     }
 
     /**
@@ -63,8 +71,7 @@ public class CarritoDAOArchivoTexto implements CarritoDAO {
             abrirReader();
             String linea;
             while ((linea = bufferedReader.readLine()) != null) {
-                // No se puede obtener el usuario aquí, así que se pasa null
-                Carrito carrito = carritoFromString(linea, null);
+                Carrito carrito = aCarritoDeString(linea, null);
                 if (carrito != null && carrito.getCodigo() == codigo) {
                     return carrito;
                 }
@@ -91,7 +98,7 @@ public class CarritoDAOArchivoTexto implements CarritoDAO {
             abrirReader();
             String linea;
             while ((linea = bufferedReader.readLine()) != null) {
-                Carrito carrito = carritoFromString(linea, usuario);
+                Carrito carrito = aCarritoDeString(linea, usuario);
                 if (carrito != null && carrito.getCodigo() == codigo && carrito.getUsuario() != null && carrito.getUsuario().getUsername().equals(usuario.getUsername())) {
                     return carrito;
                 }
@@ -166,7 +173,7 @@ public class CarritoDAOArchivoTexto implements CarritoDAO {
             abrirReader();
             String linea;
             while ((linea = bufferedReader.readLine()) != null) {
-                Carrito carrito = carritoFromString(linea, null);
+                Carrito carrito = aCarritoDeString(linea, null);
                 if (carrito != null) {
                     carritos.add(carrito);
                 }
@@ -194,7 +201,7 @@ public class CarritoDAOArchivoTexto implements CarritoDAO {
             abrirReader();
             String linea;
             while ((linea = bufferedReader.readLine()) != null) {
-                Carrito carrito = carritoFromString(linea, usuario);
+                Carrito carrito = aCarritoDeString(linea, usuario);
                 if (carrito != null && carrito.getUsuario() != null && carrito.getUsuario().getUsername().equals(usuario.getUsername())) {
                     carritos.add(carrito);
                 }
@@ -279,7 +286,7 @@ public class CarritoDAOArchivoTexto implements CarritoDAO {
      * @param usuario Usuario asociado al carrito (puede ser null).
      * @return El objeto Carrito construido a partir de la cadena.
      */
-    private Carrito carritoFromString(String s, Usuario usuario) {
+    private Carrito aCarritoDeString(String s, Usuario usuario) {
         String[] partes = s.split("_");
         if (partes.length < 4) {
             return null;
@@ -292,6 +299,7 @@ public class CarritoDAOArchivoTexto implements CarritoDAO {
             carrito.setUsuario(new Usuario(partes[1]));
         }
         int codigo = Integer.parseInt(partes[0]);
+        carrito.setUsuario( new Usuario(partes[1]));
         long fechaMillis = Long.parseLong(partes[2]);
         String itemsStr = partes[3];
         if (itemsStr.startsWith("[") && itemsStr.endsWith("]")) {

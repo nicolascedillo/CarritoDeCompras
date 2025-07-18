@@ -19,7 +19,7 @@ public class UsuarioDAOMemoria implements UsuarioDAO {
      */
     public UsuarioDAOMemoria() {
         this.usuarios = new ArrayList<>();
-        crear(new Usuario("0107456022", "Nico@", Rol.ADMINISTRADOR,"Admin", "admin@gmail.com", "0934134431", new GregorianCalendar(1990, 1, 1)));
+        crear(new Usuario("0107456022", "Nicol@", Rol.ADMINISTRADOR,"Admin", "admin@gmail.com", "0934134431", new GregorianCalendar(1990, 1, 1)));
     }
 
     /**

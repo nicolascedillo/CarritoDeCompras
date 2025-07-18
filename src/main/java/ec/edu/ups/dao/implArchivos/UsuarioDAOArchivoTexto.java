@@ -32,7 +32,12 @@ public class UsuarioDAOArchivoTexto implements UsuarioDAO {
         this.rutaArchivo = directorio.getAbsolutePath() + "\\usuarios.txt";
         File archivo = new File(this.rutaArchivo);
         if (!archivo.exists()) {
-            crear(new Usuario("0107456022", "Nico@", Rol.ADMINISTRADOR,"Admin", "admin@gmail.com", "0934134431", new GregorianCalendar(1990, 1, 1)));
+            try{
+                archivo.createNewFile();
+                crear(new Usuario("0107456022", "Nicol@", Rol.ADMINISTRADOR,"Nicolas Cedillo Admin", "nicocedillo15@gmail.com", "0991819287", new GregorianCalendar(2006, GregorianCalendar.JULY, 18)));
+            }catch (IOException e) {
+                System.out.println("Error al crear el archivo de usuarios: " + e.getMessage());
+            }
         }
     }
 
@@ -94,14 +99,14 @@ public class UsuarioDAOArchivoTexto implements UsuarioDAO {
      */
     @Override
     public Usuario buscarPorUsername(String username) {
-        Usuario usuario = null;
+        Usuario usuario;
         try {
             abrirReader();
             String linea;
             while ((linea = bufferedReader.readLine()) != null) {
                 usuario = aUsuarioDeString(separarUsuarioLinea(linea));
                 if (usuario.getUsername().equals(username)) {
-                    break;
+                    return usuario;
                 }
             }
         } catch (IOException e) {
@@ -109,7 +114,7 @@ public class UsuarioDAOArchivoTexto implements UsuarioDAO {
         } finally {
             cerrarReader();
         }
-        return usuario;
+        return null;
     }
 
     /**
@@ -344,6 +349,7 @@ public class UsuarioDAOArchivoTexto implements UsuarioDAO {
             carrito.setUsuario(new Usuario(partes[1]));
         }
         int codigo = Integer.parseInt(partes[0]);
+        carrito.setUsuario(new Usuario(partes[1]));
         long fechaMillis = Long.parseLong(partes[2]);
         String itemsStr = partes[3];
         if (itemsStr.trim().startsWith("[") && itemsStr.endsWith("]")) {

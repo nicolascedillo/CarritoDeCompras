@@ -1,15 +1,11 @@
 package ec.edu.ups.dao.implArchivos;
 
 import ec.edu.ups.dao.PreguntaDAO;
-import ec.edu.ups.modelo.Carrito;
 import ec.edu.ups.modelo.Pregunta;
-import ec.edu.ups.modelo.Producto;
-import ec.edu.ups.modelo.Usuario;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 public class PreguntaDAOArchivoBinario implements PreguntaDAO {
@@ -37,18 +33,23 @@ public class PreguntaDAOArchivoBinario implements PreguntaDAO {
         this.rutaArchivo = directorio.getAbsolutePath() + "\\preguntas.dat";
         File archivo = new File(this.rutaArchivo);
         if (!archivo.exists()) {
-            crear(1,"pregunta1");
-            crear(2,"pregunta2");
-            crear(3,"pregunta3");
-            crear(4,"pregunta4");
-            crear(5,"pregunta5");
-            crear(6,"pregunta6");
-            crear(7,"pregunta7");
-            crear(8,"pregunta8");
-            crear(9,"pregunta9");
-            crear(10,"pregunta10");
-            crear(11,"pregunta11");
-            crear(12,"pregunta12");
+            try{
+                archivo.createNewFile();
+                crear(1,"pregunta1");
+                crear(2,"pregunta2");
+                crear(3,"pregunta3");
+                crear(4,"pregunta4");
+                crear(5,"pregunta5");
+                crear(6,"pregunta6");
+                crear(7,"pregunta7");
+                crear(8,"pregunta8");
+                crear(9,"pregunta9");
+                crear(10,"pregunta10");
+                crear(11,"pregunta11");
+                crear(12,"pregunta12");
+            } catch (IOException e) {
+                System.out.println("Error al crear el archivo de preguntas: " + e.getMessage());
+            }
         }
     }
 

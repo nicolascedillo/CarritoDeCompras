@@ -35,16 +35,21 @@ public class ProductoDAOArchivoBinario implements ProductoDAO {
         this.rutaArchivo = directorio.getAbsolutePath() + "\\productos.dat";
         File archivo = new File(this.rutaArchivo);
         if (!archivo.exists()) {
-            crear(new Producto( "Computadora", 500.0));
-            crear(new Producto( "TV", 300.0));
-            crear(new Producto( "Celular", 700.0));
-            crear(new Producto( "Microfono", 40.0));
-            crear(new Producto( "Teclado", 50.0));
-            crear(new Producto( "Mouse", 20.0));
-            crear(new Producto( "Monitor", 150.0));
-            crear(new Producto( "Impresora", 120.0));
-            crear(new Producto( "Tablet", 250.0));
-            crear(new Producto( "Auriculares", 80.0));
+            try{
+                archivo.createNewFile();
+                crear(new Producto( "Computadora", 500.0));
+                crear(new Producto( "TV", 300.0));
+                crear(new Producto( "Celular", 700.0));
+                crear(new Producto( "Microfono", 40.0));
+                crear(new Producto( "Teclado", 50.0));
+                crear(new Producto( "Mouse", 20.0));
+                crear(new Producto( "Monitor", 150.0));
+                crear(new Producto( "Impresora", 120.0));
+                crear(new Producto( "Tablet", 250.0));
+                crear(new Producto( "Auriculares", 80.0));
+            } catch (IOException e) {
+                System.out.println("Error al crear el archivo de productos: " + e.getMessage());
+            }
         }
     }
 
