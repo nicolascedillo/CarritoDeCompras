@@ -29,6 +29,11 @@ public class LogInView extends JFrame {
     private JMenuItem italianoMenuItem;
 
 
+    /**
+     * Constructor de la ventana de inicio de sesión.
+     * Inicializa componentes, configura iconos y carga el idioma usando el handler de internacionalización.
+     * @param mIH Handler de internacionalización.
+     */
     public LogInView(MensajeInternacionalizacionHandler mIH) {
         this.mIH = mIH;
         setTitle(mIH.get("login.boton.iniciar"));
@@ -75,6 +80,11 @@ public class LogInView extends JFrame {
         });
     }
 
+    /**
+     * Cambia el idioma de la ventana y sus componentes usando el handler de internacionalización.
+     * @param lenguaje Código de idioma (ejemplo: "es", "en").
+     * @param pais Código de país (ejemplo: "EC", "US").
+     */
     public void cambiarIdioma(String lenguaje, String pais) {
         mIH.setLenguaje(lenguaje, pais);
         cambiarTamanio(mIH);
@@ -88,6 +98,10 @@ public class LogInView extends JFrame {
         olvidadaButton.setText(mIH.get("login.boton.olvidar"));
     }
 
+    /**
+     * Cambia el tamaño de la ventana según el idioma seleccionado.
+     * @param idioma Handler de internacionalización.
+     */
     public void cambiarTamanio(MensajeInternacionalizacionHandler idioma) {
         if (idioma.getLocale().getLanguage().equals("en")) {
             setSize(470, 275);
@@ -95,61 +109,123 @@ public class LogInView extends JFrame {
             setSize(520, 275);
         } else if (idioma.getLocale().getLanguage().equals("fr")) {
             setSize(570, 275);
+        } else if (idioma.getLocale().getLanguage().equals("de")) {
+            setSize(570, 275);
+        } else if (idioma.getLocale().getLanguage().equals("it")) {
+            setSize(570, 275);
+        } else {
+            setSize(470, 275);
         }
     }
 
+    /**
+     * Muestra un mensaje en un cuadro de diálogo.
+     * @param mensaje Texto del mensaje a mostrar.
+     */
     public void mostrarMensaje(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje);
     }
 
+    /**
+     * Obtiene el panel principal de la ventana.
+     * @return JPanel principal.
+     */
     public JPanel getPanelPrincipal() {
         return panelPrincipal;
     }
 
+    /**
+     * Obtiene el campo de texto para el nombre de usuario.
+     * @return JTextField del nombre de usuario.
+     */
     public JTextField getUsernameTextField() {
         return usernameTextField;
     }
 
+    /**
+     * Obtiene el campo de contraseña.
+     * @return JPasswordField de la contraseña.
+     */
     public JPasswordField getContrasenaPasswordField() {
         return contrasenaPasswordField;
     }
 
+    /**
+     * Obtiene el botón para iniciar sesión.
+     * @return JButton de iniciar sesión.
+     */
     public JButton getIniciarSesionButton() {
         return iniciarSesionButton;
     }
 
+    /**
+     * Obtiene el botón para registrarse.
+     * @return JButton de registrarse.
+     */
     public JButton getRegistrarseButton() {
         return registrarseButton;
     }
 
+    /**
+     * Obtiene el botón para salir.
+     * @return JButton de salir.
+     */
     public JButton getSalirButton() {
         return salirButton;
     }
 
+    /**
+     * Obtiene el handler de internacionalización.
+     * @return Handler de internacionalización.
+     */
     public MensajeInternacionalizacionHandler getMensajeInternacionalizacionHandler() {
         return mIH;
     }
 
+    /**
+     * Obtiene el botón para recuperar contraseña olvidada.
+     * @return JButton de recuperación de contraseña.
+     */
     public JButton getOlvidadaButton() {
         return olvidadaButton;
     }
 
+    /**
+     * Obtiene el menú item para idioma inglés.
+     * @return JMenuItem de inglés.
+     */
     public JMenuItem getInglesMenuItem() {
         return inglesMenuItem;
     }
 
+    /**
+     * Obtiene el menú item para idioma español.
+     * @return JMenuItem de español.
+     */
     public JMenuItem getEspanolMenuItem() {
         return espanolMenuItem;
     }
 
+    /**
+     * Obtiene el menú item para idioma francés.
+     * @return JMenuItem de francés.
+     */
     public JMenuItem getFrancesMenuItem() {
         return francesMenuItem;
     }
 
+    /**
+     * Obtiene el menú item para idioma alemán.
+     * @return JMenuItem de alemán.
+     */
     public JMenuItem getAlemanMenuItem() {
         return alemanMenuItem;
     }
 
+    /**
+     * Obtiene el menú item para idioma italiano.
+     * @return JMenuItem de italiano.
+     */
     public JMenuItem getItalianoMenuItem() {
         return italianoMenuItem;
     }

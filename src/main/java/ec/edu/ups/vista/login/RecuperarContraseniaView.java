@@ -23,6 +23,11 @@ public class RecuperarContraseniaView extends JFrame{
     private JMenuItem alemanMenuItem;
     private JMenuItem italianoMenuItem;
 
+    /**
+     * Constructor de la ventana para recuperar contraseña.
+     * Inicializa componentes, configura iconos y carga el idioma usando el handler de internacionalización.
+     * @param mIH Handler de internacionalización.
+     */
     public RecuperarContraseniaView(MensajeInternacionalizacionHandler mIH) {
         setTitle(mIH.get("recuperacion.titulo"));
         setContentPane(panelPrincipal);
@@ -62,10 +67,19 @@ public class RecuperarContraseniaView extends JFrame{
         cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
     }
 
+    /**
+     * Muestra un mensaje en un cuadro de diálogo.
+     * @param mensaje Texto del mensaje a mostrar.
+     */
     public void mostrarMensaje(String mensaje){
         JOptionPane.showMessageDialog(this, mensaje);
     }
 
+    /**
+     * Cambia el idioma de la ventana y sus componentes usando el handler de internacionalización.
+     * @param lenguaje Código de idioma (ejemplo: "es", "en").
+     * @param pais Código de país (ejemplo: "EC", "US").
+     */
     public void cambiarIdioma(String lenguaje, String pais) {
         mIH.setLenguaje(lenguaje, pais);
         setTitle(mIH.get("recuperacion.titulo"));
@@ -74,64 +88,122 @@ public class RecuperarContraseniaView extends JFrame{
         restablecerButton.setText(mIH.get("ventana.restablecer"));
     }
 
-    //GETTERS Y SETTERS
-
+    /**
+     * Obtiene la etiqueta del título de preguntas.
+     * @return JLabel del título de preguntas.
+     */
     public JLabel getLblTituloPreguntas() {
         return lblTituloPreguntas;
     }
 
+    /**
+     * Obtiene la etiqueta del código de la pregunta.
+     * @return JLabel del código de la pregunta.
+     */
     public JLabel getLblPreguntaCodigo() {
         return lblPreguntaCodigo;
     }
 
+    /**
+     * Obtiene la etiqueta del enunciado de la pregunta.
+     * @return JLabel del enunciado.
+     */
     public JLabel getLblEnunciado() {
         return lblEnunciado;
     }
 
+    /**
+     * Obtiene el campo de texto para la respuesta.
+     * @return JPasswordField de la respuesta.
+     */
     public JPasswordField getRespuestaTextField() {
         return respuestaTextField;
     }
 
+    /**
+     * Obtiene el botón para avanzar a la siguiente pregunta.
+     * @return JButton de siguiente.
+     */
     public JButton getSiguienteButton() {
         return siguienteButton;
     }
 
+    /**
+     * Obtiene el botón para restablecer la contraseña.
+     * @return JButton de restablecer.
+     */
     public JButton getRestablecerButton() {
         return restablecerButton;
     }
 
+    /**
+     * Obtiene el panel principal de la ventana.
+     * @return JPanel principal.
+     */
     public JPanel getPanelPrincipal() {
         return panelPrincipal;
     }
 
+    /**
+     * Establece el panel principal de la ventana.
+     * @param panelPrincipal JPanel a asignar.
+     */
     public void setPanelPrincipal(JPanel panelPrincipal) {
         this.panelPrincipal = panelPrincipal;
     }
 
+    /**
+     * Obtiene el handler de internacionalización.
+     * @return Handler de internacionalización.
+     */
     public MensajeInternacionalizacionHandler getmIH() {
         return mIH;
     }
 
+    /**
+     * Establece el handler de internacionalización.
+     * @param mIH Handler de internacionalización.
+     */
     public void setmIH(MensajeInternacionalizacionHandler mIH) {
         this.mIH = mIH;
     }
 
+    /**
+     * Obtiene el menú item para idioma español.
+     * @return JMenuItem de español.
+     */
     public JMenuItem getEspanolMenuItem() {
         return espanolMenuItem;
     }
 
+    /**
+     * Obtiene el menú item para idioma francés.
+     * @return JMenuItem de francés.
+     */
     public JMenuItem getFrancesMenuItem() {
         return francesMenuItem;
     }
 
+    /**
+     * Obtiene el menú item para idioma alemán.
+     * @return JMenuItem de alemán.
+     */
     public JMenuItem getAlemanMenuItem() {
         return alemanMenuItem;
     }
 
+    /**
+     * Obtiene el menú item para idioma italiano.
+     * @return JMenuItem de italiano.
+     */
     public JMenuItem getItalianoMenuItem() {
         return italianoMenuItem;
     }
 
+    /**
+     * Obtiene el menú item para idioma inglés.
+     * @return JMenuItem de inglés.
+     */
     public JMenuItem getInglesMenuItem() {
         return inglesMenuItem;
     }

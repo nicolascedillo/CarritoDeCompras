@@ -9,6 +9,10 @@ import java.util.List;
 public class PreguntaDAOMeroria implements PreguntaDAO {
     private List<Pregunta> preguntas;
 
+    /**
+     * Constructor de PreguntaDAOMeroria.
+     * Inicializa la lista de preguntas en memoria y agrega preguntas de ejemplo.
+     */
     public PreguntaDAOMeroria() {
         preguntas = new ArrayList<>();
         crear(1,"pregunta1");
@@ -25,11 +29,23 @@ public class PreguntaDAOMeroria implements PreguntaDAO {
         crear(12,"pregunta12");
     }
 
+    /**
+     * Crea una nueva pregunta y la agrega a la lista en memoria.
+     *
+     * @param codigo Código de la pregunta.
+     * @param pregunta Texto de la pregunta.
+     */
     @Override
     public void crear(int codigo, String pregunta) {
         preguntas.add(new Pregunta(codigo, pregunta));
     }
 
+    /**
+     * Busca una pregunta por su código.
+     *
+     * @param codigo Código de la pregunta a buscar.
+     * @return La pregunta encontrada o null si no existe.
+     */
     @Override
     public Pregunta buscarPorCodigo(int codigo) {
         for (Pregunta pregunta : preguntas) {
@@ -40,6 +56,11 @@ public class PreguntaDAOMeroria implements PreguntaDAO {
         return null;
     }
 
+    /**
+     * Lista todas las preguntas almacenadas en memoria.
+     *
+     * @return Lista de todas las preguntas.
+     */
     @Override
     public List<Pregunta> listar() {
         return preguntas;

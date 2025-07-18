@@ -6,6 +6,10 @@ import ec.edu.ups.util.Url;
 
 import javax.swing.*;
 
+/**
+ * Clase que representa la vista para modificar usuarios en el sistema.
+ * Permite la edición de datos como nombre, contraseña, teléfono, correo y fecha de nacimiento.
+ */
 public class UsuarioModificarView extends JInternalFrame {
     private JPanel panelPrincipal;
     private JTextField usernameTextField;
@@ -31,6 +35,11 @@ public class UsuarioModificarView extends JInternalFrame {
     private JComboBox mesComboBox;
     private MensajeInternacionalizacionHandler mIH;
 
+    /**
+     * Constructor de la ventana para modificar usuarios.
+     * Inicializa componentes, configura iconos y carga el idioma usando el handler de internacionalización.
+     * @param mIH Handler de internacionalización.
+     */
     public UsuarioModificarView(MensajeInternacionalizacionHandler mIH) {
         super(mIH.get("menu.usuario.modificar"), true, true, true, true);
         this.mIH = mIH;
@@ -41,15 +50,21 @@ public class UsuarioModificarView extends JInternalFrame {
 
         buscarButton.setIcon(Icono.icono(Url.BUSCAR));
         modificarButton.setIcon(Icono.icono(Url.MODIFICAR));
-        salirButton.setIcon(Icono.icono(Url.CERRAR));
 
         cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
     }
 
+    /**
+     * Muestra un mensaje en un cuadro de diálogo.
+     * @param mensaje Texto del mensaje a mostrar.
+     */
     public void mostrarMensaje(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje);
     }
 
+    /**
+     * Limpia todos los campos del formulario de modificación de usuario.
+     */
     public void limpiarCampos() {
         usernameTextField.setText("");
         contrasenaTextField.setText("");
@@ -61,6 +76,10 @@ public class UsuarioModificarView extends JInternalFrame {
         mesComboBox.setSelectedIndex(0);
     }
 
+    /**
+     * Carga los días en el combo box correspondiente.
+     * @param diaComboBox JComboBox donde se cargarán los días.
+     */
     private void cargarDiasComboBox(JComboBox diaComboBox) {
         diaComboBox.removeAllItems();
         for (int i = 1; i <= 31; i++) {
@@ -68,6 +87,10 @@ public class UsuarioModificarView extends JInternalFrame {
         }
     }
 
+    /**
+     * Carga los meses en el combo box correspondiente usando el handler de internacionalización.
+     * @param mesComboBox JComboBox donde se cargarán los meses.
+     */
     private void cargarMesesComboBox(JComboBox mesComboBox) {
         mesComboBox.removeAllItems();
         mesComboBox.addItem(mIH.get("mes.enero"));
@@ -85,6 +108,11 @@ public class UsuarioModificarView extends JInternalFrame {
     }
 
 
+    /**
+     * Cambia el idioma de la ventana y sus componentes usando el handler de internacionalización.
+     * @param lenguaje Código de idioma (ejemplo: "es", "en").
+     * @param pais Código de país (ejemplo: "EC", "US").
+     */
     public void cambiarIdioma(String lenguaje,String pais) {
         mIH.setLenguaje(lenguaje, pais);
         setTitle(mIH.get("menu.usuario.modificar"));
@@ -93,7 +121,6 @@ public class UsuarioModificarView extends JInternalFrame {
         lblContrasena.setText(mIH.get("ventana.usuario.contrasena"));
         buscarButton.setText(mIH.get("ventana.buscar"));
         modificarButton.setText(mIH.get("ventana.editar"));
-        salirButton.setText(mIH.get("ventana.salir"));
         lblNombre.setText(mIH.get("ventana.usuario.nombre"));
         lblTelefono.setText(mIH.get("ventana.usuario.telefono"));
         lblCorreo.setText(mIH.get("ventana.usuario.email"));
@@ -114,46 +141,90 @@ public class UsuarioModificarView extends JInternalFrame {
 
     //GETTERS Y SETTERS
 
+    /**
+     * Obtiene el campo de texto para el nombre de usuario.
+     * @return JTextField del nombre de usuario.
+     */
     public JTextField getUsernameTextField() {
         return usernameTextField;
     }
 
+    /**
+     * Obtiene el campo de texto para la contraseña.
+     * @return JTextField de la contraseña.
+     */
     public JTextField getContrasenaTextField() {
         return contrasenaTextField;
     }
 
+    /**
+     * Obtiene el botón para buscar usuario.
+     * @return JButton de buscar.
+     */
     public JButton getBuscarButton() {
         return buscarButton;
     }
 
+    /**
+     * Obtiene el botón para modificar usuario.
+     * @return JButton de modificar.
+     */
     public JButton getModificarButton() {
         return modificarButton;
     }
 
+    /**
+     * Obtiene el botón para salir.
+     * @return JButton de salir.
+     */
     public JButton getSalirButton() {
         return salirButton;
     }
 
+    /**
+     * Obtiene el campo de texto para el nombre.
+     * @return JTextField del nombre.
+     */
     public JTextField getNombreTextField() {
         return nombreTextField;
     }
 
+    /**
+     * Obtiene el campo de texto para el teléfono.
+     * @return JTextField del teléfono.
+     */
     public JTextField getTelefonoTextField() {
         return telefonoTextField;
     }
 
+    /**
+     * Obtiene el campo de texto para el correo electrónico.
+     * @return JTextField del correo.
+     */
     public JTextField getCorreoTextField() {
         return correoTextField;
     }
 
+    /**
+     * Obtiene el campo de texto para el año de nacimiento.
+     * @return JTextField del año.
+     */
     public JTextField getAnioTextField() {
         return anioTextField;
     }
 
+    /**
+     * Obtiene el combo box de días.
+     * @return JComboBox de días.
+     */
     public JComboBox getDiaComboBox() {
         return diaComboBox;
     }
 
+    /**
+     * Obtiene el combo box de meses.
+     * @return JComboBox de meses.
+     */
     public JComboBox getMesComboBox() {
         return mesComboBox;
     }

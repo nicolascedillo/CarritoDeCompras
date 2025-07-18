@@ -3,8 +3,17 @@ package ec.edu.ups.vista;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * MiDesktopPane es un JDesktopPane personalizado que dibuja un fondo temático
+ * de compras con bolsas y texto, usando colores y formas llamativas.
+ */
 public class MiDesktopPane extends JDesktopPane {
 
+    /**
+     * Sobrescribe el método paintComponent para dibujar el fondo personalizado
+     * con bolsas grandes, superpuestas y detalladas, además de texto decorativo.
+     * @param g Objeto Graphics para dibujar en el componente.
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

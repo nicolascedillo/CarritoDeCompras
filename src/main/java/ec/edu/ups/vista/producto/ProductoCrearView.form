@@ -47,6 +47,7 @@
         <properties>
           <font name="Courier New" size="14" style="1"/>
           <text value="Codigo:"/>
+          <visible value="false"/>
         </properties>
       </component>
       <component id="f8fce" class="javax.swing.JTextField" binding="txtCodigo">
@@ -58,6 +59,7 @@
         <properties>
           <columns value="0"/>
           <toolTipText value="Ingresa el codigo (ej. 1001)"/>
+          <visible value="false"/>
         </properties>
       </component>
       <component id="925c8" class="javax.swing.JButton" binding="btnAceptar">

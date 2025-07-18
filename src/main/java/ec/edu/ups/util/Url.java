@@ -1,5 +1,8 @@
 package ec.edu.ups.util;
 
+/**
+ * Enum que representa los tipos de iconos disponibles en la aplicación.
+ */
 public enum Url {
     BUSCAR,
     CARRITO,
@@ -17,5 +20,4 @@ public enum Url {
     SIGUIENTE,
     USUARIO,
     VER;
-
 }

@@ -24,6 +24,11 @@ public class ProductoCrearView extends JInternalFrame {
     private JLabel lblTitulo;
     private MensajeInternacionalizacionHandler mIH;
 
+    /**
+     * Constructor de la ventana para crear productos.
+     * Inicializa componentes, configura iconos y carga el idioma usando el handler de internacionalización.
+     * @param mIH Handler de internacionalización.
+     */
     public ProductoCrearView(MensajeInternacionalizacionHandler mIH) {
         this.mIH = mIH;
         setContentPane(panelPrincipal);
@@ -54,10 +59,17 @@ public class ProductoCrearView extends JInternalFrame {
 
     }
 
+    /**
+     * Muestra un mensaje en un cuadro de diálogo.
+     * @param mensaje Texto del mensaje a mostrar.
+     */
     public void mostrarMensaje(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje);
     }
 
+    /**
+     * Limpia todos los campos del formulario de creación de producto.
+     */
     public void limpiarCampos() {
         txtCodigo.setText("");
         txtNombre.setText("");
@@ -65,6 +77,11 @@ public class ProductoCrearView extends JInternalFrame {
     }
 
 
+    /**
+     * Cambia el idioma de la ventana y sus componentes usando el handler de internacionalización.
+     * @param lenguaje Código de idioma (ejemplo: "es", "en").
+     * @param pais Código de país (ejemplo: "EC", "US").
+     */
     public void cambiarIdioma(String lenguaje, String pais) {
         mIH.setLenguaje(lenguaje, pais);
         setTitle(mIH.get("menu.producto.crear"));
@@ -76,28 +93,50 @@ public class ProductoCrearView extends JInternalFrame {
         btnLimpiar.setText(mIH.get("ventana.limpiar"));
     }
 
-    // GETTERS Y SETTERS
-
+    /**
+     * Obtiene el panel principal de la ventana.
+     * @return JPanel principal.
+     */
     public JPanel getPanelPrincipal() {
         return panelPrincipal;
     }
 
+    /**
+     * Obtiene el campo de texto para el precio.
+     * @return JTextField del precio.
+     */
     public JTextField getTxtPrecio() {
         return txtPrecio;
     }
 
+    /**
+     * Obtiene el campo de texto para el nombre.
+     * @return JTextField del nombre.
+     */
     public JTextField getTxtNombre() {
         return txtNombre;
     }
 
+    /**
+     * Obtiene el campo de texto para el código.
+     * @return JTextField del código.
+     */
     public JTextField getTxtCodigo() {
         return txtCodigo;
     }
 
+    /**
+     * Obtiene el botón de aceptar.
+     * @return JButton de aceptar.
+     */
     public JButton getBtnAceptar() {
         return btnAceptar;
     }
 
+    /**
+     * Obtiene el botón de limpiar.
+     * @return JButton de limpiar.
+     */
     public JButton getBtnLimpiar() {
         return btnLimpiar;
     }

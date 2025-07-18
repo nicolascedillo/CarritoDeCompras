@@ -41,6 +41,11 @@ public class RegistraseView extends JFrame{
     private JMenuItem alemanMenuItem;
     private JMenuItem italianoMenuItem;
 
+    /**
+     * Constructor de la ventana de registro de usuario.
+     * Inicializa componentes, configura iconos y carga el idioma usando el handler de internacionalización.
+     * @param mIH Handler de internacionalización.
+     */
     public RegistraseView(MensajeInternacionalizacionHandler mIH) {
         setTitle(mIH.get("registro.titulo"));
         this.mIH = mIH;
@@ -81,10 +86,19 @@ public class RegistraseView extends JFrame{
 
     }
 
+    /**
+     * Muestra un mensaje en un cuadro de diálogo.
+     * @param mensaje Texto del mensaje a mostrar.
+     */
     public void mostrarMensaje(String mensaje){
         JOptionPane.showMessageDialog(this, mensaje);
     }
 
+    /**
+     * Cambia el idioma de la ventana y sus componentes usando el handler de internacionalización.
+     * @param lenguaje Código de idioma (ejemplo: "es", "en").
+     * @param pais Código de país (ejemplo: "EC", "US").
+     */
     public void cambiarIdioma(String lenguaje, String pais) {
         mIH.setLenguaje(lenguaje, pais);
         setTitle(mIH.get("registro.titulo"));
@@ -112,6 +126,9 @@ public class RegistraseView extends JFrame{
         }
     }
 
+    /**
+     * Limpia todos los campos del formulario de registro.
+     */
     public void limpiarCampos() {
         usuarioTextField.setText("");
         passwordField1.setText("");
@@ -124,6 +141,10 @@ public class RegistraseView extends JFrame{
         mesComboBox.setSelectedIndex(0);
     }
 
+    /**
+     * Carga los días en el combo box correspondiente.
+     * @param diaComboBox JComboBox donde se cargarán los días.
+     */
     private void cargarDias(JComboBox diaComboBox) {
         diaComboBox.removeAllItems();
         for (int i = 1; i <= 31; i++) {
@@ -131,6 +152,10 @@ public class RegistraseView extends JFrame{
         }
     }
 
+    /**
+     * Carga los meses en el combo box correspondiente.
+     * @param mesComboBox JComboBox donde se cargarán los meses.
+     */
     private void cargarMeses(JComboBox mesComboBox) {
         mesComboBox.removeAllItems();
         mesComboBox.addItem(mIH.get("mes.enero"));
@@ -147,110 +172,211 @@ public class RegistraseView extends JFrame{
         mesComboBox.addItem(mIH.get("mes.diciembre"));
     }
 
-    //GETTERS Y SETTERS
-
+    /**
+     * Obtiene la etiqueta del título.
+     * @return JLabel del título.
+     */
     public JLabel getLblTitulo() {
         return lblTitulo;
     }
 
+    /**
+     * Establece la etiqueta del título.
+     * @param lblTitulo JLabel a asignar.
+     */
     public void setLblTitulo(JLabel lblTitulo) {
         this.lblTitulo = lblTitulo;
     }
 
+    /**
+     * Obtiene la etiqueta del usuario.
+     * @return JLabel del usuario.
+     */
     public JLabel getLblUsuario() {
         return lblUsuario;
     }
 
+    /**
+     * Establece la etiqueta del usuario.
+     * @param lblUsuario JLabel a asignar.
+     */
     public void setLblUsuario(JLabel lblUsuario) {
         this.lblUsuario = lblUsuario;
     }
 
+    /**
+     * Obtiene el campo de texto para el usuario.
+     * @return JTextField del usuario.
+     */
     public JTextField getUsuarioTextField() {
         return usuarioTextField;
     }
 
+    /**
+     * Obtiene el campo de contraseña.
+     * @return JPasswordField de la contraseña.
+     */
     public JPasswordField getPasswordField1() {
         return passwordField1;
     }
 
+    /**
+     * Obtiene la etiqueta del enunciado de la pregunta.
+     * @return JLabel del enunciado.
+     */
     public JLabel getLblEnunciado() {
         return lblEnunciado;
     }
 
+    /**
+     * Obtiene el campo de texto para la respuesta de la pregunta.
+     * @return JTextField de la respuesta.
+     */
     public JTextField getRespuestaTextField() {
         return respuestaTextField;
     }
 
+    /**
+     * Obtiene el botón para avanzar a la siguiente pregunta.
+     * @return JButton de siguiente.
+     */
     public JButton getSiguienteButton() {
         return siguienteButton;
     }
 
+    /**
+     * Obtiene el botón para guardar el registro.
+     * @return JButton de guardar.
+     */
     public JButton getGuardarButton() {
         return guardarButton;
     }
 
+    /**
+     * Obtiene el panel principal de la ventana.
+     * @return JPanel principal.
+     */
     public JPanel getPanelPrincipal() {
         return panelPrincipal;
     }
 
+    /**
+     * Establece el panel principal de la ventana.
+     * @param panelPrincipal JPanel a asignar.
+     */
     public void setPanelPrincipal(JPanel panelPrincipal) {
         this.panelPrincipal = panelPrincipal;
     }
 
+    /**
+     * Obtiene el handler de internacionalización.
+     * @return Handler de internacionalización.
+     */
     public MensajeInternacionalizacionHandler getmIH() {
         return mIH;
     }
 
+    /**
+     * Establece el handler de internacionalización.
+     * @param mIH Handler de internacionalización.
+     */
     public void setmIH(MensajeInternacionalizacionHandler mIH) {
         this.mIH = mIH;
     }
 
+    /**
+     * Obtiene el campo de texto para el año de nacimiento.
+     * @return JTextField del año.
+     */
     public JTextField getAnioTextField() {
         return anioTextField;
     }
 
+    /**
+     * Obtiene el combo box de días.
+     * @return JComboBox de días.
+     */
     public JComboBox getDiaComboBox() {
         return diaComboBox;
     }
 
+    /**
+     * Obtiene el combo box de meses.
+     * @return JComboBox de meses.
+     */
     public JComboBox getMesComboBox() {
         return mesComboBox;
     }
 
+    /**
+     * Obtiene el campo de texto para el correo electrónico.
+     * @return JTextField del correo.
+     */
     public JTextField getCorreoTextField() {
         return correoTextField;
     }
 
+    /**
+     * Obtiene el campo de texto para el teléfono.
+     * @return JTextField del teléfono.
+     */
     public JTextField getTelefonoTextField() {
         return telefonoTextField;
     }
 
+    /**
+     * Obtiene el campo de texto para el nombre.
+     * @return JTextField del nombre.
+     */
     public JTextField getNombreTextField() {
         return nombreTextField;
     }
 
+    /**
+     * Obtiene el menú item para idioma inglés.
+     * @return JMenuItem de inglés.
+     */
     public JMenuItem getInglesMenuItem() {
         return inglesMenuItem;
     }
 
+    /**
+     * Obtiene el menú item para idioma español.
+     * @return JMenuItem de español.
+     */
     public JMenuItem getEspanolMenuItem() {
         return espanolMenuItem;
     }
 
+    /**
+     * Obtiene el menú item para idioma francés.
+     * @return JMenuItem de francés.
+     */
     public JMenuItem getFrancesMenuItem() {
         return francesMenuItem;
     }
 
+    /**
+     * Obtiene el menú item para idioma alemán.
+     * @return JMenuItem de alemán.
+     */
     public JMenuItem getAlemanMenuItem() {
         return alemanMenuItem;
     }
 
+    /**
+     * Obtiene el menú item para idioma italiano.
+     * @return JMenuItem de italiano.
+     */
     public JMenuItem getItalianoMenuItem() {
         return italianoMenuItem;
     }
 
+    /**
+     * Obtiene la etiqueta del código de la pregunta.
+     * @return JLabel del código de la pregunta.
+     */
     public JLabel getLblPreguntaCodigo() {
         return lblPreguntaCodigo;
     }
 }
-

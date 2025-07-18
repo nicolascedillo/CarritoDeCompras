@@ -115,6 +115,7 @@
             </constraints>
             <properties>
               <background color="-10249183"/>
+              <enabled value="false"/>
               <font name="DialogInput"/>
               <horizontalAlignment value="0"/>
               <horizontalTextPosition value="11"/>
