@@ -24,6 +24,11 @@ public class CarritoListaView extends JInternalFrame {
     private DefaultTableModel modelo;
     private MensajeInternacionalizacionHandler mIH;
 
+    /**
+     * Constructor de la ventana para listar carritos.
+     * Inicializa componentes, configura iconos y carga el idioma usando el handler de internacionalización.
+     * @param mIH Handler de internacionalización.
+     */
     public CarritoListaView(MensajeInternacionalizacionHandler mIH) {
         super(mIH.get("menu.carrito.buscar"), true, true, true, true);
         this.mIH = mIH;
@@ -42,10 +47,18 @@ public class CarritoListaView extends JInternalFrame {
         cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
     }
 
+    /**
+     * Muestra un mensaje en un cuadro de diálogo.
+     * @param mensaje Texto del mensaje a mostrar.
+     */
     public void mostrarMensaje(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje);
     }
 
+    /**
+     * Carga los datos de una lista de carritos en la tabla.
+     * @param carritos Lista de carritos a mostrar.
+     */
     public void cargarDatosLista(List<Carrito> carritos) {
         modelo.setRowCount(0);
         for (Carrito carrito : carritos) {
@@ -61,6 +74,10 @@ public class CarritoListaView extends JInternalFrame {
         }
     }
 
+    /**
+     * Carga los datos de un carrito buscado en la tabla.
+     * @param carrito Carrito a mostrar.
+     */
     public void cargarDatosBusqueda(Carrito carrito) {
         modelo.setRowCount(0);
         Object[] fila = {
@@ -74,11 +91,19 @@ public class CarritoListaView extends JInternalFrame {
         modelo.addRow(fila);
     }
 
+    /**
+     * Limpia el campo de código y la tabla.
+     */
     public void limpiarCampos() {
         codigoTextField.setText("");
         modelo.setRowCount(0);
     }
 
+    /**
+     * Cambia el idioma de la ventana y sus componentes usando el handler de internacionalización.
+     * @param lenguaje Código de idioma (ejemplo: "es", "en").
+     * @param pais Código de país (ejemplo: "EC", "US").
+     */
     public void cambiarIdioma(String lenguaje, String pais) {
         mIH.setLenguaje(lenguaje, pais);
         setTitle(mIH.get("menu.carrito.buscar"));
@@ -94,26 +119,50 @@ public class CarritoListaView extends JInternalFrame {
 
     //GETTERS Y SETTERS
 
+    /**
+     * Obtiene el campo de texto para el código del carrito.
+     * @return JTextField del código.
+     */
     public JTextField getCodigoTextField() {
         return codigoTextField;
     }
 
+    /**
+     * Obtiene el botón para listar carritos.
+     * @return JButton de listar.
+     */
     public JButton getListarButton() {
         return listarButton;
     }
 
+    /**
+     * Obtiene el botón para buscar carritos.
+     * @return JButton de buscar.
+     */
     public JButton getBuscarButton() {
         return buscarButton;
     }
 
+    /**
+     * Obtiene la tabla de carritos.
+     * @return JTable de carritos.
+     */
     public JTable getTable1() {
         return table1;
     }
 
+    /**
+     * Obtiene el modelo de la tabla.
+     * @return DefaultTableModel de la tabla.
+     */
     public DefaultTableModel getModelo() {
         return modelo;
     }
 
+    /**
+     * Obtiene el botón para ver detalles de un carrito.
+     * @return JButton de ver detalles.
+     */
     public JButton getVerDetallesButton() {
         return verDetallesButton;
     }

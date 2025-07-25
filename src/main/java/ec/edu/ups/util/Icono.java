@@ -4,6 +4,11 @@ import javax.swing.*;
 
 public class Icono {
 
+    /**
+     * Retorna el icono correspondiente al tipo de Url solicitado.
+     * @param url Tipo de icono a cargar.
+     * @return ImageIcon correspondiente al recurso solicitado, o null si no se encuentra.
+     */
     public static ImageIcon icono(Url url) {
         switch (url){
             case BUSCAR:

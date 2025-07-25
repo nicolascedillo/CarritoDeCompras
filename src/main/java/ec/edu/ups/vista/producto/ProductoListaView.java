@@ -22,6 +22,11 @@ public class ProductoListaView extends JInternalFrame {
     private DefaultTableModel modelo;
     private MensajeInternacionalizacionHandler mIH;
 
+    /**
+     * Constructor de la ventana para listar y buscar productos.
+     * Inicializa componentes, configura iconos y carga el idioma usando el handler de internacionalización.
+     * @param mIH Handler de internacionalización.
+     */
     public ProductoListaView(MensajeInternacionalizacionHandler mIH) {
         this.mIH = mIH;
         setContentPane(panelPrincipal);
@@ -48,10 +53,18 @@ public class ProductoListaView extends JInternalFrame {
 
     }
 
+    /**
+     * Muestra un mensaje en un cuadro de diálogo.
+     * @param mensaje Texto del mensaje a mostrar.
+     */
     public void mostrarMensaje(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje);
     }
 
+    /**
+     * Carga los datos de una lista de productos en la tabla.
+     * @param listaProductos Lista de productos a mostrar.
+     */
     public void cargarDatos(List<Producto> listaProductos) {
         modelo.setNumRows(0);
 
@@ -66,6 +79,11 @@ public class ProductoListaView extends JInternalFrame {
 
     }
 
+    /**
+     * Cambia el idioma de la ventana y sus componentes usando el handler de internacionalización.
+     * @param lenguaje Código de idioma (ejemplo: "es", "en").
+     * @param pais Código de país (ejemplo: "EC", "US").
+     */
     public void cambiarIdioma(String lenguaje, String pais) {
         mIH.setLenguaje(lenguaje, pais);
         Object[] columnas = {mIH.get("ventana.producto.codigo"), mIH.get("ventana.producto.nombre"), mIH.get("ventana.producto.precio")};
@@ -77,24 +95,42 @@ public class ProductoListaView extends JInternalFrame {
         btnListar.setText(mIH.get("ventana.listar"));
     }
 
-    //GETTERS Y SETTERS
-
+    /**
+     * Obtiene el campo de texto para buscar productos.
+     * @return JTextField de búsqueda.
+     */
     public JTextField getTxtBuscar() {
         return txtBuscar;
     }
 
+    /**
+     * Obtiene el botón para buscar productos.
+     * @return JButton de buscar.
+     */
     public JButton getBtnBuscar() {
         return btnBuscar;
     }
 
+    /**
+     * Obtiene el panel principal de la ventana.
+     * @return JPanel principal.
+     */
     public JPanel getPanelPrincipal() {
         return panelPrincipal;
     }
 
+    /**
+     * Obtiene el botón para listar productos.
+     * @return JButton de listar.
+     */
     public JButton getBtnListar() {
         return btnListar;
     }
 
+    /**
+     * Obtiene el modelo de la tabla.
+     * @return DefaultTableModel de la tabla.
+     */
     public DefaultTableModel getModelo() {
         return modelo;
     }

@@ -5,7 +5,9 @@ import ec.edu.ups.dao.UsuarioDAO;
 import ec.edu.ups.modelo.PreguntaRespondida;
 import ec.edu.ups.modelo.Rol;
 import ec.edu.ups.modelo.Usuario;
+import ec.edu.ups.util.CedulaValidationException;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
+import ec.edu.ups.util.PasswordException;
 import ec.edu.ups.vista.MenuPrincipalView;
 import ec.edu.ups.vista.login.LogInView;
 import ec.edu.ups.vista.login.RecuperarContraseniaView;
@@ -26,6 +28,18 @@ public class PreguntaController {
     private int contadorPreguntas;
     private MensajeInternacionalizacionHandler mIH;
 
+    /**
+     * Constructor de PreguntaController.
+     * Inicializa los DAOs, vistas y el handler de internacionalización.
+     * Configura los eventos en la vista de inicio de sesión.
+     *
+     * @param usuarioDAO DAO para operaciones de usuario.
+     * @param preguntaDAO DAO para operaciones de preguntas.
+     * @param logInView Vista de inicio de sesión.
+     * @param registraseView Vista de registro de usuario.
+     * @param mIH Handler de internacionalización.
+     * @param recuperarContraseniaView Vista para recuperar contraseña.
+     */
     public PreguntaController(UsuarioDAO usuarioDAO, PreguntaDAO preguntaDAO, LogInView logInView,
                               RegistraseView registraseView, MensajeInternacionalizacionHandler mIH, RecuperarContraseniaView recuperarContraseniaView) {
         this.usuarioDAO = usuarioDAO;
@@ -39,6 +53,10 @@ public class PreguntaController {
         configurarEventosEnVista();
     }
 
+    /**
+     * Configura los eventos en la vista de inicio de sesión.
+     * Asocia los botones de registro y recuperación de contraseña con sus acciones correspondientes.
+     */
     private void configurarEventosEnVista(){
 
         logInView.getRegistrarseButton().addActionListener(new ActionListener() {
@@ -71,12 +89,19 @@ public class PreguntaController {
         });
     }
 
+    /**
+     * Muestra la vista de registro y configura sus eventos.
+     */
     private void registrarse() {
         logInView.setVisible(false);
         configurarEventosEnRegistrarse();
         registraseView.setVisible(true);
     }
 
+    /**
+     * Configura los eventos en la vista de registro.
+     * Maneja la lógica de validación y registro de usuario, así como la gestión de preguntas de verificación.
+     */
     private void configurarEventosEnRegistrarse() {
         registraseView.getUsuarioTextField().setText("");
         registraseView.getPasswordField1().setText("");
@@ -90,10 +115,7 @@ public class PreguntaController {
         registraseView.getGuardarButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                if(preguntasRespondidas.size() < 3){
-                    registraseView.mostrarMensaje(mIH.get("registro.preguntas.requeridas"));
-                    return;
-                }
+
                 if (registraseView.getUsuarioTextField().getText().isEmpty() ||
                         registraseView.getPasswordField1().getText().isEmpty() ||
                         registraseView.getNombreTextField().getText().isEmpty() ||
@@ -105,57 +127,98 @@ public class PreguntaController {
                     registraseView.mostrarMensaje(mIH.get("mensaje.completar.campos"));
                     return;
                 }
-                if (usuarioDAO.buscarPorUsername(registraseView.getUsuarioTextField().getText()) != null) {
-                    registraseView.mostrarMensaje(mIH.get("mensaje.usuario.existe"));
+
+                try {
+
+                    String username = registraseView.getUsuarioTextField().getText();
+                    String password = registraseView.getPasswordField1().getText();
+                    String nombre = registraseView.getNombreTextField().getText();
+                    String telefono = registraseView.getTelefonoTextField().getText();
+                    if (!telefono.matches("\\d{10}")) {
+                        registraseView.mostrarMensaje(mIH.get("telefono.invalido"));
+                        return;
+                    }
+                    String correo = registraseView.getCorreoTextField().getText();
+                    if (!correo.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+                        registraseView.mostrarMensaje(mIH.get("correo.invalido"));
+                        return;
+                    }
+                    GregorianCalendar fecha = new GregorianCalendar();
+                    int anio = Integer.parseInt(registraseView.getAnioTextField().getText());
+                    if (anio < 1900 || anio > 2024) {
+                        registraseView.mostrarMensaje(mIH.get("anio.invalido"));
+                        return;
+                    }
+                    int mes = -1;
+                    int dia;
+                    String mesSeleccionado ;
+                    if(mIH.getLocale().getCountry().equals("US")){
+                        dia = (Integer) registraseView.getMesComboBox().getSelectedItem();
+                        mesSeleccionado = (String) registraseView.getDiaComboBox().getSelectedItem();
+                    }else{
+                        dia = (Integer) registraseView.getDiaComboBox().getSelectedItem();
+                        mesSeleccionado = (String) registraseView.getMesComboBox().getSelectedItem();
+                    }
+
+                    if (mesSeleccionado.equals(mIH.get("mes.enero"))) {
+                        mes = 0;
+                    } else if (mesSeleccionado.equals(mIH.get("mes.febrero"))) {
+                        mes = 1;
+                    } else if (mesSeleccionado.equals(mIH.get("mes.marzo"))) {
+                        mes = 2;
+                    } else if (mesSeleccionado.equals(mIH.get("mes.abril"))) {
+                        mes = 3;
+                    } else if (mesSeleccionado.equals(mIH.get("mes.mayo"))) {
+                        mes = 4;
+                    } else if (mesSeleccionado.equals(mIH.get("mes.junio"))) {
+                        mes = 5;
+                    } else if (mesSeleccionado.equals(mIH.get("mes.julio"))) {
+                        mes = 6;
+                    } else if (mesSeleccionado.equals(mIH.get("mes.agosto"))) {
+                        mes = 7;
+                    } else if (mesSeleccionado.equals(mIH.get("mes.septiembre"))) {
+                        mes = 8;
+                    } else if (mesSeleccionado.equals(mIH.get("mes.octubre"))) {
+                        mes = 9;
+                    } else if (mesSeleccionado.equals(mIH.get("mes.noviembre"))) {
+                        mes = 10;
+                    } else if (mesSeleccionado.equals(mIH.get("mes.diciembre"))) {
+                        mes = 11;
+                    } else {
+                        registraseView.mostrarMensaje(mIH.get("mes.invalido"));
+                        return;
+                    }
+                    fecha.set(anio, mes, dia);
+
+                    Usuario usuario1 = new Usuario(Rol.USUARIO,
+                            nombre, telefono, correo, fecha);
+
+                    if (usuarioDAO.buscarPorUsername(username) != null) {
+                        registraseView.mostrarMensaje(mIH.get("mensaje.usuario.existe"));
+                        return;
+                    }
+                    if(preguntasRespondidas.size() < 3){
+                        registraseView.mostrarMensaje(mIH.get("registro.preguntas.requeridas"));
+                        return;
+                    }
+                    usuario1.setPreguntasVerificacion(preguntasRespondidas);
+                    usuario1.setPassword(password);
+                    usuario1.setUsername(username);
+                    usuarioDAO.crear(usuario1);
+                    registraseView.mostrarMensaje(mIH.get("mensaje.usuario.creado"));
+                    registraseView.limpiarCampos();
+
+                } catch (NumberFormatException ex) {
+                    registraseView.mostrarMensaje(mIH.get("numberFormatException"));
+                    return;
+                } catch (PasswordException ex) {
+                    registraseView.mostrarMensaje(mIH.get("passwordException"));
+                    return;
+                } catch (CedulaValidationException ex){
+                    registraseView.mostrarMensaje(mIH.get("cedulaException"));
                     return;
                 }
-                String username = registraseView.getUsuarioTextField().getText();
-                String password = registraseView.getPasswordField1().getText();
-                String nombre = registraseView.getNombreTextField().getText();
-                String telefono = registraseView.getTelefonoTextField().getText();
-                String correo = registraseView.getCorreoTextField().getText();
-                GregorianCalendar fecha = new GregorianCalendar();
-                int dia =(Integer) registraseView.getDiaComboBox().getSelectedItem();
-                int mes = -1;
-                String mesSeleccionado = (String) registraseView.getMesComboBox().getSelectedItem();
-                if (mesSeleccionado.equals(mIH.get("mes.enero"))) {
-                    mes = 0;
-                } else if (mesSeleccionado.equals(mIH.get("mes.febrero"))) {
-                    mes = 1;
-                } else if (mesSeleccionado.equals(mIH.get("mes.marzo"))) {
-                    mes = 2;
-                } else if (mesSeleccionado.equals(mIH.get("mes.abril"))) {
-                    mes = 3;
-                } else if (mesSeleccionado.equals(mIH.get("mes.mayo"))) {
-                    mes = 4;
-                } else if (mesSeleccionado.equals(mIH.get("mes.junio"))) {
-                    mes = 5;
-                } else if (mesSeleccionado.equals(mIH.get("mes.julio"))) {
-                    mes = 6;
-                } else if (mesSeleccionado.equals(mIH.get("mes.agosto"))) {
-                    mes = 7;
-                } else if (mesSeleccionado.equals(mIH.get("mes.septiembre"))) {
-                    mes = 8;
-                } else if (mesSeleccionado.equals(mIH.get("mes.octubre"))) {
-                    mes = 9;
-                } else if (mesSeleccionado.equals(mIH.get("mes.noviembre"))) {
-                    mes = 10;
-                } else if (mesSeleccionado.equals(mIH.get("mes.diciembre"))) {
-                    mes = 11;
-                } else {
-                    registraseView.mostrarMensaje(mIH.get("mes.invalido"));
-                    return;
-                }
-                int anio = Integer.parseInt(registraseView.getAnioTextField().getText()) ;
-                fecha.set(anio, mes, dia);
 
-                registraseView.limpiarCampos();
-
-                Usuario usuario1 = new Usuario(username, password, Rol.USUARIO,
-                        nombre, telefono, correo, fecha);
-                usuario1.setPreguntasVerificacion(preguntasRespondidas);
-                usuarioDAO.crear(usuario1);
-                registraseView.mostrarMensaje(mIH.get("mensaje.usuario.creado"));
                 logInView.setVisible(true);
                 registraseView.dispose();
                 contadorPreguntas = 1;
@@ -182,11 +245,20 @@ public class PreguntaController {
         });
     }
 
+    /**
+     * Carga la pregunta de verificación correspondiente al código dado en la vista de registro.
+     *
+     * @param codigo Código de la pregunta a mostrar.
+     */
     private void cargarPregunta(int codigo){
         registraseView.getLblPreguntaCodigo().setText(mIH.get("registro.numero.pregunta") + " " + codigo);
         registraseView.getLblEnunciado().setText(mIH.get(preguntaDAO.buscarPorCodigo(codigo).getEnunciado()));
     }
 
+    /**
+     * Configura los eventos en la vista de recuperación de contraseña.
+     * Permite validar respuestas de preguntas de verificación y restablecer la contraseña del usuario.
+     */
     private void configurarEventosEnOlvidada() {
         Usuario usuarioRecuperacion = usuarioDAO.buscarPorUsername(logInView.getUsernameTextField().getText());
         List<PreguntaRespondida> preguntas = usuarioRecuperacion.getPreguntasVerificacion();
@@ -198,7 +270,6 @@ public class PreguntaController {
             respuestas.add(preguntaRespondida.getRespuesta());
         }
         final int[] iteradorCodigo = {0};
-        final int[] correctas = {0};
         cargarPreguntaOlvidada(codigos.get(iteradorCodigo[0]));
 
         quitarActionListeners(recuperarContraseniaView.getRestablecerButton());
@@ -224,9 +295,7 @@ public class PreguntaController {
                     return;
                 }
                 iteradorCodigo[0]++;
-                correctas[0]++;
                 recuperarContraseniaView.getRespuestaTextField().setText("");
-//                cargarPreguntaOlvidada(codigos.get(iteradorCodigo[0]));
 
             }
         });
@@ -239,26 +308,40 @@ public class PreguntaController {
                     return;
                 }
 
-                String nuevaContrasenia = recuperarContraseniaView.getRespuestaTextField().getText();
-                usuarioRecuperacion.setPassword(nuevaContrasenia);
-                usuarioDAO.actualizar(usuarioRecuperacion);
-                recuperarContraseniaView.mostrarMensaje(mIH.get("recuperacion.contrasena.actualizada"));
-                recuperarContraseniaView.getRespuestaTextField().setText("");
-                recuperarContraseniaView.getSiguienteButton().setEnabled(true);
-                recuperarContraseniaView.getRestablecerButton().setEnabled(false);
-                iteradorCodigo[0] = 0;
-                correctas[0] = 0;
-                logInView.setVisible(true);
-                recuperarContraseniaView.dispose();
+                try{
+                    String nuevaContrasenia = recuperarContraseniaView.getRespuestaTextField().getText();
+                    usuarioRecuperacion.setPassword(nuevaContrasenia);
+                    usuarioDAO.actualizar(usuarioRecuperacion);
+                    recuperarContraseniaView.mostrarMensaje(mIH.get("recuperacion.contrasena.actualizada"));
+                    recuperarContraseniaView.getRespuestaTextField().setText("");
+                    recuperarContraseniaView.getSiguienteButton().setEnabled(true);
+                    recuperarContraseniaView.getRestablecerButton().setEnabled(false);
+                    iteradorCodigo[0] = 0;
+                    logInView.setVisible(true);
+                    recuperarContraseniaView.dispose();
+                }catch (PasswordException ex){
+                    recuperarContraseniaView.mostrarMensaje(mIH.get("passwordException"));
+                }
             }
         });
     }
 
+    /**
+     * Carga la pregunta de verificación correspondiente al código dado en la vista de recuperación de contraseña.
+     *
+     * @param codigo Código de la pregunta a mostrar.
+     */
     private void cargarPreguntaOlvidada(int codigo){
         recuperarContraseniaView.getLblPreguntaCodigo().setText(mIH.get("registro.numero.pregunta") + " " + codigo);
         recuperarContraseniaView.getLblEnunciado().setText(mIH.get(preguntaDAO.buscarPorCodigo(codigo).getEnunciado()));
     }
 
+    /**
+     * Cambia el idioma de las vistas de registro y recuperación de contraseña usando el handler de internacionalización.
+     *
+     * @param lenguaje Código de idioma (ejemplo: "es", "en").
+     * @param pais Código de país (ejemplo: "EC", "US").
+     */
     public void cambiarIdioma(String lenguaje, String pais) {
         mIH.setLenguaje(lenguaje, pais);
         registraseView.cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
@@ -266,6 +349,11 @@ public class PreguntaController {
         cargarPregunta(contadorPreguntas);
     }
 
+    /**
+     * Randomiza el orden de la lista de preguntas respondidas.
+     *
+     * @param lista Lista de preguntas respondidas a randomizar.
+     */
     private void randomizarListaPreguntaRespondida(List<PreguntaRespondida> lista) {
         List<PreguntaRespondida> listaRandomizada = new LinkedList<>();
         while (!lista.isEmpty()) {
@@ -275,12 +363,24 @@ public class PreguntaController {
         lista.addAll(listaRandomizada);
     }
 
+    /**
+     * Quita todos los ActionListeners de un botón dado.
+     *
+     * @param button Botón al que se le quitarán los ActionListeners.
+     */
     private void quitarActionListeners(JButton button) {
         for (ActionListener al : button.getActionListeners()) {
             button.removeActionListener(al);
         }
     }
 
+    /**
+     * Configura los eventos para usuarios que no tienen preguntas de verificación asignadas.
+     * Permite asignar preguntas de verificación y actualizar el usuario.
+     *
+     * @param usuarioSinPregguntas Usuario sin preguntas de verificación.
+     * @param menuPrincipalView Vista del menú principal.
+     */
     public void configurarEventosUsuarioSinPregunta(Usuario usuarioSinPregguntas, MenuPrincipalView menuPrincipalView) {
         registraseView.getUsuarioTextField().setText(usuarioSinPregguntas.getUsername());
         registraseView.getPasswordField1().setText(usuarioSinPregguntas.getPassword());

@@ -37,6 +37,11 @@ public class MenuPrincipalView extends JFrame {
 
 
 
+    /**
+     * Constructor de la ventana principal del sistema.
+     * Inicializa los menús, items, iconos y el fondo, usando el handler de internacionalización.
+     * @param mIH Handler de internacionalización.
+     */
     public MenuPrincipalView(MensajeInternacionalizacionHandler mIH){
         this.mIH = mIH;
 
@@ -139,10 +144,17 @@ public class MenuPrincipalView extends JFrame {
 
     }
 
+    /**
+     * Muestra un mensaje en un cuadro de diálogo.
+     * @param mensaje Texto del mensaje a mostrar.
+     */
     public void mostrarMensaje(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje);
     }
 
+    /**
+     * Deshabilita los menús y opciones exclusivas del administrador.
+     */
     public void deshabilitarMenusAdministrador() {
         getMenuItemCrearProducto().setVisible(false);
         getMenuItemModificarProdcuto().setVisible(false);
@@ -151,6 +163,11 @@ public class MenuPrincipalView extends JFrame {
         getMenuItemBuscarUsuario().setVisible(false);
     }
 
+    /**
+     * Cambia el idioma de la ventana y todos los menús usando el handler de internacionalización.
+     * @param lenguaje Código de idioma (ejemplo: "es", "en").
+     * @param pais Código de país (ejemplo: "EC", "US").
+     */
     public void cambiarIdioma(String lenguaje, String pais) {
         mIH.setLenguaje(lenguaje, pais);
         setTitle(mIH.get("app.titulo"));
@@ -187,86 +204,170 @@ public class MenuPrincipalView extends JFrame {
 
     //GETTERS
 
+    /**
+     * Obtiene el menú item para crear producto.
+     * @return JMenuItem de crear producto.
+     */
     public JMenuItem getMenuItemCrearProducto() {
         return menuItemCrearProducto;
     }
 
+    /**
+     * Obtiene el menú item para eliminar producto.
+     * @return JMenuItem de eliminar producto.
+     */
     public JMenuItem getMenuItemEliminarProducto() {
         return menuItemEliminarProducto;
     }
 
+    /**
+     * Obtiene el menú item para buscar producto.
+     * @return JMenuItem de buscar producto.
+     */
     public JMenuItem getMenuItemBuscarProducto() {
         return menuItemBuscarProducto;
     }
 
+    /**
+     * Obtiene el desktop pane principal.
+     * @return MiDesktopPane.
+     */
     public MiDesktopPane getjDesktopPane() {
         return jDesktopPane;
     }
 
+    /**
+     * Obtiene el menú item para modificar producto.
+     * @return JMenuItem de modificar producto.
+     */
     public JMenuItem getMenuItemModificarProdcuto() {
         return menuItemModificarProdcuto;
     }
 
+    /**
+     * Obtiene el menú item para crear carrito.
+     * @return JMenuItem de crear carrito.
+     */
     public JMenuItem getMenuItemCrearCarrito() {
         return menuItemCrearCarrito;
     }
 
+    /**
+     * Obtiene el menú item para eliminar carrito.
+     * @return JMenuItem de eliminar carrito.
+     */
     public JMenuItem getMenuItemEliminarCarrito() {
         return menuItemEliminarCarrito;
     }
 
+    /**
+     * Obtiene el menú item para listar carritos.
+     * @return JMenuItem de listar carritos.
+     */
     public JMenuItem getMenuItemListaCarrito() {
         return menuItemListaCarrito;
     }
 
+    /**
+     * Obtiene el menú item para modificar carrito.
+     * @return JMenuItem de modificar carrito.
+     */
     public JMenuItem getMenuItemModificarCarrito() {
         return menuItemModificarCarrito;
     }
 
+    /**
+     * Obtiene el menú item para crear usuario.
+     * @return JMenuItem de crear usuario.
+     */
     public JMenuItem getMenuItemCrearUsuario() {
         return menuItemCrearUsuario;
     }
 
+    /**
+     * Obtiene el menú item para buscar usuario.
+     * @return JMenuItem de buscar usuario.
+     */
     public JMenuItem getMenuItemBuscarUsuario() {
         return menuItemBuscarUsuario;
     }
 
+    /**
+     * Obtiene el menú item para modificar usuario.
+     * @return JMenuItem de modificar usuario.
+     */
     public JMenuItem getMenuItemModificarUsuario() {
         return menuItemModificarUsuario;
     }
 
+    /**
+     * Obtiene el menú item para eliminar usuario.
+     * @return JMenuItem de eliminar usuario.
+     */
     public JMenuItem getMenuItemEliminarUsuario() {
         return menuItemEliminarUsuario;
     }
 
+    /**
+     * Obtiene el menú item para idioma español.
+     * @return JMenuItem de español.
+     */
     public JMenuItem getMenuItemEspanol() {
         return menuItemEspanol;
     }
 
+    /**
+     * Obtiene el menú item para idioma inglés.
+     * @return JMenuItem de inglés.
+     */
     public JMenuItem getMenuItemIngles() {
         return menuItemIngles;
     }
 
+    /**
+     * Obtiene el menú item para idioma francés.
+     * @return JMenuItem de francés.
+     */
     public JMenuItem getMenuItemFrances() {
         return menuItemFrances;
     }
 
+    /**
+     * Obtiene el menú item para idioma alemán.
+     * @return JMenuItem de alemán.
+     */
     public JMenuItem getMenuItemAleman() {
         return menuItemAleman;
     }
 
+    /**
+     * Obtiene el menú item para idioma italiano.
+     * @return JMenuItem de italiano.
+     */
     public JMenuItem getMenuItemItaliano() {
         return menuItemItaliano;
     }
 
+    /**
+     * Obtiene el menú item para cerrar sesión.
+     * @return JMenuItem de cerrar sesión.
+     */
     public JMenuItem getMenuItemCerrarSesion() {
         return menuItemCerrarSesion;
     }
 
+    /**
+     * Obtiene el menú item para salir de la aplicación.
+     * @return JMenuItem de salir.
+     */
     public JMenuItem getMenuItemSalir() {
         return menuItemSalir;
     }
 
+    /**
+     * Obtiene el handler de internacionalización.
+     * @return Handler de internacionalización.
+     */
     public MensajeInternacionalizacionHandler getMensajeInternacionalizacionHandler() {
         return mIH;
     }

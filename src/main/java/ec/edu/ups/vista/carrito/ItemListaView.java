@@ -22,6 +22,11 @@ public class ItemListaView extends JInternalFrame {
     private DefaultTableModel modelo;
     private MensajeInternacionalizacionHandler mIH;
 
+    /**
+     * Constructor de la ventana para mostrar los items de un carrito.
+     * Inicializa componentes, configura iconos y carga el idioma usando el handler de internacionalización.
+     * @param mIH Handler de internacionalización.
+     */
     public ItemListaView(MensajeInternacionalizacionHandler mIH) {
         super(mIH.get("ventana.carrito.items"), true, true, true, true);
         this.mIH = mIH;
@@ -45,6 +50,11 @@ public class ItemListaView extends JInternalFrame {
         });
     }
 
+    /**
+     * Carga los datos de los items del carrito en la tabla.
+     * Llena la tabla con el código, nombre, precio y cantidad de cada producto en el carrito.
+     * @param carrito Carrito cuyos items se mostrarán.
+     */
     public void cargarDatos(Carrito carrito) {
         modelo.setRowCount(0);
         codigoDelCarritoTextField.setText(String.valueOf(carrito.getCodigo()));
@@ -60,6 +70,12 @@ public class ItemListaView extends JInternalFrame {
         }
     }
 
+    /**
+     * Cambia el idioma de la ventana y sus componentes usando el handler de internacionalización.
+     * Actualiza los textos de la interfaz según el lenguaje y país especificados.
+     * @param lenguaje Código de idioma (ejemplo: "es", "en").
+     * @param pais Código de país (ejemplo: "EC", "US").
+     */
     public void cambiarIdioma(String lenguaje, String pais) {
         mIH.setLenguaje(lenguaje, pais);
         Object[] columnas = {
@@ -75,13 +91,18 @@ public class ItemListaView extends JInternalFrame {
         lblTitulo.setText(mIH.get("ventana.carrito.items"));
     }
 
-    //GETTERS Y SETTERS
-
-
+    /**
+     * Obtiene la tabla de items del carrito.
+     * @return JTable de items.
+     */
     public JTable getTable1() {
         return table1;
     }
 
+    /**
+     * Obtiene el modelo de la tabla.
+     * @return DefaultTableModel de la tabla.
+     */
     public DefaultTableModel getModelo() {
         return modelo;
     }

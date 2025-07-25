@@ -10,18 +10,25 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
 
+/**
+ * Clase que representa la vista para listar y buscar usuarios en la aplicación.
+ */
 public class UsuarioListarView extends JInternalFrame {
     private JPanel panelPrincipal;
     private JTextField nombreTextField;
     private JButton lisarButton;
     private JTable table1;
     private JButton buscarButton;
-    private JButton salirButton;
     private JLabel lblTitulo;
     private JLabel lblUsuario;
     private DefaultTableModel modelo;
     private MensajeInternacionalizacionHandler mIH;
 
+    /**
+     * Constructor de la ventana para listar y buscar usuarios.
+     * Inicializa componentes, configura iconos y carga el idioma usando el handler de internacionalización.
+     * @param mIH Handler de internacionalización.
+     */
     public UsuarioListarView(MensajeInternacionalizacionHandler mIH) {
         super(mIH.get("menu.usuario.buscar"), true, true, true, true);
         this.mIH = mIH;
@@ -32,7 +39,6 @@ public class UsuarioListarView extends JInternalFrame {
 
         buscarButton.setIcon(Icono.icono(Url.BUSCAR));
         lisarButton.setIcon(Icono.icono(Url.LISTAR));
-        salirButton.setIcon(Icono.icono(Url.CERRAR));
 
         modelo = new DefaultTableModel();
         table1.setModel(modelo);
@@ -40,11 +46,18 @@ public class UsuarioListarView extends JInternalFrame {
         cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
     }
 
+    /**
+     * Muestra un mensaje en un cuadro de diálogo.
+     * @param mensaje Texto del mensaje a mostrar.
+     */
     public void mostrarMensaje(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje);
     }
 
-
+    /**
+     * Carga los datos de una lista de usuarios en la tabla.
+     * @param usuarios Lista de usuarios a mostrar.
+     */
     public void cargarDatosListar(List<Usuario> usuarios){
         modelo.setRowCount(0);
         String fecha = "sin fecha";
@@ -64,6 +77,10 @@ public class UsuarioListarView extends JInternalFrame {
         }
     }
 
+    /**
+     * Carga los datos de un usuario buscado en la tabla.
+     * @param usuario Usuario a mostrar.
+     */
     public void cargarDatosBusqueda(Usuario usuario){
         modelo.setRowCount(0);
         String fecha = "sin fecha";
@@ -82,6 +99,11 @@ public class UsuarioListarView extends JInternalFrame {
         modelo.addRow(fila);
     }
 
+    /**
+     * Cambia el idioma de la ventana y sus componentes usando el handler de internacionalización.
+     * @param lenguaje Código de idioma (ejemplo: "es", "en").
+     * @param pais Código de país (ejemplo: "EC", "US").
+     */
     public void cambiarIdioma(String lenguaje, String pais){
         mIH.setLenguaje(lenguaje, pais);
         Object[] columnas = {mIH.get("ventana.usuario.usuario"),
@@ -95,23 +117,36 @@ public class UsuarioListarView extends JInternalFrame {
 
     //GETTERS Y SETTERS
 
+    /**
+     * Obtiene el campo de texto para el nombre.
+     * @return JTextField del nombre.
+     */
     public JTextField getNombreTextField() {
         return nombreTextField;
     }
 
+    /**
+     * Obtiene el botón para listar usuarios.
+     * @return JButton de listar.
+     */
     public JButton getLisarButton() {
         return lisarButton;
     }
 
+    /**
+     * Obtiene la tabla de usuarios.
+     * @return JTable de usuarios.
+     */
     public JTable getTable1() {
         return table1;
     }
 
+    /**
+     * Obtiene el botón para buscar usuarios.
+     * @return JButton de buscar.
+     */
     public JButton getBuscarButton() {
         return buscarButton;
     }
 
-    public JButton getSalirButton() {
-        return salirButton;
-    }
 }

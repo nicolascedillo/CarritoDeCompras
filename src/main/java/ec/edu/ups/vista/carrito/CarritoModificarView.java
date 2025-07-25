@@ -37,6 +37,11 @@ public class CarritoModificarView extends JInternalFrame {
     private DefaultTableModel modelo;
     private MensajeInternacionalizacionHandler mIH;
 
+    /**
+     * Constructor de la ventana para modificar un carrito.
+     * Inicializa componentes, configura iconos y carga el idioma usando el handler de internacionalización.
+     * @param mIH Handler de internacionalización.
+     */
     public CarritoModificarView(MensajeInternacionalizacionHandler mIH) {
         super(mIH.get("menu.carrito.modificar"), true, true, true, true);
         this.mIH = mIH;
@@ -56,10 +61,18 @@ public class CarritoModificarView extends JInternalFrame {
         cambiarIdioma(mIH.getLocale().getLanguage(), mIH.getLocale().getCountry());
     }
 
+    /**
+     * Muestra un mensaje en un cuadro de diálogo.
+     * @param mensaje Texto del mensaje a mostrar.
+     */
     public void mostrarMensaje(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje);
     }
 
+    /**
+     * Carga los datos de los items del carrito en la tabla.
+     * @param carrito Carrito cuyos items se mostrarán.
+     */
     public void cargarDatos(Carrito carrito) {
         modelo.setRowCount(0);
 
@@ -75,6 +88,11 @@ public class CarritoModificarView extends JInternalFrame {
         }
     }
 
+    /**
+     * Cambia el idioma de la ventana y sus componentes usando el handler de internacionalización.
+     * @param language Código de idioma (ejemplo: "es", "en").
+     * @param country Código de país (ejemplo: "EC", "US").
+     */
     public void cambiarIdioma(String language, String country) {
         mIH.setLenguaje(language, country);
         setTitle(mIH.get("menu.carrito.modificar"));
@@ -104,50 +122,98 @@ public class CarritoModificarView extends JInternalFrame {
 
     //GETTERS Y SETTERS
 
+    /**
+     * Obtiene el campo de texto para el código del carrito.
+     * @return JTextField del código.
+     */
     public JTextField getCodigoTextField() {
         return codigoTextField;
     }
 
+    /**
+     * Obtiene el campo de texto para la fecha del carrito.
+     * @return JTextField de la fecha.
+     */
     public JTextField getFechaTextField() {
         return fechaTextField;
     }
 
+    /**
+     * Obtiene el botón para buscar carrito.
+     * @return JButton de buscar.
+     */
     public JButton getBuscarButton() {
         return buscarButton;
     }
 
+    /**
+     * Obtiene el botón para editar el carrito.
+     * @return JButton de editar.
+     */
     public JButton getEditarButton() {
         return editarButton;
     }
 
+    /**
+     * Obtiene la tabla de productos del carrito.
+     * @return JTable de productos.
+     */
     public JTable getTable1() {
         return table1;
     }
 
+    /**
+     * Obtiene el campo de texto para el subtotal.
+     * @return JTextField del subtotal.
+     */
     public JTextField getSubtotalTextField() {
         return subtotalTextField;
     }
 
+    /**
+     * Obtiene el campo de texto para el IVA.
+     * @return JTextField del IVA.
+     */
     public JTextField getIvaTextField() {
         return ivaTextField;
     }
 
+    /**
+     * Obtiene el campo de texto para el total.
+     * @return JTextField del total.
+     */
     public JTextField getTotalTextField() {
         return totalTextField;
     }
 
+    /**
+     * Obtiene el campo de texto para el usuario.
+     * @return JTextField del usuario.
+     */
     public JTextField getUsuarioTextField() {
         return usuarioTextField;
     }
 
+    /**
+     * Obtiene el modelo de la tabla.
+     * @return DefaultTableModel de la tabla.
+     */
     public DefaultTableModel getModelo() {
         return modelo;
     }
 
+    /**
+     * Obtiene el botón para añadir producto al carrito.
+     * @return JButton de añadir.
+     */
     public JButton getAnadirButton() {
         return anadirButton;
     }
 
+    /**
+     * Obtiene el botón para eliminar producto del carrito.
+     * @return JButton de eliminar.
+     */
     public JButton getEliminarButton() {
         return eliminarButton;
     }
